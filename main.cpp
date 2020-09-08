@@ -1,14 +1,12 @@
 #include <iostream>
-#include <Core/menuinterface.h>
+#include <core/menuinterface.h>
 
 using namespace std;
 
 int main()
 {
     core::MenuInterface m = core::MenuInterface(cout, cin);
-    m.displayWelcome("Ben Whitely", "Assignment 1: Dungeon Builder");
-    // run main menu loop
+    m.displayWelcome("Sakcham Gupta", "Dungeon Builder");
     m.run();
-
     return 0;
 }

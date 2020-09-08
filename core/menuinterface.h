@@ -2,11 +2,12 @@
 #define MENUINTERFACE_H
 
 #include <iostream>
-#include <set>
+#include <unordered_set>
 
 namespace core {
 
 class MenuInterface {
+
   public:
     MenuInterface() = delete;
     ~MenuInterface() = default;
@@ -15,18 +16,19 @@ class MenuInterface {
     MenuInterface(std::ostream& display, std::istream& input);
     void displayWelcome (const std::string& author, const std::string& title) const;
     void run();
+
   private:
-    std::ostream& _display;
-    std::istream& _input;
-    const std::set<char> mainMenuOptions;
-    const std::set<char> describeViewOptions;
-    const std::set<char> explorationOptions;
-    const std::set<char> dungeonOptions;
+    std::ostream& display;
+    std::istream& input;
+    const std::unordered_set<char> mainMenuOptions;
+    const std::unordered_set<char> describeViewOptions;
+    const std::unordered_set<char> explorationOptions;
 
     void mainMenu() const;
     void describeViewMenu() const;
     void explorationMenu() const;
-    bool isValidOption(const std::set<char>& menuOptions, const char& userInput) const;
+    void resetInput() const;
+    bool isValidOption(const std::unordered_set<char>& menuOptions, const char& userInput) const;
     bool isValidDimension(const char& userInput) const;
 };
 }
