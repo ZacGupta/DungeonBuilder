@@ -15,7 +15,7 @@ class MenuInterface {
 
     MenuInterface(std::ostream& display, std::istream& input);
     void displayWelcome (const std::string& author, const std::string& title) const;
-    void run();
+    void run() const;
 
   private:
     std::ostream& display;
@@ -26,7 +26,7 @@ class MenuInterface {
     void explorationMenu() const;
     void resetInput() const;
     bool isValidOption(const std::unordered_set<char>& menuOptions, const char& userInput) const;
-    bool isValidDimension(const char& userInput) const;
+    bool isValidInteger(const char& userInput) const;
 };
 }
 
