@@ -20,9 +20,6 @@ class MenuInterface {
   private:
     std::ostream& display;
     std::istream& input;
-    const std::unordered_set<char> mainMenuOptions;
-    const std::unordered_set<char> describeViewOptions;
-    const std::unordered_set<char> explorationOptions;
 
     void mainMenu() const;
     void describeViewMenu() const;
