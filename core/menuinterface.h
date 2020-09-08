@@ -21,7 +21,13 @@ class MenuInterface {
     const std::set<char> mainMenuOptions;
     const std::set<char> describeViewOptions;
     const std::set<char> explorationOptions;
+    const std::set<char> dungeonOptions;
 
+    void mainMenu() const;
+    void describeViewMenu() const;
+    void explorationMenu() const;
+    bool isValidOption(const std::set<char>& menuOptions, const char& userInput) const;
+    bool isValidDimension(const char& userInput) const;
 };
 }
 
