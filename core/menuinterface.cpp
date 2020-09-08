@@ -120,7 +120,6 @@ void MenuInterface::mainMenu() const {
         else {
             char quitChoice;
 
-            //Confirm quit
             do {
                 display << "\n*Are you sure you want to quit? (y/n)*" << std::endl;
                 input >> userInput;
@@ -138,9 +137,7 @@ void MenuInterface::mainMenu() const {
 
             if (quitChoice == 'y') {
                 display << "\nGoodbye!" << std::endl;
-            }
-            //If choice is 'n'
-            else {
+            } else {
                 input.clear();
                 input.ignore();
                 display << std::endl;
@@ -179,12 +176,10 @@ void MenuInterface::describeViewMenu() const {
         //View Dungeon
         else if (choice == 'v') {
             display << "\n[PRINT DUNGEON]\n" << std::endl;
-            display << "\nPress ENTER to continue" << std::endl;
+            display << "Press ENTER to continue" << std::endl;
             input.sync();
             input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            display << std::endl;
             describeViewMenu();
-
         }
         //Return to Main Menu
         else {
@@ -205,6 +200,57 @@ void MenuInterface::describeViewMenu() const {
 
 void MenuInterface::explorationMenu() const {
     const std::unordered_set<char> menuOptions{'d', 'r'};
+    std::string userInput;
+    char choice;
+
+    display << "What would you like to do" << std::endl
+            << " (d)escribe a room" << std::endl
+            << " (r)eturn to previous menu" << std::endl;
+    input >> userInput;
+
+    if (userInput.length() == 1 and isValidOption(menuOptions, userInput.front())) {
+        choice  = userInput.front();
+        //Describe the room.
+        if (choice == 'd') {
+            char roomNumber;
+            //Get Room Number.
+            do {
+                display << "\nWhich room would you like to describe? (1-4)" << std::endl;
+                input >> userInput;
+
+                if (userInput.length() == 1) {
+                    roomNumber = userInput.front();
+                }
+                if (input.fail() or not isValidInteger(roomNumber)) {
+                    input.clear();
+                    input.ignore();
+                    display << "\nInvalid input option" << std::endl
+                            << "Please enter a value between [1-4] (inclusive)" << std::endl;
+                }
+            } while (not isValidInteger(roomNumber));
+
+            display << "Room *" << roomNumber << "* is..." << std::endl;
+            display << "[DESCRIBE ROOM]\n" << std::endl;
+            display << "Press ENTER to continue" << std::endl;
+            input.sync();
+            input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            explorationMenu();
+
+        }
+        //Return to Describe/View Menu.
+        else {
+            display << "\nReturning to describe/view menu.\n" << std::endl;
+            describeViewMenu();
+        }
+    }
+    //Invalid input.
+    else {
+        input.clear();
+        input.ignore();
+        display << "\nInvalid input option" << std::endl
+                << "Please select between ['d', 'v', 'r']\n" << std::endl;
+        explorationMenu();
+    }
 
 }
 
