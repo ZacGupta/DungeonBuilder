@@ -61,3 +61,6 @@ HEADERS += \
     core/items/item.h \
     core/items/weapon.h \
     core/menuinterface.h
+
+DISTFILES += \
+    DungeonBuilder.Doxyfile

@@ -3,10 +3,10 @@
 
 namespace core {
 
-MenuInterface::MenuInterface(std::ostream& display, std::istream& input) : display{display}, input{input} {}
+MenuInterface::MenuInterface(std::ostream& display, std::istream& input) : _display{display}, _input{input} {}
 
 void MenuInterface::displayWelcome(const std::string& author, const std::string& title) const {
-    display << "Welcome to: " + title << std::endl
+    _display << "Welcome to: " + title << std::endl
             << "                  Developed by " + author << std::endl
             << "           COMP 3023 Software Development with C++\n" << std::endl;
 }
@@ -22,18 +22,19 @@ void MenuInterface::mainMenu() const {
     std::string userInput;
     char choice;
 
-    display << "What would you like to do" << std::endl
+    _display << "What would you like to do" << std::endl
             << " (g)enerate the example level" << std::endl
             << " (r)andom dungeon level" << std::endl
             << " (q)uit" << std::endl;
-    input >> userInput;
+    _input >> userInput;
 
+    //Valid input
     if (userInput.length() == 1 and isValidOption(menuOptions, userInput.front())) {
         choice  = userInput.front();
 
         //Generate Example Dungeon
         if (choice == 'g') {
-            display << "\nCreating example dungeon level..." << std::endl
+            _display << "\nCreating example dungeon level..." << std::endl
                     << "Dungeon level created!\n" << std::endl;
             describeViewMenu();
         }
@@ -45,19 +46,19 @@ void MenuInterface::mainMenu() const {
             char dungeonType;
 
             //input.ignore() here fixes a bug.
-            input.ignore();
+            _input.ignore();
 
             //Get name
             do {
-                display << "\nWhat would you like to call the level?" << std::endl;
-                std::getline(input, dungeonName);
+                _display << "\nWhat would you like to call the level?" << std::endl;
+                std::getline(_input, dungeonName);
 
                 if (dungeonName.empty()) {
-                    display << "\nThe name can not be empty\n" << std::endl;
+                    _display << "\nThe name can not be empty\n" << std::endl;
                 }
-                if (input.fail()) {
-                    input.clear();
-                    input.ignore();
+                if (_input.fail()) {
+                    _input.clear();
+                    _input.ignore();
 
                 }
             } while (dungeonName.empty());
@@ -65,54 +66,54 @@ void MenuInterface::mainMenu() const {
             //Get rows
             do {
 
-                display << "\nHow many rows in " << "*" << dungeonName << "*?" << std::endl;
-                input >> userInput;
+                _display << "\nHow many rows in " << "*" << dungeonName << "*?" << std::endl;
+                _input >> userInput;
 
                 if (userInput.length() == 1) {
                     rows = userInput.front();
                 }
-                if (input.fail() or not isValidInteger(rows)) {
-                    input.clear();
-                    input.ignore();
-                    display << "\nInvalid input option" << std::endl
+                if (_input.fail() or not isValidInteger(rows)) {
+                    _input.clear();
+                    _input.ignore();
+                    _display << "\nInvalid input option" << std::endl
                             << "Please enter a value between 1-4 (inclusive)" << std::endl;
                 }
             } while (not isValidInteger(rows));
 
             //Get columns
             do {
-                display << "\nHow many columns in " << "*" << dungeonName << "*?" << std::endl;
-                input >> userInput;
+                _display << "\nHow many columns in " << "*" << dungeonName << "*?" << std::endl;
+                _input >> userInput;
 
                 if (userInput.length() == 1) {
                     columns = userInput.front();
                 }
-                if (input.fail() or not isValidInteger(columns)) {
-                    input.clear();
-                    input.ignore();
-                    display << "\nInvalid input option" << std::endl
+                if (_input.fail() or not isValidInteger(columns)) {
+                    _input.clear();
+                    _input.ignore();
+                    _display << "\nInvalid input option" << std::endl
                             << "Please enter a value between [1-4] (inclusive)" << std::endl;
                 }
             } while (not isValidInteger(columns));
 
             //Get type
             do {
-                display << "\nWhat type of dungeon level is it? (b)asic or (m)agical" << std::endl;
-                input >> userInput;
+                _display << "\nWhat type of dungeon level is it? (b)asic or (m)agical" << std::endl;
+                _input >> userInput;
 
                 if (userInput.length() == 1) {
                     dungeonType = userInput.front();
                 }
 
-                if (input.fail() or not isValidOption(dungeonOptions, dungeonType)) {
-                    input.clear();
-                    input.ignore();
-                    display << "\nInvalid input option" << std::endl
+                if (_input.fail() or not isValidOption(dungeonOptions, dungeonType)) {
+                    _input.clear();
+                    _input.ignore();
+                    _display << "\nInvalid input option" << std::endl
                             << "Please enter either ['b' or 'm']" << std::endl;
                 }
             } while (not isValidOption(dungeonOptions, dungeonType));
 
-            display << "\nCreating " << dungeonName << "..." << std::endl
+            _display << "\nCreating " << dungeonName << "..." << std::endl
                     << "Dungeon level created!\n" << std::endl;
             describeViewMenu();
         }
@@ -121,35 +122,35 @@ void MenuInterface::mainMenu() const {
             char quitChoice;
 
             do {
-                display << "\n*Are you sure you want to quit? (y/n)*" << std::endl;
-                input >> userInput;
+                _display << "\n*Are you sure you want to quit? (y/n)*" << std::endl;
+                _input >> userInput;
 
                 if (userInput.length() == 1) {
                     quitChoice = userInput.front();
                 }
-                if (input.fail() or not isValidOption(quitOptions, quitChoice)) {
-                    input.clear();
-                    input.ignore();
-                    display << "\nInvalid input option" << std::endl
+                if (_input.fail() or not isValidOption(quitOptions, quitChoice)) {
+                    _input.clear();
+                    _input.ignore();
+                    _display << "\nInvalid input option" << std::endl
                             << "Please enter either ['y' or 'n']" << std::endl;
                 }
             } while (not isValidOption(quitOptions, quitChoice));
 
             if (quitChoice == 'y') {
-                display << "\nGoodbye!" << std::endl;
+                _display << "\nGoodbye!" << std::endl;
             } else {
-                input.clear();
-                input.ignore();
-                display << std::endl;
+                _input.clear();
+                _input.ignore();
+                _display << std::endl;
                 mainMenu();
             }
         }
     }
     //Invalid input for main choice leads here.
     else {
-        input.clear();
-        input.ignore();
-        display << "\nInvalid input option" << std::endl
+        _input.clear();
+        _input.ignore();
+        _display << "\nInvalid input option" << std::endl
                 << "Please select between ['g', 'r', 'q']\n" << std::endl;
         mainMenu();
     }
@@ -160,38 +161,39 @@ void MenuInterface::describeViewMenu() const {
     std::string userInput;
     char choice;
 
-    display << "What would you like to do" << std::endl
+    _display << "What would you like to do" << std::endl
             << " (d)escribe the dungeon level" << std::endl
             << " (v)iew the dungeon level" << std::endl
             << " (r)eturn to the main menu" << std::endl;
-    input >> userInput;
+    _input >> userInput;
 
+    //Valid input
     if (userInput.length() == 1 and isValidOption(menuOptions, userInput.front())) {
         choice  = userInput.front();
         //Describe Dungeon
         if (choice == 'd') {
-            display << "\n[DESCRIBE DUNGEON]\n" << std::endl;
+            _display << "\n[DESCRIBE DUNGEON]\n" << std::endl;
             explorationMenu();
         }
         //View Dungeon
         else if (choice == 'v') {
-            display << "\n[PRINT DUNGEON]\n" << std::endl;
-            display << "Press ENTER to continue" << std::endl;
-            input.sync();
-            input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            _display << "\n[PRINT DUNGEON]\n" << std::endl;
+            _display << "Press ENTER to continue" << std::endl;
+            _input.sync();
+            _input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             describeViewMenu();
         }
         //Return to Main Menu
         else {
-            display << "\nReturning to main menu.\n" << std::endl;
+            _display << "\nReturning to main menu.\n" << std::endl;
             mainMenu();
         }
     }
     //Invalid input.
     else {
-        input.clear();
-        input.ignore();
-        display << "\nInvalid input option" << std::endl
+        _input.clear();
+        _input.ignore();
+        _display << "\nInvalid input option" << std::endl
                 << "Please select between ['d', 'v', 'r']\n" << std::endl;
         describeViewMenu();
     }
@@ -203,11 +205,12 @@ void MenuInterface::explorationMenu() const {
     std::string userInput;
     char choice;
 
-    display << "What would you like to do" << std::endl
+    _display << "What would you like to do" << std::endl
             << " (d)escribe a room" << std::endl
             << " (r)eturn to previous menu" << std::endl;
-    input >> userInput;
+    _input >> userInput;
 
+    //Valid input
     if (userInput.length() == 1 and isValidOption(menuOptions, userInput.front())) {
         choice  = userInput.front();
         //Describe the room.
@@ -215,39 +218,39 @@ void MenuInterface::explorationMenu() const {
             char roomNumber;
             //Get Room Number.
             do {
-                display << "\nWhich room would you like to describe? (1-4)" << std::endl;
-                input >> userInput;
+                _display << "\nWhich room would you like to describe? (1-4)" << std::endl;
+                _input >> userInput;
 
                 if (userInput.length() == 1) {
                     roomNumber = userInput.front();
                 }
-                if (input.fail() or not isValidInteger(roomNumber)) {
-                    input.clear();
-                    input.ignore();
-                    display << "\nInvalid input option" << std::endl
+                if (_input.fail() or not isValidInteger(roomNumber)) {
+                    _input.clear();
+                    _input.ignore();
+                    _display << "\nInvalid input option" << std::endl
                             << "Please enter a value between [1-4] (inclusive)" << std::endl;
                 }
             } while (not isValidInteger(roomNumber));
 
-            display << "Room *" << roomNumber << "* is..." << std::endl;
-            display << "[DESCRIBE ROOM]\n" << std::endl;
-            display << "Press ENTER to continue" << std::endl;
-            input.sync();
-            input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            _display << "Room *" << roomNumber << "* is..." << std::endl;
+            _display << "[DESCRIBE ROOM]\n" << std::endl;
+            _display << "Press ENTER to continue" << std::endl;
+            _input.sync();
+            _input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             explorationMenu();
 
         }
         //Return to Describe/View Menu.
         else {
-            display << "\nReturning to describe/view menu.\n" << std::endl;
+            _display << "\nReturning to describe/view menu.\n" << std::endl;
             describeViewMenu();
         }
     }
     //Invalid input.
     else {
-        input.clear();
-        input.ignore();
-        display << "\nInvalid input option" << std::endl
+        _input.clear();
+        _input.ignore();
+        _display << "\nInvalid input option" << std::endl
                 << "Please select between ['d', 'v', 'r']\n" << std::endl;
         explorationMenu();
     }

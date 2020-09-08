@@ -71,3 +71,9 @@ Thumbs.db
 *.dll
 *.exe
 
+#Doxygen
+*.js
+*.html
+*.svg
+*.css
+
