@@ -1,6 +1,8 @@
 #include "menuinterface.h"
 
-MenuInterface::MenuInterface()
-{
+namespace core {
 
+MenuInterface::MenuInterface() {
+
+}
 }

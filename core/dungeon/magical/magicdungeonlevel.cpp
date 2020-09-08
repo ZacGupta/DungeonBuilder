@@ -1,6 +1,12 @@
 #include "magicdungeonlevel.h"
 
-MagicDungeonLevel::MagicDungeonLevel()
-{
+namespace core {
+namespace dungeon {
+namespace magical {
 
+MagicDungeonLevel::MagicDungeonLevel() {
+
+}
+}
+}
 }

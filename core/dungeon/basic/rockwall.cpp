@@ -1,6 +1,12 @@
 #include "rockwall.h"
 
-RockWall::RockWall()
-{
+namespace core {
+namespace dungeon {
+namespace basic {
 
+RockWall::RockWall() {
+
+}
+}
+}
 }

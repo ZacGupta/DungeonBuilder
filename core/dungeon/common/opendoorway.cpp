@@ -1,6 +1,13 @@
 #include "opendoorway.h"
 
-OpenDoorway::OpenDoorway()
-{
+namespace core {
+namespace dungeon {
+namespace common {
 
+
+OpenDoorway::OpenDoorway() {
+
+}
+}
+}
 }

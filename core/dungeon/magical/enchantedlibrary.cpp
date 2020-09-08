@@ -1,6 +1,12 @@
 #include "enchantedlibrary.h"
 
-EnchantedLibrary::EnchantedLibrary()
-{
+namespace core {
+namespace dungeon {
+namespace magical {
 
+EnchantedLibrary::EnchantedLibrary() {
+
+}
+}
+}
 }

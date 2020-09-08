@@ -1,6 +1,13 @@
 #include "alchemistslaboratory.h"
 
-AlchemistsLaboratory::AlchemistsLaboratory()
-{
+namespace core {
+namespace dungeon {
+namespace magical {
 
+
+AlchemistsLaboratory::AlchemistsLaboratory() {
+
+}
+}
+}
 }

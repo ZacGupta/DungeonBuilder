@@ -1,6 +1,12 @@
 #include "rockchamber.h"
 
-RockChamber::RockChamber()
-{
+namespace core {
+namespace dungeon {
+namespace basic {
 
+RockChamber::RockChamber() {
+
+}
+}
+}
 }

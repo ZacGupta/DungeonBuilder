@@ -1,6 +1,12 @@
 #include "magicwall.h"
 
-MagicWall::MagicWall()
-{
+namespace core {
+namespace dungeon {
+namespace magical {
 
+MagicWall::MagicWall() {
+
+}
+}
+}
 }

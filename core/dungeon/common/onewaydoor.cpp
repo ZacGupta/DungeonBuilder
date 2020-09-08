@@ -1,6 +1,13 @@
 #include "onewaydoor.h"
 
-OneWayDoor::OneWayDoor()
-{
+namespace core {
+namespace dungeon {
+namespace common {
 
+
+OneWayDoor::OneWayDoor() {
+
+}
+}
+}
 }

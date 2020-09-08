@@ -1,6 +1,8 @@
 #include "game.h"
 
-Game::Game()
-{
+namespace core {
 
+Game::Game() {
+
+}
 }

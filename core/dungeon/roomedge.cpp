@@ -1,6 +1,10 @@
 #include "roomedge.h"
 
-RoomEdge::RoomEdge()
-{
+namespace core {
+namespace dungeon {
 
+RoomEdge::RoomEdge() {
+
+}
+}
 }

@@ -1,6 +1,12 @@
 #include "quartzchamber.h"
 
-QuartzChamber::QuartzChamber()
-{
+namespace core {
+namespace dungeon {
+namespace basic {
 
+QuartzChamber::QuartzChamber() {
+
+}
+}
+}
 }

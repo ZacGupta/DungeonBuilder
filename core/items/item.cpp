@@ -1,6 +1,10 @@
 #include "item.h"
 
-Item::Item()
-{
+namespace core {
+namespace items {
 
+Item::Item() {
+
+}
+}
 }

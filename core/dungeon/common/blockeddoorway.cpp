@@ -1,6 +1,12 @@
 #include "blockeddoorway.h"
 
-BlockedDoorway::BlockedDoorway()
-{
+namespace core {
+namespace dungeon {
+namespace common {
 
+BlockedDoorway::BlockedDoorway() {
+
+}
+}
+}
 }

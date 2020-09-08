@@ -1,6 +1,10 @@
 #include "monster.h"
 
-Monster::Monster()
-{
+namespace core {
+namespace creatures {
 
+Monster::Monster() {
+
+}
+}
 }

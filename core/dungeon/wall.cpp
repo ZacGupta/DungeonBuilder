@@ -1,6 +1,10 @@
 #include "wall.h"
 
-Wall::Wall()
-{
+namespace core {
+namespace dungeon {
 
+Wall::Wall() {
+
+}
+}
 }
