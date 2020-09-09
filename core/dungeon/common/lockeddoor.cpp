@@ -1,13 +1,9 @@
 #include "lockeddoor.h"
 
-namespace core {
-namespace dungeon {
-namespace common {
+namespace core::dungeon::common {
 
 
 LockedDoor::LockedDoor() {
 
-}
-}
 }
 }

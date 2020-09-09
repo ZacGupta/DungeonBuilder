@@ -1,7 +1,6 @@
 #include "wall.h"
 
-namespace core {
-namespace dungeon {
+namespace core::dungeon {
 
 Wall::Wall() {
     std::cout << "Created Wall" << std::endl;
@@ -28,5 +27,4 @@ bool Wall::isPassage() const {
 }
 
 
-}
 }

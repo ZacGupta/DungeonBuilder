@@ -1,10 +1,8 @@
 #include "abstractcreature.h"
 
-namespace core {
-namespace creatures {
+namespace core::creatures {
 
 AbstractCreature::AbstractCreature() {
 
-}
 }
 }

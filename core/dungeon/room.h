@@ -6,8 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace core {
-namespace dungeon {
+namespace core::dungeon {
 
 class RoomEdge;
 
@@ -52,6 +51,5 @@ class Room {
     RoomEdge* _west;
 };
 enum class Direction : unsigned {North = 1, South = 2, East = 3, West = 4}; // Make sure this is in the correct scope
-}
 }
 #endif // ROOM_H

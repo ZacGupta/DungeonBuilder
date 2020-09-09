@@ -1,12 +1,17 @@
 #include "magicwall.h"
 
-namespace core {
-namespace dungeon {
-namespace magical {
+namespace core::dungeon::magical {
 
-MagicWall::MagicWall() {
+MagicWall::~MagicWall() {
+    std::cout << "Destroyed MagicWall" << std::endl;
+}
+
+MagicWall::MagicWall(Direction direction) {
+    std::cout << "Created MagicalWall" << std::endl;
 
 }
-}
+
+const std::string MagicWall::description() const {
+    return "a Magic Wall";
 }
 }

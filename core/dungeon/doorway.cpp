@@ -1,10 +1,8 @@
 #include "doorway.h"
 
-namespace core {
-namespace dungeon {
+namespace core::dungeon {
 
 Doorway::Doorway() {
 
-}
 }
 }

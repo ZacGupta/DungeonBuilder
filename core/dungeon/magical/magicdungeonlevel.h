@@ -1,16 +1,13 @@
 #ifndef MAGICDUNGEONLEVEL_H
 #define MAGICDUNGEONLEVEL_H
 
-namespace core {
-namespace dungeon {
-namespace magical {
+namespace core::dungeon::magical {
 
 class MagicDungeonLevel {
   public:
     MagicDungeonLevel();
 };
 }
-}
-}
+
 
 #endif // MAGICDUNGEONLEVEL_H

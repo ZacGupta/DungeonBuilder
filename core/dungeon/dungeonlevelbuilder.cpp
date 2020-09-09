@@ -1,10 +1,8 @@
 #include "dungeonlevelbuilder.h"
 
-namespace core {
-namespace dungeon {
+namespace core::dungeon {
 
 DungeonLevelBuilder::DungeonLevelBuilder() {
 
-}
 }
 }

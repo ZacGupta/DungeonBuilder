@@ -1,10 +1,8 @@
 #include "consumable.h"
 
-namespace core {
-namespace items {
+namespace core::items {
 
 Consumable::Consumable() {
 
-}
 }
 }

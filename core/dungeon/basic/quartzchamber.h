@@ -1,16 +1,13 @@
 #ifndef QUARTZCHAMBER_H
 #define QUARTZCHAMBER_H
 
-namespace core {
-namespace dungeon {
-namespace basic {
+namespace core::dungeon::basic {
 
 class QuartzChamber {
   public:
     QuartzChamber();
 };
 }
-}
-}
+
 
 #endif // QUARTZCHAMBER_H

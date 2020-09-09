@@ -3,21 +3,17 @@
 
 #include "core/dungeon/wall.h"
 
-namespace core {
-namespace dungeon {
-namespace basic {
+namespace core::dungeon::basic {
 
-class RockWall : Wall {
+class RockWall : public Wall {
   public:
     RockWall() = delete;
-    RockWall(const Wall& other) = delete;
+    RockWall(const RockWall& other) = delete;
     RockWall(Direction direction);
     ~RockWall();
 
     virtual const std::string description() const override;
 };
-}
-}
 }
 
 #endif // ROCKWALL_H

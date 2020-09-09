@@ -5,8 +5,7 @@
 #include <string>
 #include "iostream"//DELETE THIS
 
-namespace core {
-namespace dungeon {
+namespace core::dungeon {
 
 class RoomEdge {
   public:
@@ -25,7 +24,6 @@ class RoomEdge {
     Direction _direction;
 
 };
-}
 }
 
 #endif // ROOMEDGE_H

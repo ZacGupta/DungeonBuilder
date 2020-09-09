@@ -1,16 +1,13 @@
 #ifndef ENCHANTEDLIBRARY_H
 #define ENCHANTEDLIBRARY_H
 
-namespace core {
-namespace dungeon {
-namespace magical {
+namespace core::dungeon::magical {
 
 class EnchantedLibrary {
   public:
     EnchantedLibrary();
 };
 }
-}
-}
+
 
 #endif // ENCHANTEDLIBRARY_H

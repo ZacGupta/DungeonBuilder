@@ -1,8 +1,6 @@
 #include "rockwall.h"
 
-namespace core {
-namespace dungeon {
-namespace basic {
+namespace core::dungeon::basic {
 
 
 RockWall::RockWall(Direction direction) : Wall{direction} {
@@ -17,6 +15,4 @@ const std::string RockWall::description() const {
     return "a Rock Wall";
 }
 
-}
-}
 }

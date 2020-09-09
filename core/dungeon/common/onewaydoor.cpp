@@ -1,13 +1,9 @@
 #include "onewaydoor.h"
 
-namespace core {
-namespace dungeon {
-namespace common {
+namespace core::dungeon::common {
 
 
 OneWayDoor::OneWayDoor() {
 
-}
-}
 }
 }

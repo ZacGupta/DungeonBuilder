@@ -3,8 +3,7 @@
 
 #include "core/dungeon/roomedge.h"
 
-namespace core {
-namespace dungeon {
+namespace core::dungeon {
 
 class Wall : public RoomEdge  {
   public:
@@ -18,7 +17,6 @@ class Wall : public RoomEdge  {
   protected:
     Wall(Direction direction);
 };
-}
 }
 
 #endif // WALL_H

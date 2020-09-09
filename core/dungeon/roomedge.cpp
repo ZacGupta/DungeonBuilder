@@ -1,8 +1,7 @@
 #include "roomedge.h"
 
 
-namespace core {
-namespace dungeon {
+namespace core::dungeon {
 
 RoomEdge::RoomEdge() {
     std::cout << "Created RoomEdge" << std::endl;
@@ -24,5 +23,4 @@ const Direction& RoomEdge::getDirection() const {
     return _direction;
 }
 
-}
 }

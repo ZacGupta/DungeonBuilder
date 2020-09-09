@@ -1,14 +1,13 @@
 #ifndef ABSTRACTCREATURE_H
 #define ABSTRACTCREATURE_H
 
-namespace core {
-namespace creatures {
+namespace core::creatures {
 
 class AbstractCreature {
   public:
     AbstractCreature();
 };
 }
-}
+
 
 #endif // ABSTRACTCREATURE_H
