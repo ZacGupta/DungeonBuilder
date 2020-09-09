@@ -12,7 +12,13 @@ OneWayDoor::~OneWayDoor() {
 }
 
 const std::string OneWayDoor::description() const {
-    return "a One Way Door";
+    if (_isEntrance) {
+        return "the entrance to the dungeon level (One Way Door)";
+    } else if (_isExit) {
+        return "an EXIT (One Way Door)";
+    } else {
+        return "a One Way Door";
+    }
 }
 
 char OneWayDoor::displayCharacter() const {

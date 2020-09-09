@@ -12,7 +12,7 @@ OpenDoorway::~OpenDoorway() {
 }
 
 const std::string OpenDoorway::description() const {
-    return "an Open Doorway";
+    return "an Open Doorway to another chamber";
 }
 
 char OpenDoorway::displayCharacter() const {

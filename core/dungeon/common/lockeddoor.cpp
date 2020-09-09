@@ -12,7 +12,7 @@ LockedDoor::~LockedDoor() {
 }
 
 const std::string LockedDoor::description() const {
-    return "a Locked Door";
+    return "a Locked Door to another chamber";
 }
 
 char LockedDoor::displayCharacter() const {

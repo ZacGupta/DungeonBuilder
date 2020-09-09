@@ -11,7 +11,7 @@ BlockedDoorway::~BlockedDoorway() {
 }
 
 const std::string BlockedDoorway::description() const {
-    return "a Blocked Doorway";
+    return "a Blocked Doorway to another chamber";
 }
 
 char BlockedDoorway::displayCharacter() const {
