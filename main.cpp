@@ -14,16 +14,17 @@ using namespace core::dungeon::common;
 
 int main() {
 
-    OpenDoorway* d1 = new OpenDoorway(Direction::North);
-    OneWayDoor* d2 = new OneWayDoor(Direction::South);
-    OneWayDoor* d3 = new OneWayDoor(Direction::East);
-    OneWayDoor* d4 = new OneWayDoor(Direction::West);
-
     RockChamber r = RockChamber(1);
-    r.setNorth(d1);
-    r.setSouth(d2);
-    r.setEast(d3);
-    r.setWest(d4);
+    r.setNorth(new OneWayDoor(Direction::North));
+    r.setSouth(new OneWayDoor(Direction::South));
+    r.setEast(new OneWayDoor(Direction::East));
+    r.setWest(new OneWayDoor(Direction::West));
+
+    cout << r.north().isPassage() << endl;
+    cout << r.south().isPassage() << endl;
+    cout << r.east().isPassage() << endl;
+    cout << r.west().isPassage() << endl;
+
 
 
 //    cout << "d1: " << &d1 << endl;

@@ -2,7 +2,8 @@
 
 namespace core::dungeon {
 
-Doorway::Doorway(Direction direction) : RoomEdge{direction} {
+Doorway::Doorway(Direction direction) : RoomEdge{direction}, _opposite{nullptr} {
+    if (_opposite) std::cout << "Opposite on construction" << std::endl;
 
     std::cout << "Created Doorway with direction" << std::endl;
 }
@@ -12,7 +13,7 @@ Doorway::~Doorway() {
 }
 
 void Doorway::connect(const Doorway* opposite) {
-    if (opposite) {
+    if (opposite and not _opposite) {
         _opposite = opposite;
     }
 }
@@ -26,11 +27,11 @@ bool Doorway::isExit() const {
 }
 
 bool Doorway::isPassage() const {
-    if (_opposite) {
-        return true;
+    if (_opposite == nullptr) {
+        return false;
     }
     else {
-        return false;
+        return true;
     }
 }
 }

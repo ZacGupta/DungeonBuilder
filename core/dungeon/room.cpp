@@ -3,7 +3,7 @@
 
 namespace core::dungeon {
 
-Room::Room(const int id) : _id{id} {
+Room::Room(const int id) : _id{id}, _item{}, _creature{}, _north{nullptr}, _south{nullptr}, _east{nullptr}, _west{nullptr} {
     std::cout << "Created Room" << std::endl;
 }
 
