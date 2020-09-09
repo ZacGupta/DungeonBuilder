@@ -7,7 +7,7 @@ namespace core {
 namespace dungeon {
 namespace basic {
 
-class RockWall : public Wall {
+class RockWall : Wall {
     RockWall() = delete;
     RockWall(const Wall& other) = delete;
     RockWall(Direction direction);

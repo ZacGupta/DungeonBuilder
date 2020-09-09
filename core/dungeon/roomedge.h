@@ -3,15 +3,15 @@
 
 #include "core/dungeon/room.h"
 #include <string>
+#include "iostream"//DELETE THIS
 
 namespace core {
 namespace dungeon {
 
 class RoomEdge {
   public:
-    RoomEdge() = delete;
+    RoomEdge();
     RoomEdge(const RoomEdge& other) = delete;
-    RoomEdge(Direction direction);
     virtual ~RoomEdge();
 
     friend std::ostream& operator<<(std::ostream& out, const RoomEdge& roomEdge);  //operator overload (<<)

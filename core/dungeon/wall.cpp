@@ -3,5 +3,27 @@
 namespace core {
 namespace dungeon {
 
+Wall::Wall() {
+    std::cout << "Created Wall" << std::endl;
+}
+
+Wall::~Wall() {
+    std::cout << "Destroyed Wall" << std::endl;
+}
+
+char Wall::displayCharacter() const {
+    if (_direction == Direction::North or _direction == Direction::South) {
+        return '-';
+    }
+    else {
+        return '|';
+    }
+}
+
+bool Wall::isPassage() const {
+    return false;
+}
+
+
 }
 }

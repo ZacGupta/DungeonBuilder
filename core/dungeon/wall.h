@@ -8,9 +8,8 @@ namespace dungeon {
 
 class Wall : public RoomEdge  {
   public:
-    Wall() = delete;
+    Wall();
     Wall(const Wall& other) = delete;
-    Wall(Direction direction);
     virtual ~Wall();
 
     virtual const std::string description() const override = 0;

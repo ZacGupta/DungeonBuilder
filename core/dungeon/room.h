@@ -42,8 +42,7 @@ class Room {
     void setSouth(const RoomEdge* southEdge);
     void setEast(const RoomEdge* eastEdge);
     void setWest(const RoomEdge* westEdge);
-
-  private:
+  protected:
     const int _id;
     core::items::Item _item;
     core::creatures::AbstractCreature _creature;
@@ -52,7 +51,7 @@ class Room {
     RoomEdge* _east;
     RoomEdge* _west;
 };
-enum class Direction : unsigned {North, South, East, West}; // Make sure this is in the correct scope
+enum class Direction : unsigned {North = 1, South = 2, East = 3, West = 4}; // Make sure this is in the correct scope
 }
 }
 #endif // ROOM_H
