@@ -50,6 +50,6 @@ class Room {
     RoomEdge* _east;
     RoomEdge* _west;
 };
-enum class Direction : unsigned {North = 1, South = 2, East = 3, West = 4}; // Make sure this is in the correct scope
+enum class Direction : unsigned {North, South, East, West};
 }
 #endif // ROOM_H

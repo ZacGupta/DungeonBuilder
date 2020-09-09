@@ -11,7 +11,7 @@ class Wall : public RoomEdge  {
     Wall(const Wall& other) = delete;
     virtual ~Wall();
 
-    virtual const std::string description() const override = 0;
+    virtual const std::string description() const override = 0; //May not be neccesary to declare this again.
     virtual char displayCharacter() const override;
     virtual bool isPassage() const override;
   protected:
