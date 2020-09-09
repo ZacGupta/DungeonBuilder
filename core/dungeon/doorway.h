@@ -16,21 +16,17 @@ class Doorway : public RoomEdge {
     virtual bool isPassage() const override;
 
     void connect(const Doorway* opposite);
+    const Doorway& opposite() const;
 
-    void markAsEntrance();
-    void markAsExit();
-    bool isEntrance() const;
-    bool isExit() const;
-
-    const Doorway* _opposite;
+    virtual bool isEntrance() const;
+    virtual bool isExit() const;
 
   protected:
-
-    bool _isEntrance;
-    bool _isExit;
+    Doorway(Direction direction);
+    const Doorway* _opposite;
 
     //Protected constructor
-    Doorway(Direction direction);
+
 
 };
 }

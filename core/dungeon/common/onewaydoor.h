@@ -14,6 +14,14 @@ class OneWayDoor : public Doorway {
 
     virtual const std::string description() const override;
     virtual char displayCharacter() const override;
+    virtual bool isEntrance() const override;
+    virtual bool isExit() const override;
+
+    void markAsEntrance();
+    void markAsExit();
+  private:
+    bool _isEntrance;
+    bool _isExit;
 };
 }
 
