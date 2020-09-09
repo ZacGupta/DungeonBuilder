@@ -11,18 +11,23 @@ class Doorway : public RoomEdge {
     Doorway(const Doorway& other) = delete;
     virtual ~Doorway();
 
-    friend std::ostream& operator<<(std::ostream& out, const Doorway& doorway);  //operator overload (<<)
-
     virtual const std::string description() const override = 0; //May not be neccesary to declare this again.
     virtual char displayCharacter() const override = 0; //May not be neccesary to declare this again.
-    virtual bool isPassage() const override = 0; //May not be neccesary to declare this again.
+    virtual bool isPassage() const override;
 
     void connect(const Doorway* opposite);
+
+    void markAsEntrance();
+    void markAsExit();
     bool isEntrance() const;
     bool isExit() const;
 
+
   protected:
-    Doorway* opposite;
+    const Doorway* _opposite;
+    bool _isEntrance;
+    bool _isExit;
+
     //Protected constructor
     Doorway(Direction direction);
 
