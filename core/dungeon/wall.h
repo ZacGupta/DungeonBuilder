@@ -15,6 +15,8 @@ class Wall : public RoomEdge  {
     virtual const std::string description() const override = 0;
     virtual char displayCharacter() const override;
     virtual bool isPassage() const override;
+  protected:
+    Wall(Direction direction);
 };
 }
 }

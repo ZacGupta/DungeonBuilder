@@ -8,6 +8,7 @@ namespace dungeon {
 namespace basic {
 
 class RockWall : Wall {
+  public:
     RockWall() = delete;
     RockWall(const Wall& other) = delete;
     RockWall(Direction direction);

@@ -4,7 +4,13 @@
 namespace core {
 namespace dungeon {
 
-RoomEdge::RoomEdge() {std::cout << "Created Roomedge" << std::endl;}
+RoomEdge::RoomEdge() {
+    std::cout << "Created RoomEdge" << std::endl;
+}
+
+RoomEdge::RoomEdge(Direction direction) : _direction{direction} {
+    std::cout << "Created RoomEdge with Direction" << std::endl;
+}
 
 RoomEdge::~RoomEdge() {
     std::cout << "Destroyed RoomEdge" << std::endl;

@@ -21,7 +21,9 @@ class RoomEdge {
     virtual bool isPassage() const = 0;
     const Direction& getDirection() const;
   protected:
+    RoomEdge (Direction _direction);
     Direction _direction;
+
 };
 }
 }
