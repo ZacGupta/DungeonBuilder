@@ -8,10 +8,6 @@ Doorway::Doorway(Direction direction) : RoomEdge{direction} {
 }
 
 Doorway::~Doorway() {
-    if (_opposite) {
-        _opposite = nullptr;
-        std::cout << "Opposite is now null" << std::endl;
-    }
     std::cout << "Destroyed Doorway" << std::endl;
 }
 
@@ -19,10 +15,6 @@ void Doorway::connect(const Doorway* opposite) {
     if (opposite) {
         _opposite = opposite;
     }
-}
-
-const Doorway& Doorway::opposite() const {
-    return *_opposite;
 }
 
 bool Doorway::isEntrance() const {
@@ -34,11 +26,11 @@ bool Doorway::isExit() const {
 }
 
 bool Doorway::isPassage() const {
-    if (_opposite == nullptr) {
-        return false;
+    if (_opposite) {
+        return true;
     }
     else {
-        return true;
+        return false;
     }
 }
 }

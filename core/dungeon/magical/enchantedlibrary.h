@@ -1,11 +1,18 @@
 #ifndef ENCHANTEDLIBRARY_H
 #define ENCHANTEDLIBRARY_H
 
+#include <core/dungeon/room.h>
+
 namespace core::dungeon::magical {
 
-class EnchantedLibrary {
+class EnchantedLibrary : public Room {
   public:
-    EnchantedLibrary();
+    EnchantedLibrary() = delete;
+    EnchantedLibrary(const EnchantedLibrary& other) = delete;
+    EnchantedLibrary(const int id);
+    virtual ~EnchantedLibrary();
+
+    virtual const std::string description() const override;
 };
 }
 

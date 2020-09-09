@@ -4,6 +4,7 @@
 #include <core/dungeon/magical/magicwall.h>
 #include <core/dungeon/common/opendoorway.h>
 #include <core/dungeon/common/onewaydoor.h>
+#include <core/dungeon/basic/rockchamber.h>
 
 using namespace std;
 using namespace core::dungeon;
@@ -11,14 +12,19 @@ using namespace core::dungeon::basic;
 using namespace core::dungeon::magical;
 using namespace core::dungeon::common;
 
-
 int main() {
 
     OpenDoorway* d1 = new OpenDoorway(Direction::North);
-    OpenDoorway* d2 = new OpenDoorway(Direction::South);
-    OneWayDoor* d3 = new OneWayDoor(Direction::North);
+    OneWayDoor* d2 = new OneWayDoor(Direction::South);
+    OneWayDoor* d3 = new OneWayDoor(Direction::East);
+    OneWayDoor* d4 = new OneWayDoor(Direction::West);
 
-    delete d3;
+    RockChamber r = RockChamber(1);
+    r.setNorth(d1);
+    r.setSouth(d2);
+    r.setEast(d3);
+    r.setWest(d4);
+
 
 //    cout << "d1: " << &d1 << endl;
 //    cout << "d2: " << &d2 << endl;

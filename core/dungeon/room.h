@@ -5,6 +5,7 @@
 #include "core/items/item.h"
 #include <string>
 #include <vector>
+#include <iostream> //DELETE THIS
 
 namespace core::dungeon {
 
@@ -14,12 +15,11 @@ class Room {
   public:
     Room() = delete;
     Room(const Room& other) = delete;
-    Room(const int id);
     virtual ~Room(); //Responsible for cleaning up roomEdge pointers.
 
     friend std::ostream& operator<<(std::ostream& out, const Room& room);  //operator overload (<<)
 
-    virtual std::string description() const = 0;
+    virtual const std::string description() const = 0;
     std::vector<std::string> display() const;
 
     //Getters
@@ -39,13 +39,14 @@ class Room {
     void setEast(const RoomEdge* eastEdge);
     void setWest(const RoomEdge* westEdge);
   protected:
+    Room(const int id);
     const int _id;
     core::items::Item _item;
     core::creatures::AbstractCreature _creature;
-    RoomEdge* _north;
-    RoomEdge* _south;
-    RoomEdge* _east;
-    RoomEdge* _west;
+    const RoomEdge* _north;
+    const RoomEdge* _south;
+    const RoomEdge* _east;
+    const RoomEdge* _west;
 };
 enum class Direction : unsigned {North, South, East, West};
 }
