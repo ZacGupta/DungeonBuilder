@@ -9,7 +9,7 @@ namespace core::dungeon {
 
 class RoomEdge {
   public:
-    RoomEdge();
+    RoomEdge() = delete;
     RoomEdge(const RoomEdge& other) = delete;
     virtual ~RoomEdge();
 

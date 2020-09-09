@@ -6,7 +6,7 @@ MagicWall::~MagicWall() {
     std::cout << "Destroyed MagicWall" << std::endl;
 }
 
-MagicWall::MagicWall(Direction direction) {
+MagicWall::MagicWall(Direction direction) : Wall{direction} {
     std::cout << "Created MagicalWall" << std::endl;
 
 }

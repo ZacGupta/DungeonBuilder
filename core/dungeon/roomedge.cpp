@@ -3,10 +3,6 @@
 
 namespace core::dungeon {
 
-RoomEdge::RoomEdge() {
-    std::cout << "Created RoomEdge" << std::endl;
-}
-
 RoomEdge::RoomEdge(Direction direction) : _direction{direction} {
     std::cout << "Created RoomEdge with Direction" << std::endl;
 }

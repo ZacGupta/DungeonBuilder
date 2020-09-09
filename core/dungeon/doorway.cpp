@@ -2,11 +2,9 @@
 
 namespace core::dungeon {
 
-Doorway::Doorway() {
-    std::cout << "Created Doorway" << std::endl;
+Doorway::Doorway(Direction direction) : RoomEdge{direction} {
+    std::cout << "Created Doorway with direction" << std::endl;
 }
-
-Doorway::Doorway(Direction direction) : RoomEdge{direction} {}
 
 Doorway::~Doorway() {
     std::cout << "Destroyed Doorway" << std::endl;

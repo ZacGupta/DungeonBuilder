@@ -7,7 +7,7 @@ namespace core::dungeon {
 
 class Wall : public RoomEdge  {
   public:
-    Wall();
+    Wall() = delete;
     Wall(const Wall& other) = delete;
     virtual ~Wall();
 

@@ -7,7 +7,7 @@ namespace core::dungeon {
 
 class Doorway : public RoomEdge {
   public:
-    Doorway();
+    Doorway() = delete;
     Doorway(const Doorway& other) = delete;
     virtual ~Doorway();
 
@@ -22,9 +22,10 @@ class Doorway : public RoomEdge {
     bool isEntrance() const;
     bool isExit() const;
 
+    const Doorway* _opposite;
 
   protected:
-    const Doorway* _opposite;
+
     bool _isEntrance;
     bool _isExit;
 
