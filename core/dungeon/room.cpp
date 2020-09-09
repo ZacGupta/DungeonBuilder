@@ -3,8 +3,5 @@
 namespace core {
 namespace dungeon {
 
-Room::Room() {
-
-}
 }
 }

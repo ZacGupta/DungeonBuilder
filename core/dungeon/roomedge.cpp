@@ -3,8 +3,8 @@
 namespace core {
 namespace dungeon {
 
-RoomEdge::RoomEdge() {
 
-}
+
+
 }
 }

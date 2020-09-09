@@ -1,7 +1,6 @@
 #ifndef MENUINTERFACE_H
 #define MENUINTERFACE_H
 
-#include <iostream>
 #include <unordered_set>
 
 namespace core {
@@ -11,7 +10,7 @@ class MenuInterface {
   public:
     //!< @brief This class cannot be instantiated without specifying references to an ostream and istream object.
     MenuInterface() = delete;
-    MenuInterface(const MenuInterface& other) = default;
+    MenuInterface(const MenuInterface& other) = delete;
     ~MenuInterface() = default;
 
     //!< @brief The constructor requires a reference to an ostream and istream object.

@@ -31,12 +31,13 @@ class Room {
     const core::creatures::AbstractCreature& creature() const;
     void setCreature(const core::creatures::AbstractCreature& newCreature);
 
+    //Getters
     const RoomEdge& getNorth() const;
     const RoomEdge& getSouth() const;
     const RoomEdge& getEast() const;
     const RoomEdge& getNWest() const;
 
-    //Does this require a pointer or reference?
+    //Setters - Do these require a pointer or reference?
     void setNorth(const RoomEdge* northEdge);
     void setSouth(const RoomEdge* southEdge);
     void setEast(const RoomEdge* eastEdge);

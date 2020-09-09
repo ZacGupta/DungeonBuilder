@@ -1,4 +1,5 @@
 #include "menuinterface.h"
+#include <iostream>
 #include <limits>
 
 namespace core {
