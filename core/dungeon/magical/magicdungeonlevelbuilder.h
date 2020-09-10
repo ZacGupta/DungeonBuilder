@@ -5,12 +5,11 @@
 
 namespace core::dungeon::magical {
 
-class MagicDungeonLevelBuilder : DungeonLevelBuilder {
+class MagicDungeonLevelBuilder : public DungeonLevelBuilder {
   public:
+    MagicDungeonLevelBuilder() = default;
     MagicDungeonLevelBuilder(const MagicDungeonLevelBuilder& other) = delete;
-
-    MagicDungeonLevelBuilder();
-    ~MagicDungeonLevelBuilder();
+    ~MagicDungeonLevelBuilder() = default;
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) const override;
     virtual Room* buildRoom(const int id) const override;

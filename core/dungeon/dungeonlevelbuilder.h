@@ -9,10 +9,9 @@ namespace core::dungeon {
 
 class DungeonLevelBuilder {
   public:
+    DungeonLevelBuilder() = default;
     DungeonLevelBuilder(const DungeonLevelBuilder& other) = delete;
-
-    DungeonLevelBuilder();
-    virtual ~DungeonLevelBuilder();
+    virtual ~DungeonLevelBuilder() = default;
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) const;
     virtual Room* buildRoom(const int id) const;
