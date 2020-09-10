@@ -8,7 +8,7 @@ namespace core::items {
 class Consumable : public Item {
   public:
     Consumable() = delete;
-    Consumable(const Consumable& other) = delete;
+    Consumable(const Consumable& other) = default;
 
     Consumable(std::string name);
     ~Consumable();

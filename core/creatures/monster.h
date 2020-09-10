@@ -8,10 +8,11 @@ namespace core::creatures {
 class Monster : public AbstractCreature {
   public:
     Monster() = delete;
-    Monster(const Monster& other) = delete;
+    Monster(const Monster& other) = default;
 
     Monster(std::string name);
     ~Monster();
+    void setName(std::string name);
 
     virtual std::unique_ptr<AbstractCreature> clone() override;
 };

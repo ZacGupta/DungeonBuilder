@@ -8,7 +8,7 @@ namespace core::items {
 class Weapon : public Item {
   public:
     Weapon() = delete;
-    Weapon(const Weapon& other) = delete;
+    Weapon(const Weapon& other) = default;
 
     Weapon(std::string name);
     ~Weapon();

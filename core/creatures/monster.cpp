@@ -10,7 +10,11 @@ Monster::~Monster() {
     std::cout << "Destroyed Monster: " << _name << std::endl;
 }
 
+void Monster::setName(std::string name) {
+    _name = name;
+}
+
 std::unique_ptr<AbstractCreature> Monster::clone() {
-    return std::make_unique<AbstractCreature>(*this);
+    return std::make_unique<Monster>(*this);
 }
 }

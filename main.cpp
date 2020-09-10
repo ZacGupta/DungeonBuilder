@@ -5,12 +5,16 @@
 #include <core/dungeon/common/opendoorway.h>
 #include <core/dungeon/common/onewaydoor.h>
 #include <core/dungeon/basic/rockchamber.h>
+#include <core/creatures/monster.h>
+#include <core/items/weapon.h>
 
 using namespace std;
 using namespace core::dungeon;
 using namespace core::dungeon::basic;
 using namespace core::dungeon::magical;
 using namespace core::dungeon::common;
+using namespace core::items;
+using namespace core::creatures;
 
 int main() {
 
@@ -26,13 +30,13 @@ int main() {
     r.setEast(d3);
     r.setWest(d4);
 
-    d1->connect(d2);
-    d2->connect(d1);
+//    d1->connect(d2);
+//    d2->connect(d1);
 
-    cout << r.north().isPassage() << endl;
-    cout << r.south().isPassage() << endl;
-    cout << r.east().isPassage() << endl;
-    cout << r.west().isPassage() << endl;
+//    cout << r.north().isPassage() << endl;
+//    cout << r.south().isPassage() << endl;
+//    cout << r.east().isPassage() << endl;
+//    cout << r.west().isPassage() << endl;
 
 //    cout << "d1: " << &d1 << endl;
 //    cout << "d2: " << &d2 << endl;

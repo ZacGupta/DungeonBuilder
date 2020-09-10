@@ -10,7 +10,7 @@ namespace core::items {
 class Item {
   public:
     Item() = delete;
-    Item(const Item& other) = delete;
+    Item(const Item& other) = default;
 
     Item(std::string name);
     virtual ~Item();

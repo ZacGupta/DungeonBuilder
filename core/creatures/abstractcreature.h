@@ -10,7 +10,7 @@ namespace core::creatures {
 class AbstractCreature {
   public:
     AbstractCreature() = delete;
-    AbstractCreature(const AbstractCreature& other) = delete;
+    AbstractCreature(const AbstractCreature& other) = default;
 
     AbstractCreature(std::string name);
     virtual ~AbstractCreature();
@@ -20,8 +20,9 @@ class AbstractCreature {
     void markAsBoss();
     bool isBoss();
     virtual std::unique_ptr<AbstractCreature> clone() = 0;
+        std::string _name;
   protected:
-    std::string _name;
+
     bool _isBoss;
 };
 }
