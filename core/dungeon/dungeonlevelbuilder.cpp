@@ -16,5 +16,5 @@ void DungeonLevelBuilder::buildItem(const Room& room) const {}
 
 void DungeonLevelBuilder::buildCreature(const Room& room) const {}
 
-const DungeonLevel DungeonLevelBuilder::getDungeonLevel() const {}
+const DungeonLevel* DungeonLevelBuilder::getDungeonLevel() const {}
 }

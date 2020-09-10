@@ -4,12 +4,12 @@
 #include "core/dungeon/dungeonlevel.h"
 #include "core/dungeon/room.h"
 #include <string>
+#include <iostream> //DELETE THIS
 
 namespace core::dungeon {
 
 class DungeonLevelBuilder {
   public:
-    DungeonLevelBuilder() = default;
     DungeonLevelBuilder(const DungeonLevelBuilder& other) = delete;
     virtual ~DungeonLevelBuilder() = default;
 
@@ -20,7 +20,9 @@ class DungeonLevelBuilder {
     virtual void buildExit(const Room& room, const Direction direction) const;
     virtual void buildItem(const Room& room) const;
     virtual void buildCreature(const Room& room) const;
-    virtual const DungeonLevel getDungeonLevel() const;
+    virtual const DungeonLevel* getDungeonLevel() const;
+  protected:
+    DungeonLevelBuilder() = default;
 };
 }
 

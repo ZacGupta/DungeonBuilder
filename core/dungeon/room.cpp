@@ -20,7 +20,7 @@ std::ostream& operator<<(std::ostream& out, const Room& room) {
 }
 
 std::vector<std::string> Room::display() const {
-    return std::vector<std::string>();
+    return _display;
 }
 
 int Room::id() const {

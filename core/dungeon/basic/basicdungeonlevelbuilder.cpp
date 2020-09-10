@@ -4,13 +4,19 @@
 #include "core/items/weapon.h"
 #include "core/items/consumable.h"
 #include "core/creatures/monster.h"
+#include "core/dungeon/basic/basicdungeonlevel.h"
 #include <utility>
 
 namespace core::dungeon::basic {
 
 BasicDungeonLevelBuilder::BasicDungeonLevelBuilder() {
+    std::cout << "Created BasicDungeonLevelBuilder" << std::endl;
     prototypeItems();
     prototypeCreatures();
+}
+
+BasicDungeonLevelBuilder::~BasicDungeonLevelBuilder() {
+    std::cout << "Destroyed BasicDungeonLevelBuilder" << std::endl;
 }
 
 void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) const {
@@ -39,8 +45,8 @@ void BasicDungeonLevelBuilder::buildCreature(const Room& room) const {
 
 }
 
-const DungeonLevel BasicDungeonLevelBuilder::getDungeonLevel() const {
-
+const DungeonLevel* BasicDungeonLevelBuilder::getDungeonLevel() const {
+    return new BasicDungeonLevel{"name", 1,1};
 }
 
 void BasicDungeonLevelBuilder::prototypeItems() {
