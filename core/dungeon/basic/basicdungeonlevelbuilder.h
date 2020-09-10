@@ -1,13 +1,16 @@
 #ifndef BASICDUNGEONLEVELBUILDER_H
 #define BASICDUNGEONLEVELBUILDER_H
 
-#include <core/dungeon/dungeonlevelbuilder.h>
+#include "core/dungeon/dungeonlevelbuilder.h"
+#include "core/items/item.h"
+#include "core/creatures/abstractcreature.h"
+#include <map>
 
 namespace core::dungeon::basic {
 
 class BasicDungeonLevelBuilder : public DungeonLevelBuilder {
   public:
-    BasicDungeonLevelBuilder() = default;
+    BasicDungeonLevelBuilder();
     BasicDungeonLevelBuilder(const DungeonLevelBuilder& other) = delete;
     ~BasicDungeonLevelBuilder() = default;
 
@@ -19,6 +22,11 @@ class BasicDungeonLevelBuilder : public DungeonLevelBuilder {
     virtual void buildItem(const Room& room) const override;
     virtual void buildCreature(const Room& room) const override;
     virtual const DungeonLevel getDungeonLevel() const override;
+  private:
+    std::map <int, std::unique_ptr<core::items::Item>> _items;
+    std::map <int, std::unique_ptr<core::creatures::AbstractCreature>> _creatures;
+    void prototypeItems();
+    void prototypeCreatures();
 };
 }
 

@@ -1,7 +1,7 @@
 #ifndef ALCHEMISTSLABORATORY_H
 #define ALCHEMISTSLABORATORY_H
 
-#include <core/dungeon/room.h>
+#include "core/dungeon/room.h"
 
 namespace core::dungeon::magical {
 

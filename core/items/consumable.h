@@ -1,7 +1,7 @@
 #ifndef CONSUMABLE_H
 #define CONSUMABLE_H
 
-#include <core/items/item.h>
+#include "core/items/item.h"
 
 namespace core::items {
 

@@ -1,7 +1,7 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include <core/items/item.h>
+#include "core/items/item.h"
 
 namespace core::items {
 

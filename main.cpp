@@ -7,6 +7,9 @@
 #include <core/dungeon/basic/rockchamber.h>
 #include <core/creatures/monster.h>
 #include <core/items/weapon.h>
+#include <set>
+#include <memory>
+#include <map>
 
 using namespace std;
 using namespace core::dungeon;
@@ -29,6 +32,10 @@ int main() {
     r.setSouth(d2);
     r.setEast(d3);
     r.setWest(d4);
+
+    map <int, unique_ptr<Item>> items;
+
+    items.insert(std::pair<int,unique_ptr<Weapon>>(1, make_unique<Weapon>(Weapon("sword"))));
 
 //    d1->connect(d2);
 //    d2->connect(d1);

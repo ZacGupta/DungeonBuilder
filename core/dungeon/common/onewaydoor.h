@@ -1,7 +1,7 @@
 #ifndef ONEWAYDOOR_H
 #define ONEWAYDOOR_H
 
-#include <core/dungeon/doorway.h>
+#include "core/dungeon/doorway.h"
 
 namespace core::dungeon::common {
 

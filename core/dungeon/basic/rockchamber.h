@@ -1,7 +1,7 @@
 #ifndef ROCKCHAMBER_H
 #define ROCKCHAMBER_H
 
-#include <core/dungeon/room.h>
+#include "core/dungeon/room.h"
 
 namespace core::dungeon::basic {
 
