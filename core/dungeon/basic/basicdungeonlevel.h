@@ -6,6 +6,7 @@ namespace core::dungeon::basic {
 class BasicDungeonLevel {
   public:
     BasicDungeonLevel();
+
 };
 
 }
