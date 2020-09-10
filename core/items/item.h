@@ -1,11 +1,24 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <string>
+#include <memory>
+
 namespace core::items {
 
 class Item {
   public:
-    Item();
+    Item() = delete;
+    Item(const Item& other) = delete;
+
+    Item(std::string name);
+    virtual ~Item();
+
+    std::string name();
+    char displayCharacter();
+    virtual std::unique_ptr<Item> clone() = 0;
+  protected:
+    std::string _name;
 };
 }
 

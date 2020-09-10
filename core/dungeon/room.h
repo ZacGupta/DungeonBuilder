@@ -5,6 +5,7 @@
 #include "core/items/item.h"
 #include <string>
 #include <vector>
+#include <memory>
 #include <iostream> //DELETE THIS
 
 namespace core::dungeon {
@@ -32,8 +33,8 @@ class Room {
     const RoomEdge& west() const;
 
     //Setters
-    void setItem(const core::items::Item& newItem);
-    void setCreature(const core::creatures::AbstractCreature& newCreature);
+    void setItem(std::unique_ptr<core::items::Item> newItem);
+    void setCreature(std::unique_ptr<core::creatures::AbstractCreature> newCreature);
     void setNorth(const RoomEdge* northEdge);
     void setSouth(const RoomEdge* southEdge);
     void setEast(const RoomEdge* eastEdge);
@@ -41,8 +42,8 @@ class Room {
   protected:
     Room(const int id);
     const int _id;
-    core::items::Item _item;
-    core::creatures::AbstractCreature _creature;
+    std::unique_ptr<core::items::Item> _item;
+    std::unique_ptr<core::creatures::AbstractCreature> _creature;
     const RoomEdge* _north;
     const RoomEdge* _south;
     const RoomEdge* _east;

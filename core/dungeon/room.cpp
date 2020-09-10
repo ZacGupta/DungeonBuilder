@@ -28,11 +28,11 @@ int Room::id() const {
 }
 
 const items::Item& Room::item() const {
-    return _item;
+    return *_item;
 }
 
 const creatures::AbstractCreature& Room::creature() const {
-    return _creature;
+    return *_creature;
 }
 
 const RoomEdge& Room::north() const {
@@ -51,12 +51,12 @@ const RoomEdge& Room::west() const {
     return *_west;
 }
 
-void Room::setItem(const items::Item& newItem) {
-    _item = newItem;
+void Room::setItem(std::unique_ptr<core::items::Item> newItem) {
+    _item = std::move(newItem);
 }
 
-void Room::setCreature(const creatures::AbstractCreature& newCreature) {
-    _creature = newCreature;
+void Room::setCreature(std::unique_ptr<core::creatures::AbstractCreature> newCreature) {
+    _creature = std::move(newCreature);
 }
 
 void Room::setNorth(const RoomEdge* northEdge) {
