@@ -1,11 +1,18 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#include <core/items/item.h>
+
 namespace core::items {
 
-class Weapon {
+class Weapon : public Item {
   public:
-    Weapon();
+    Weapon() = delete;
+    Weapon(const Weapon& other) = delete;
+
+    Weapon(std::string name);
+    ~Weapon();
+    virtual std::unique_ptr<Item> clone() override;
 };
 }
 
