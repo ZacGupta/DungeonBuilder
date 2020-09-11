@@ -9,6 +9,7 @@
 #include <core/items/weapon.h>
 #include <core/dungeon/basic/basicdungeonlevelbuilder.h>
 #include <core/dungeon/magical/magicdungeonlevelbuilder.h>
+#include <core/dungeon/basic/basicdungeonlevel.h>
 #include <core/game.h>
 #include <set>
 #include <memory>
@@ -30,17 +31,45 @@ int main() {
     //UNIQUE POINTER TESTING
     //Initialise Game
     Game* game = game->instance();
-    //Dungeons
-    unique_ptr<DungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
-    unique_ptr<MagicDungeonLevelBuilder> dlb2{new MagicDungeonLevelBuilder()};
-    unique_ptr<DungeonLevelBuilder> dlb3{new BasicDungeonLevelBuilder()};
 
-    //Main will send a unique pointer to Game, which Game will take ownership of via std::move(), which also deletes the previous builder.
-    //The final Builder will only be deleted AFTER main ends because Game is static, and Game itself won't be deleted until Main ends.
-    game->setDungeonType(std::move(dlb));
-    game->setDungeonType(std::move(dlb2));
-    game->setDungeonType(std::move(dlb3));
-    //END UNIQUE POINTER TESTING
+    Room* room1 = new RockChamber(1);
+    Room* room2 = new RockChamber(2);
+    Room* room3 = new RockChamber(3);
+    Room* room4 = new RockChamber(4);
+    Room* room5 = new RockChamber(5);
+    Room* room6 = new RockChamber(6);
+
+    BasicDungeonLevel bdl = BasicDungeonLevel("Test Dungeon", 3, 2);
+    bdl.addRoom(room1);
+    bdl.addRoom(room2);
+    bdl.addRoom(room3);
+    bdl.addRoom(room4);
+    bdl.addRoom(room5);
+    bdl.addRoom(room6);
+
+    Room* rr = bdl.retrieveRoom(1);
+
+
+
+    if (rr) {
+        cout << rr->id() << endl;
+        cout << rr->description() << endl;
+    }
+
+
+
+
+//    //Dungeons
+//    unique_ptr<DungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
+//    unique_ptr<MagicDungeonLevelBuilder> dlb2{new MagicDungeonLevelBuilder()};
+//    unique_ptr<DungeonLevelBuilder> dlb3{new BasicDungeonLevelBuilder()};
+
+//    //Main will send a unique pointer to Game, which Game will take ownership of via std::move(), which also deletes the previous builder.
+//    //The final Builder will only be deleted AFTER main ends because Game is static, and Game itself won't be deleted until Main ends.
+//    game->setDungeonType(std::move(dlb));
+//    game->setDungeonType(std::move(dlb2));
+//    game->setDungeonType(std::move(dlb3));
+//    //END UNIQUE POINTER TESTING
 
 //    //SHARED POINTER TESTING
 //    //A new dungeon
