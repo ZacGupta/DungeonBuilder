@@ -8,6 +8,7 @@
 #include <core/creatures/monster.h>
 #include <core/items/weapon.h>
 #include <core/dungeon/basic/basicdungeonlevelbuilder.h>
+#include <core/dungeon/magical/magicdungeonlevelbuilder.h>
 #include <core/game.h>
 #include <set>
 #include <memory>
@@ -24,20 +25,47 @@ using namespace core::creatures;
 
 int main() {
 
-    BasicDungeonLevelBuilder* dlb = new BasicDungeonLevelBuilder;
+    //delete dlb;
 
-    BasicDungeonLevelBuilder* dlb2 = new BasicDungeonLevelBuilder;
-
-
-    //shared_ptr<BasicDungeonLevelBuilder> dlb = make_shared<BasicDungeonLevelBuilder>(new BasicDungeonLevelBuilder);
+    //UNIQUE POINTER TESTING
+    //Initialise Game
     Game* game = game->instance();
-    game->setDungeonType(dlb);
+    //Dungeons
+    unique_ptr<DungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
+    unique_ptr<MagicDungeonLevelBuilder> dlb2{new MagicDungeonLevelBuilder()};
+    unique_ptr<DungeonLevelBuilder> dlb3{new BasicDungeonLevelBuilder()};
 
-    cout << "Reset Dungeon";
+    //Main will send a unique pointer to Game, which Game will take ownership of via std::move(), which also deletes the previous builder.
+    //The final Builder will only be deleted AFTER main ends because Game is static, and Game itself won't be deleted until Main ends.
+    game->setDungeonType(std::move(dlb));
+    game->setDungeonType(std::move(dlb2));
+    game->setDungeonType(std::move(dlb3));
+    //END UNIQUE POINTER TESTING
 
-    game->setDungeonType(dlb);
+//    //SHARED POINTER TESTING
+//    //A new dungeon
+//    shared_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder};
+//    //Initialise Game
+//    Game* game = game->instance();
+//    //Set Dungeonm
+//    game->setDungeonType(dlb);
 
+//    //There a pointer to the dungeon in main AND game now.
+//    cout << "Dungeon Pointer count: " << dlb.use_count() << endl;
 
+//    //A new dungeon needs to be built
+//    shared_ptr<BasicDungeonLevelBuilder> dlb2{new BasicDungeonLevelBuilder};
+
+//    //Game will delete it's copy of the previous shared pointer when setDungeonType() is called, THEN create a copy of the new dungeon.
+//    game->setDungeonType(dlb2);
+
+//    //When setting a new dungeon, main must delete it's old copy too.
+//    cout << "Reset Dungeon" << endl;
+//    dlb.reset();
+//    cout << "Now there's a new dungeon" << endl;
+//    cout << "Old dungeon Pointer count: " << dlb.use_count() << endl;
+//    cout << "New dungeon Pointer count: " << dlb2.use_count() << endl;
+//    //END SHARED POINTER TESTING
 
 
 //    BasicDungeonLevelBuilder dlv{BasicDungeonLevelBuilder()};

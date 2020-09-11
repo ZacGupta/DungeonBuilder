@@ -10,8 +10,8 @@ namespace core::dungeon {
 
 class DungeonLevelBuilder {
   public:
-    DungeonLevelBuilder(const DungeonLevelBuilder& other) = delete;
-    virtual ~DungeonLevelBuilder() = default;
+    DungeonLevelBuilder(const DungeonLevelBuilder& other) = default;
+    virtual ~DungeonLevelBuilder();
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) const;
     virtual Room* buildRoom(const int id) const;
@@ -22,7 +22,7 @@ class DungeonLevelBuilder {
     virtual void buildCreature(const Room& room) const;
     virtual const DungeonLevel* getDungeonLevel() const;
   protected:
-    DungeonLevelBuilder() = default;
+    DungeonLevelBuilder();
 };
 enum class MoveConstraints : unsigned {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 82};
 }

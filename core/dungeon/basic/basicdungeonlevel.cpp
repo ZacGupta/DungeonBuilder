@@ -7,7 +7,7 @@ BasicDungeonLevel::BasicDungeonLevel(const std::string& name, int width, int hei
 }
 
 BasicDungeonLevel::~BasicDungeonLevel() {
-    std::cout << "Created BasicDungeonLevel" << std::endl;
+    std::cout << "Destroyed BasicDungeonLevel" << std::endl;
 }
 
 const std::string BasicDungeonLevel::description() const {

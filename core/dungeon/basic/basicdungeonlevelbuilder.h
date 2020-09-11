@@ -12,7 +12,7 @@ class BasicDungeonLevelBuilder : public DungeonLevelBuilder {
   public:
     BasicDungeonLevelBuilder();
     ~BasicDungeonLevelBuilder();
-    BasicDungeonLevelBuilder(const DungeonLevelBuilder& other) = delete;
+    BasicDungeonLevelBuilder(const BasicDungeonLevelBuilder& other) = delete;
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) const override;
     virtual Room* buildRoom(const int id) const override;

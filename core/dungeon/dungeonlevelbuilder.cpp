@@ -2,6 +2,14 @@
 
 namespace core::dungeon {
 
+DungeonLevelBuilder::DungeonLevelBuilder() {
+    std::cout << "Created DungeonLevelbuilder" << std::endl;
+}
+
+DungeonLevelBuilder::~DungeonLevelBuilder() {
+    std::cout << "Destroyed DungeonLevelbuilder" << std::endl;
+}
+
 void DungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) const {}
 
 Room* DungeonLevelBuilder::buildRoom(const int id) const {}
@@ -17,4 +25,6 @@ void DungeonLevelBuilder::buildItem(const Room& room) const {}
 void DungeonLevelBuilder::buildCreature(const Room& room) const {}
 
 const DungeonLevel* DungeonLevelBuilder::getDungeonLevel() const {}
+
+
 }
