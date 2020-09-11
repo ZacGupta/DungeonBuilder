@@ -20,14 +20,6 @@ std::ostream& operator<<(std::ostream& out, const Room& room) {
 }
 
 std::vector<std::string> Room::display() const {
-
-    std::string row1;
-    std::string row2;
-    std::string row3;
-    std::string row4;
-    std::string row5;
-
-
     //Base template
     std::string top = "+---- ----+";
     const std::string offCentreTop = "|         |";
@@ -36,24 +28,22 @@ std::vector<std::string> Room::display() const {
     std::string bottom = "+---- ----+";
 
 
-    //Fill in the relevant doorway characters
+    //Fill in the relevant RoomEdge characters
     top[5] = _north->displayCharacter();
     bottom[5] = _south->displayCharacter();
     centre[10] = _east->displayCharacter();
     centre[0] = _west->displayCharacter();
 
-//    //Fill Centre of the room (Creature/Loot Item)
-//    if (_creature) {
-//        centre[4] = _creature->displayCharacter();
-
-//    }
-//    if (_item) {
-//        centre[6] = _item->displayCharacter();
-//    }
-//    if (_creature->isBoss()) {
-//        centre[5] = '*';
-//    }
-
+    //Fill centre of the room (Creature/Loot Item)
+    if (_creature) {
+        centre[4] = _creature->displayCharacter();
+        if (_creature->isBoss()) {
+            centre[5] = '*';
+        }
+    }
+    if (_item) {
+        centre[6] = _item->displayCharacter();
+    }
     return std::vector<std::string> {top, offCentreTop, centre, offCentreBottom, bottom};
 }
 

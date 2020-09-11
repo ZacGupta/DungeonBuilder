@@ -4,6 +4,8 @@
 #include <core/dungeon/magical/magicwall.h>
 #include <core/dungeon/common/opendoorway.h>
 #include <core/dungeon/common/onewaydoor.h>
+#include <core/dungeon/common/lockeddoor.h>
+#include <core/dungeon/common/blockeddoorway.h>
 #include <core/dungeon/basic/rockchamber.h>
 #include <core/creatures/monster.h>
 #include <core/items/weapon.h>
@@ -28,10 +30,17 @@ int main() {
 
         RockChamber r = RockChamber(1);
 
-        OneWayDoor* d1 = new OneWayDoor(Direction::North);
-        OneWayDoor* d2 = new OneWayDoor(Direction::South);
-        OneWayDoor* d3 = new OneWayDoor(Direction::East);
-        OneWayDoor* d4 = new OneWayDoor(Direction::West);
+        RoomEdge* d1 = new OneWayDoor(Direction::North);
+        RoomEdge* d2 = new BlockedDoorway(Direction::South);
+        RoomEdge* d3 = new LockedDoor(Direction::East);
+        RoomEdge* d4 = new OpenDoorway(Direction::West);
+        unique_ptr<AbstractCreature> m {new Monster("Monster")};
+        unique_ptr<Item> w {new Weapon("Weapon")};
+
+
+        m->markAsBoss();
+        r.setCreature(move(m));
+        r.setItem(move(w));
 
         r.setNorth(d1);
         r.setSouth(d2);
@@ -43,7 +52,6 @@ int main() {
         cout << r.display().at(2) << endl;
         cout << r.display().at(3) << endl;
         cout << r.display().at(4) << endl;
-
 
 //    //Initialise Game
 //    Game* game = game->instance();
