@@ -7,11 +7,14 @@
 #include <core/dungeon/basic/rockchamber.h>
 #include <core/creatures/monster.h>
 #include <core/items/weapon.h>
+#include <core/dungeon/basic/basicdungeonlevelbuilder.h>
+#include <core/game.h>
 #include <set>
 #include <memory>
 #include <map>
 
 using namespace std;
+using namespace core;
 using namespace core::dungeon;
 using namespace core::dungeon::basic;
 using namespace core::dungeon::magical;
@@ -21,21 +24,44 @@ using namespace core::creatures;
 
 int main() {
 
-    RockChamber r = RockChamber(1);
+    BasicDungeonLevelBuilder* dlb = new BasicDungeonLevelBuilder;
 
-    OneWayDoor* d1 = new OneWayDoor(Direction::North);
-    OneWayDoor* d2 = new OneWayDoor(Direction::South);
-    OneWayDoor* d3 = new OneWayDoor(Direction::East);
-    OneWayDoor* d4 = new OneWayDoor(Direction::West);
+    BasicDungeonLevelBuilder* dlb2 = new BasicDungeonLevelBuilder;
 
-    r.setNorth(d1);
-    r.setSouth(d2);
-    r.setEast(d3);
-    r.setWest(d4);
 
-    map <int, unique_ptr<Item>> items;
+    //shared_ptr<BasicDungeonLevelBuilder> dlb = make_shared<BasicDungeonLevelBuilder>(new BasicDungeonLevelBuilder);
+    Game* game = game->instance();
+    game->setDungeonType(dlb);
 
-    items.insert(std::pair<int,unique_ptr<Weapon>>(1, make_unique<Weapon>(Weapon("sword"))));
+    cout << "Reset Dungeon";
+
+    game->setDungeonType(dlb);
+
+
+
+
+//    BasicDungeonLevelBuilder dlv{BasicDungeonLevelBuilder()};
+
+//    cout << dlv._items.at(1)->name() << endl;
+
+
+
+
+//    RockChamber r = RockChamber(1);
+
+//    OneWayDoor* d1 = new OneWayDoor(Direction::North);
+//    OneWayDoor* d2 = new OneWayDoor(Direction::South);
+//    OneWayDoor* d3 = new OneWayDoor(Direction::East);
+//    OneWayDoor* d4 = new OneWayDoor(Direction::West);
+
+//    r.setNorth(d1);
+//    r.setSouth(d2);
+//    r.setEast(d3);
+//    r.setWest(d4);
+
+//    map <int, unique_ptr<Item>> items;
+
+//   items.insert(std::pair<int,unique_ptr<Weapon>>(1, make_unique<Weapon>(Weapon("sword"))));
 
 //    d1->connect(d2);
 //    d2->connect(d1);

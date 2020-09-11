@@ -28,6 +28,7 @@ class DungeonLevel {
     const int _width;
     const int _height;
     const int _numberOfRooms;
+    std::vector<std::string> _rooms;
     const std::vector<std::string> _display;
 };
 }

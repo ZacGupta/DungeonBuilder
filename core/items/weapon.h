@@ -11,7 +11,8 @@ class Weapon : public Item {
     Weapon(const Weapon& other) = default;
 
     Weapon(std::string name);
-    ~Weapon();
+    ~Weapon() = default;
+
     virtual std::unique_ptr<Item> clone() override;
 };
 }

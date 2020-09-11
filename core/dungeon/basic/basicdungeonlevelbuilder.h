@@ -23,10 +23,10 @@ class BasicDungeonLevelBuilder : public DungeonLevelBuilder {
     virtual void buildCreature(const Room& room) const override;
     virtual const DungeonLevel* getDungeonLevel() const override;
   private:
-    std::map <int, std::unique_ptr<core::items::Item>> _items;
-    std::map <int, std::unique_ptr<core::creatures::AbstractCreature>> _creatures;
     void prototypeItems();
     void prototypeCreatures();
+    std::map <int, std::unique_ptr<core::items::Item>> _items;
+    std::map <int, std::unique_ptr<core::creatures::AbstractCreature>> _creatures;
 };
 }
 

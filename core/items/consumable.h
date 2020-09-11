@@ -11,7 +11,8 @@ class Consumable : public Item {
     Consumable(const Consumable& other) = default;
 
     Consumable(std::string name);
-    ~Consumable();
+    ~Consumable() = default;
+
     virtual std::unique_ptr<Item> clone() override;
 };
 }

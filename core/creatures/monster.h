@@ -11,8 +11,7 @@ class Monster : public AbstractCreature {
     Monster(const Monster& other) = default;
 
     Monster(std::string name);
-    ~Monster();
-    void setName(std::string name);
+    ~Monster() = default;
 
     virtual std::unique_ptr<AbstractCreature> clone() override;
 };

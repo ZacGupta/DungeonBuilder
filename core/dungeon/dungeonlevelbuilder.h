@@ -24,6 +24,7 @@ class DungeonLevelBuilder {
   protected:
     DungeonLevelBuilder() = default;
 };
+enum class MoveConstraints : unsigned {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 82};
 }
 
 #endif // DUNGEONLEVELBUILDER_H

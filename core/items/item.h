@@ -3,7 +3,6 @@
 
 #include <string>
 #include <memory>
-#include <iostream> //DELETE THIS
 
 namespace core::items {
 
@@ -13,7 +12,7 @@ class Item {
     Item(const Item& other) = default;
 
     Item(std::string name);
-    virtual ~Item();
+    virtual ~Item() = default;
 
     std::string name();
     char displayCharacter();

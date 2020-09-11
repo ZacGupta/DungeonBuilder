@@ -2,13 +2,7 @@
 
 namespace core::creatures {
 
-AbstractCreature::AbstractCreature(std::string name) : _name{name}, _isBoss{false} {
-    std::cout << "Created AbstractCreature: " << _name << std::endl;
-}
-
-AbstractCreature::~AbstractCreature() {
-    std::cout << "Destroyed AbstractCreature: " << _name << std::endl;
-}
+AbstractCreature::AbstractCreature(std::string name) : _name{name}, _isBoss{false} {}
 
 std::string AbstractCreature::name() {
     return _name;

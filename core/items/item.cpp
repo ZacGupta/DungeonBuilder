@@ -2,13 +2,7 @@
 
 namespace core::items {
 
-Item::Item(std::string name) : _name{name} {
-    std::cout << "Created Item: " << _name << std::endl;
-}
-
-Item::~Item() {
-    std::cout << "Created Item: " << _name << std::endl;
-}
+Item::Item(std::string name) : _name{name} {}
 
 std::string Item::name() {
     return _name;
