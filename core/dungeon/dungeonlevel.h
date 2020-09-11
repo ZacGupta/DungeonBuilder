@@ -14,8 +14,8 @@ class DungeonLevel {
 
     friend std::ostream& operator<<(std::ostream& out, const DungeonLevel& dungeonLevel);  //operator overload (<<)
 
-    virtual bool addRoom(const Room* room);
-    virtual Room* retrieveRoom(int) const;
+    virtual bool addRoom(Room* room);
+    virtual Room* retrieveRoom(int id) const;
     virtual int width() const;
     virtual int height() const;
     virtual int numberOfRooms() const;
@@ -28,7 +28,7 @@ class DungeonLevel {
     const int _width;
     const int _height;
     const int _numberOfRooms;
-    std::vector<std::string> _rooms;
+    std::vector<Room*> _rooms;
     const std::vector<std::string> _display;
 };
 }

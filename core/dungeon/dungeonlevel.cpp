@@ -4,6 +4,7 @@
 namespace core::dungeon {
 
 DungeonLevel::DungeonLevel(const std::string& name, int width, int height) : _name{name}, _width{width}, _height{height}, _numberOfRooms{height * width} {
+    _rooms.reserve(_numberOfRooms);
     std::cout << "Created DungeonLevel" << std::endl;
 }
 
@@ -15,13 +16,18 @@ std::ostream& operator<<(std::ostream& out, const DungeonLevel& dungeonLevel) {
     return out << dungeonLevel.description();
 }
 
-bool DungeonLevel::addRoom(const Room* room) {
-    room = new core::dungeon::basic::RockChamber{1};
+bool DungeonLevel::addRoom(Room* room) {
+    if (room and _rooms.size() < static_cast<unsigned>(_numberOfRooms)) {
+        _rooms.push_back(room);
+        return true;
+    }
     return false;
 }
 
-Room* DungeonLevel::retrieveRoom(int) const {
-    return new core::dungeon::basic::RockChamber{1};
+Room* DungeonLevel::retrieveRoom(int id) const {
+    if (id >= 0 and id <= numberOfRooms()) {
+        return _rooms.at(id + 1);
+    }
 }
 
 int DungeonLevel::width() const {
