@@ -9,7 +9,6 @@ Game::Game() : _builder{nullptr} {
 }
 
 Game::~Game() {
-    _builder.reset();
     theInstance = nullptr;
     std::cout << "Destroyed Game" << std::endl;
 }

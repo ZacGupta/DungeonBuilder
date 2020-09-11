@@ -3,7 +3,7 @@
 
 namespace core::dungeon {
 
-Room::Room(const int id) : _id{id}, _item{}, _creature{}, _north{nullptr}, _south{nullptr}, _east{nullptr}, _west{nullptr} {
+Room::Room(const int id) : _id{id}, _item{nullptr}, _creature{nullptr}, _north{nullptr}, _south{nullptr}, _east{nullptr}, _west{nullptr} {
     std::cout << "Created Room" << std::endl;
 }
 
@@ -20,7 +20,41 @@ std::ostream& operator<<(std::ostream& out, const Room& room) {
 }
 
 std::vector<std::string> Room::display() const {
-    return _display;
+
+    std::string row1;
+    std::string row2;
+    std::string row3;
+    std::string row4;
+    std::string row5;
+
+
+    //Base template
+    std::string top = "+---- ----+";
+    const std::string offCentreTop = "|         |";
+    std::string centre = "           ";
+    const std::string offCentreBottom = "|         |";
+    std::string bottom = "+---- ----+";
+
+
+    //Fill in the relevant doorway characters
+    top[5] = _north->displayCharacter();
+    bottom[5] = _south->displayCharacter();
+    centre[10] = _east->displayCharacter();
+    centre[0] = _west->displayCharacter();
+
+//    //Fill Centre of the room (Creature/Loot Item)
+//    if (_creature) {
+//        centre[4] = _creature->displayCharacter();
+
+//    }
+//    if (_item) {
+//        centre[6] = _item->displayCharacter();
+//    }
+//    if (_creature->isBoss()) {
+//        centre[5] = '*';
+//    }
+
+    return std::vector<std::string> {top, offCentreTop, centre, offCentreBottom, bottom};
 }
 
 int Room::id() const {

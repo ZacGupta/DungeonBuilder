@@ -48,7 +48,6 @@ class Room {
     const RoomEdge* _south;
     const RoomEdge* _east;
     const RoomEdge* _west;
-    const std::vector<std::string> _display;
 };
 enum class Direction : unsigned {North, South, East, West};
 }

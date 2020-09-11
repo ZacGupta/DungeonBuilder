@@ -32,7 +32,7 @@ char OneWayDoor::displayCharacter() const {
         } else if (_direction == Direction::South) {
             return '^';
         } else if (_direction == Direction::East) {
-            return '>';
+            return '<';
         } else {
             return '>';
         }

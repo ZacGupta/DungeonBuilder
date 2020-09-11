@@ -26,40 +26,55 @@ using namespace core::creatures;
 
 int main() {
 
-    //delete dlb;
+        RockChamber r = RockChamber(1);
 
-    //UNIQUE POINTER TESTING
-    //Initialise Game
-    Game* game = game->instance();
+        OneWayDoor* d1 = new OneWayDoor(Direction::North);
+        OneWayDoor* d2 = new OneWayDoor(Direction::South);
+        OneWayDoor* d3 = new OneWayDoor(Direction::East);
+        OneWayDoor* d4 = new OneWayDoor(Direction::West);
 
-    Room* room1 = new RockChamber(1);
-    Room* room2 = new RockChamber(2);
-    Room* room3 = new RockChamber(3);
-    Room* room4 = new RockChamber(4);
-    Room* room5 = new RockChamber(5);
-    Room* room6 = new RockChamber(6);
+        r.setNorth(d1);
+        r.setSouth(d2);
+        r.setEast(d3);
+        r.setWest(d4);
 
-    BasicDungeonLevel bdl = BasicDungeonLevel("Test Dungeon", 3, 2);
-    bdl.addRoom(room1);
-    bdl.addRoom(room2);
-    bdl.addRoom(room3);
-    bdl.addRoom(room4);
-    bdl.addRoom(room5);
-    bdl.addRoom(room6);
-
-    Room* rr = bdl.retrieveRoom(1);
+        cout << r.display().at(0) << endl;
+        cout << r.display().at(1) << endl;
+        cout << r.display().at(2) << endl;
+        cout << r.display().at(3) << endl;
+        cout << r.display().at(4) << endl;
 
 
+//    //Initialise Game
+//    Game* game = game->instance();
 
-    if (rr) {
-        cout << rr->id() << endl;
-        cout << rr->description() << endl;
-    }
+//    Room* room1 = new RockChamber(1);
+//    Room* room2 = new RockChamber(2);
+//    Room* room3 = new RockChamber(3);
+//    Room* room4 = new RockChamber(4);
+//    Room* room5 = new RockChamber(5);
+//    Room* room6 = new RockChamber(6);
 
+//    BasicDungeonLevel bdl = BasicDungeonLevel("Test Dungeon", 3, 2);
+//    bdl.addRoom(room1);
+//    bdl.addRoom(room2);
+//    bdl.addRoom(room3);
+//    bdl.addRoom(room4);
+//    bdl.addRoom(room5);
+//    bdl.addRoom(room6);
 
+//    Room* rr = bdl.retrieveRoom(3);
 
+//    if (rr) {
+//        cout << rr->id() << endl;
+//        cout << rr->description() << endl;
+//    }
 
-//    //Dungeons
+//    //Do this when finished with the retreived Room
+//    rr = nullptr;
+
+//    //UNIQUE POINTER TESTING
+//    Game* game = game->instance();
 //    unique_ptr<DungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
 //    unique_ptr<MagicDungeonLevelBuilder> dlb2{new MagicDungeonLevelBuilder()};
 //    unique_ptr<DungeonLevelBuilder> dlb3{new BasicDungeonLevelBuilder()};

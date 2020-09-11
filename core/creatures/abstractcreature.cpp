@@ -13,6 +13,7 @@ char AbstractCreature::displayCharacter() {
 }
 
 void AbstractCreature::markAsBoss() {
+    _name = "Elite " + _name;
     _isBoss = true;
 }
 
