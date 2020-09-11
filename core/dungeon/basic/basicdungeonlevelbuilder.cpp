@@ -10,9 +10,9 @@
 namespace core::dungeon::basic {
 
 BasicDungeonLevelBuilder::BasicDungeonLevelBuilder() {
-    std::cout << "Created BasicDungeonLevelBuilder" << std::endl;
     prototypeItems();
     prototypeCreatures();
+    std::cout << "Created BasicDungeonLevelBuilder" << std::endl;
 }
 
 BasicDungeonLevelBuilder::~BasicDungeonLevelBuilder() {

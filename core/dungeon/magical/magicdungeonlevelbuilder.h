@@ -12,7 +12,7 @@ class MagicDungeonLevelBuilder : public DungeonLevelBuilder {
   public:
     MagicDungeonLevelBuilder();
     ~MagicDungeonLevelBuilder();
-    MagicDungeonLevelBuilder(const MagicDungeonLevelBuilder& other) = default;
+    MagicDungeonLevelBuilder(const MagicDungeonLevelBuilder& other) = delete;
 
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) const override;

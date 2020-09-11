@@ -8,7 +8,7 @@ namespace core::dungeon::basic {
 class BasicDungeonLevel : public DungeonLevel {
   public:
     BasicDungeonLevel() = delete;
-    BasicDungeonLevel (const BasicDungeonLevel& other) = default;
+    BasicDungeonLevel (const BasicDungeonLevel& other) = delete;
 
     BasicDungeonLevel(const std::string& name, int width, int height);
     virtual ~BasicDungeonLevel();
