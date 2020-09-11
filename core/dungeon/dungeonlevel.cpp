@@ -9,6 +9,9 @@ DungeonLevel::DungeonLevel(const std::string& name, int width, int height) : _na
 }
 
 DungeonLevel::~DungeonLevel() {
+    for (Room* room : _rooms) {
+        delete room;
+    }
     std::cout << "Destroyed DungeonLevel" << std::endl;
 }
 
