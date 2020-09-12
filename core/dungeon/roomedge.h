@@ -19,6 +19,7 @@ class RoomEdge {
     virtual char displayCharacter() const = 0;
     virtual bool isPassage() const = 0;
     const Direction& getDirection() const;
+    const Direction oppositeDirection() const;
   protected:
     RoomEdge (Direction _direction);
     Direction _direction;

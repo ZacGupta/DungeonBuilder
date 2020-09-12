@@ -83,20 +83,32 @@ void Room::setCreature(std::unique_ptr<core::creatures::AbstractCreature> newCre
     _creature = std::move(newCreature);
 }
 
-void Room::setNorth(const RoomEdge* northEdge) {
-    _north = northEdge;
-}
-
-void Room::setSouth(const RoomEdge* southEdge) {
-    _south = southEdge;
-}
-
-void Room::setEast(const RoomEdge* eastEdge) {
-    _east = eastEdge;
-}
-
-void Room::setWest(const RoomEdge* westEdge) {
-    _west = westEdge;
+void Room::setEdge(const RoomEdge* edge, Direction direction) {
+    switch (direction) {
+    case (Direction::North):
+        if (_north) {
+            delete _north;
+        }
+        _north = edge;
+        break;
+    case (Direction::South):
+        if (_south) {
+            delete _south;
+        }
+        _south = edge;
+        break;
+    case (Direction::East):
+        if (_east) {
+            delete _east;
+        }
+        _east = edge;
+        break;
+    case (Direction::West):
+        if (_west) {
+            delete _west;
+        }
+        _west = edge;
+    }
 }
 }
 

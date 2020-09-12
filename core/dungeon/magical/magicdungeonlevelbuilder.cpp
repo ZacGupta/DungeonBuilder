@@ -1,10 +1,10 @@
 #include "magicdungeonlevelbuilder.h"
+#include "core/dungeon/magical/magicdungeonlevel.h"
 #include "core/dungeon/magical/alchemistslaboratory.h"
 #include "core/dungeon/magical/enchantedlibrary.h"
 #include "core/items/weapon.h"
 #include "core/items/consumable.h"
 #include "core/creatures/monster.h"
-#include <utility>
 
 namespace core::dungeon::magical {
 
@@ -20,14 +20,20 @@ MagicDungeonLevelBuilder::~MagicDungeonLevelBuilder() {
 }
 
 void MagicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {
-
+    _level = new MagicDungeonLevel(name, width, height);
 }
 
 Room* MagicDungeonLevelBuilder::buildRoom(const int id) {
-
+    //50% chance for each type of Room.
+    if (randomInt(2) == 0) {
+        _level->addRoom(new AlchemistsLaboratory(id));
+    }
+    else {
+        _level->addRoom(new EnchantedLibrary(id));
+    }
 }
 
-void MagicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, const MoveConstraints constraints) {
+void MagicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, const Direction direction, const MoveConstraints constraints) {
 
 }
 
@@ -40,15 +46,20 @@ void MagicDungeonLevelBuilder::buildExit(Room* room, const Direction direction) 
 }
 
 void MagicDungeonLevelBuilder::buildItem(Room* room) {
-
+    //65% chance that Item is a consumable, 35% chance it is a Weapon.
+    if (randomInt(100) < 65) {
+        room->setItem(_consumables.at(randomInt(3))->clone());
+    } else {
+        room->setItem(_weapons.at(randomInt(3))->clone());
+    }
 }
 
 void MagicDungeonLevelBuilder::buildCreature(Room* room) {
-
+    room->setCreature(_creatures.at(randomInt(3))->clone());
 }
 
-const DungeonLevel* MagicDungeonLevelBuilder::getDungeonLevel() const {
-
+DungeonLevel* MagicDungeonLevelBuilder::getDungeonLevel() const {
+    return _level;
 }
 
 void MagicDungeonLevelBuilder::prototypeItems() {

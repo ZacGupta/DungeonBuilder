@@ -28,44 +28,41 @@ using namespace core::creatures;
 
 int main() {
 
-        std::uniform_real_distribution<double> realDistribution{0, 6};
-        std::mt19937 randomGenerator{uint32_t(time(nullptr))};
-        int random =  realDistribution(randomGenerator);
-        int random1 =  realDistribution(randomGenerator);
-        int random2 =  realDistribution(randomGenerator);
+//    MoveConstraints mc = MoveConstraints::DestinationLocked&MoveConstraints::OriginLocked;
 
-        cout << random << endl;
-        cout << random1 << endl;
-        cout << random2 << endl;
+//    static_cast<unsigned>(mc);
 
-    RockChamber r = RockChamber(1);
+//    cout << mc << endl;
 
-    OneWayDoor* d1 = new OneWayDoor(Direction::North);
-    RoomEdge* d2 = new BlockedDoorway(Direction::South);
-    RoomEdge* d3 = new LockedDoor(Direction::East);
-    RoomEdge* d4 = new OpenDoorway(Direction::West);
-    unique_ptr<AbstractCreature> m {new Monster("Monster")};
-    unique_ptr<Item> w {new Weapon("Weapon")};
+//    RockChamber r = RockChamber(1);
+
+//    OneWayDoor* d1 = new OneWayDoor(Direction::North);
+//    RoomEdge* d2 = new BlockedDoorway(Direction::South);
+//    RoomEdge* d3 = new LockedDoor(Direction::East);
+//    RoomEdge* d4 = new OpenDoorway(Direction::West);
+//    unique_ptr<AbstractCreature> m {new Monster("Monster")};
+//    unique_ptr<Item> w {new Weapon("Weapon")};
 
 
-    m->markAsBoss();
-    r.setCreature(move(m));
-    r.setItem(move(w));
-    d1->markAsEntrance();
-    r.setNorth(d1);
-    r.setSouth(d2);
-    r.setEast(d3);
-    r.setWest(d4);
+//    m->markAsBoss();
+//    r.setCreature(move(m));
+//    r.setItem(move(w));
+//    d1->markAsEntrance();
+//    r.setNorth(d1);
+//    r.setSouth(d2);
+//    r.setEast(d3);
+//    r.setWest(d4);
 
-    cout << r.display().at(0) << endl;
-    cout << r.display().at(1) << endl;
-    cout << r.display().at(2) << endl;
-    cout << r.display().at(3) << endl;
-    cout << r.display().at(4) << endl;
+//    cout << r.display().at(0) << endl;
+//    cout << r.display().at(1) << endl;
+//    cout << r.display().at(2) << endl;
+//    cout << r.display().at(3) << endl;
+//    cout << r.display().at(4) << endl;
 
     Game* game = game->instance();
-    cout << game->randomDouble() << endl;
-
+    unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
+    game->setDungeonType(move(dlb));
+//    game->createRandomLevel("Level", 1, 1);
 
 //    //Initialise Game
 //    Game* game = game->instance();

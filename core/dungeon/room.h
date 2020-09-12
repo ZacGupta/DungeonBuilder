@@ -8,7 +8,10 @@
 #include <memory>
 #include <iostream> //DELETE THIS
 
+
 namespace core::dungeon {
+
+enum class Direction : unsigned {North, East, South, West};
 
 class RoomEdge;
 
@@ -35,10 +38,7 @@ class Room {
     //Setters
     void setItem(std::unique_ptr<core::items::Item> newItem);
     void setCreature(std::unique_ptr<core::creatures::AbstractCreature> newCreature);
-    void setNorth(const RoomEdge* northEdge);
-    void setSouth(const RoomEdge* southEdge);
-    void setEast(const RoomEdge* eastEdge);
-    void setWest(const RoomEdge* westEdge);
+    void setEdge(const RoomEdge* edge, Direction direction);
   protected:
     Room(const int id);
     const int _id;
@@ -49,6 +49,6 @@ class Room {
     const RoomEdge* _east;
     const RoomEdge* _west;
 };
-enum class Direction : unsigned {North, South, East, West};
+
 }
 #endif // ROOM_H
