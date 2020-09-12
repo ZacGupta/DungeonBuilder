@@ -9,7 +9,7 @@
 
 namespace core::dungeon::basic {
 
-BasicDungeonLevelBuilder::BasicDungeonLevelBuilder() {
+BasicDungeonLevelBuilder::BasicDungeonLevelBuilder() : DungeonLevelBuilder() {
     prototypeItems();
     prototypeCreatures();
     std::cout << "Created BasicDungeonLevelBuilder" << std::endl;
@@ -19,50 +19,69 @@ BasicDungeonLevelBuilder::~BasicDungeonLevelBuilder() {
     std::cout << "Destroyed BasicDungeonLevelBuilder" << std::endl;
 }
 
-void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) const {
+void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {
+    _level = new BasicDungeonLevel(name, width, height);
 }
 
-Room* BasicDungeonLevelBuilder::buildRoom(const int id) const {
-    return new QuartzChamber(1);
+Room* BasicDungeonLevelBuilder::buildRoom(const int id) {
+    //50% chance for each type of Room.
+    if (randomInt(2) == 0) {
+        _level->addRoom(new QuartzChamber(id));
+    }
+    else {
+        _level->addRoom(new RockChamber(id));
+    }
 }
 
-void BasicDungeonLevelBuilder::buildDoorWay(const Room& origin, const Room& destination) const {
-}
-
-void BasicDungeonLevelBuilder::buildEntrance(const Room& room, const Direction direction) const {
-
-}
-
-void BasicDungeonLevelBuilder::buildExit(const Room& room, const Direction direction) const {
-
-}
-
-void BasicDungeonLevelBuilder::buildItem(const Room& room) const {
+void BasicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, const MoveConstraints constraints) {
 
 }
 
-void BasicDungeonLevelBuilder::buildCreature(const Room& room) const {
+void BasicDungeonLevelBuilder::buildEntrance(Room* room, const Direction direction) {
 
+}
+
+void BasicDungeonLevelBuilder::buildExit(Room* room, const Direction direction) {
+
+}
+
+void BasicDungeonLevelBuilder::buildItem(Room* room) {
+    //65% chance that Item is a consumable, 35% chance it is a Weapon.
+    if (randomInt(100) < 65) {
+        room->setItem(_consumables.at(randomInt(3))->clone());
+    } else {
+        room->setItem(_weapons.at(randomInt(3))->clone());
+    }
+}
+
+void BasicDungeonLevelBuilder::buildCreature(Room* room) {
+    room->setCreature(_creatures.at(randomInt(3))->clone());
 }
 
 const DungeonLevel* BasicDungeonLevelBuilder::getDungeonLevel() const {
-    return new BasicDungeonLevel{"name", 1, 1};
+
 }
 
 void BasicDungeonLevelBuilder::prototypeItems() {
-    _items.insert(std::pair<int, std::unique_ptr<core::items::Consumable>>(0, std::make_unique<core::items::Consumable>(core::items::Consumable("Health Potion"))));
-    _items.insert(std::pair<int, std::unique_ptr<core::items::Consumable>>(1, std::make_unique<core::items::Consumable>(core::items::Consumable("Molotov Cocktail"))));
-    _items.insert(std::pair<int, std::unique_ptr<core::items::Consumable>>(2, std::make_unique<core::items::Consumable>(core::items::Consumable("Smoke Bomb"))));
-    _items.insert(std::pair<int, std::unique_ptr<core::items::Weapon>>(3, std::make_unique<core::items::Weapon>(core::items::Weapon("Boomerang"))));
-    _items.insert(std::pair<int, std::unique_ptr<core::items::Weapon>>(4, std::make_unique<core::items::Weapon>(core::items::Weapon("Short Sword"))));
-    _items.insert(std::pair<int, std::unique_ptr<core::items::Weapon>>(5, std::make_unique<core::items::Weapon>(core::items::Weapon("Battle Axe"))));
-}
+    _consumables.push_back(std::make_unique<core::items::Consumable>(core::items::Consumable("Health Potion")));
+    _consumables.push_back(std::make_unique<core::items::Consumable>(core::items::Consumable("Molotov Cocktail")));
+    _consumables.push_back(std::make_unique<core::items::Consumable>(core::items::Consumable("Resistance Potion")));
+
+    _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Boomerang")));
+    _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Wizard's Staff")));
+    _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Basic Wand")));
+};
 
 void BasicDungeonLevelBuilder::prototypeCreatures() {
-    _creatures.insert(std::pair<int, std::unique_ptr<core::creatures::Monster>>(0, std::make_unique<core::creatures::Monster>(core::creatures::Monster("Goblin"))));
-    _creatures.insert(std::pair<int, std::unique_ptr<core::creatures::Monster>>(1, std::make_unique<core::creatures::Monster>(core::creatures::Monster("Werewolf"))));
-    _creatures.insert(std::pair<int, std::unique_ptr<core::creatures::Monster>>(2, std::make_unique<core::creatures::Monster>(core::creatures::Monster("Evil Wizard"))));
-    std::cout << std::endl;
+    _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Goblin")));
+    _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Evil Wizard")));
+    _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Dragon")));
+}
+
+int BasicDungeonLevelBuilder::randomInt(double possibilities) {
+    std::uniform_real_distribution<double> realDistribution{0, possibilities};
+    std::mt19937 randomGenerator{uint32_t(time(nullptr))};
+    return realDistribution(randomGenerator);
 }
 
 }

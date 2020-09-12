@@ -4,7 +4,8 @@
 #include "core/dungeon/dungeonlevelbuilder.h"
 #include "core/items/item.h"
 #include "core/creatures/abstractcreature.h"
-#include <map>
+#include <random>
+#include <ctime>
 
 namespace core::dungeon::basic {
 
@@ -14,19 +15,18 @@ class BasicDungeonLevelBuilder : public DungeonLevelBuilder {
     ~BasicDungeonLevelBuilder();
     BasicDungeonLevelBuilder(const BasicDungeonLevelBuilder& other) = delete;
 
-    virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) const override;
-    virtual Room* buildRoom(const int id) const override;
-    virtual void buildDoorWay(const Room& origin, const Room& destination) const override; //@param MoveConstraints constraints
-    virtual void buildEntrance(const Room& room, const Direction direction) const override;
-    virtual void buildExit(const Room& room, const Direction direction) const override;
-    virtual void buildItem(const Room& room) const override;
-    virtual void buildCreature(const Room& room) const override;
+    virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) override;
+    virtual Room* buildRoom(int id) override;
+    virtual void buildDoorWay(Room* origin, Room* destination, const MoveConstraints constraints) override;
+    virtual void buildEntrance(Room* room, const Direction direction) override;
+    virtual void buildExit(Room* room, const Direction direction) override;
+    virtual void buildItem(Room* room) override;
+    virtual void buildCreature(Room* room) override;
     virtual const DungeonLevel* getDungeonLevel() const override;
   private:
-    void prototypeItems();
-    void prototypeCreatures();
-    std::map <int, std::unique_ptr<core::items::Item>> _items;
-    std::map <int, std::unique_ptr<core::creatures::AbstractCreature>> _creatures;
+    void prototypeItems() override;
+    void prototypeCreatures() override;
+    int randomInt(double possibilities);
 };
 }
 

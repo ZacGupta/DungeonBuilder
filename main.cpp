@@ -28,30 +28,44 @@ using namespace core::creatures;
 
 int main() {
 
-        RockChamber r = RockChamber(1);
+        std::uniform_real_distribution<double> realDistribution{0, 6};
+        std::mt19937 randomGenerator{uint32_t(time(nullptr))};
+        int random =  realDistribution(randomGenerator);
+        int random1 =  realDistribution(randomGenerator);
+        int random2 =  realDistribution(randomGenerator);
 
-        RoomEdge* d1 = new OneWayDoor(Direction::North);
-        RoomEdge* d2 = new BlockedDoorway(Direction::South);
-        RoomEdge* d3 = new LockedDoor(Direction::East);
-        RoomEdge* d4 = new OpenDoorway(Direction::West);
-        unique_ptr<AbstractCreature> m {new Monster("Monster")};
-        unique_ptr<Item> w {new Weapon("Weapon")};
+        cout << random << endl;
+        cout << random1 << endl;
+        cout << random2 << endl;
+
+    RockChamber r = RockChamber(1);
+
+    OneWayDoor* d1 = new OneWayDoor(Direction::North);
+    RoomEdge* d2 = new BlockedDoorway(Direction::South);
+    RoomEdge* d3 = new LockedDoor(Direction::East);
+    RoomEdge* d4 = new OpenDoorway(Direction::West);
+    unique_ptr<AbstractCreature> m {new Monster("Monster")};
+    unique_ptr<Item> w {new Weapon("Weapon")};
 
 
-        m->markAsBoss();
-        r.setCreature(move(m));
-        r.setItem(move(w));
+    m->markAsBoss();
+    r.setCreature(move(m));
+    r.setItem(move(w));
+    d1->markAsEntrance();
+    r.setNorth(d1);
+    r.setSouth(d2);
+    r.setEast(d3);
+    r.setWest(d4);
 
-        r.setNorth(d1);
-        r.setSouth(d2);
-        r.setEast(d3);
-        r.setWest(d4);
+    cout << r.display().at(0) << endl;
+    cout << r.display().at(1) << endl;
+    cout << r.display().at(2) << endl;
+    cout << r.display().at(3) << endl;
+    cout << r.display().at(4) << endl;
 
-        cout << r.display().at(0) << endl;
-        cout << r.display().at(1) << endl;
-        cout << r.display().at(2) << endl;
-        cout << r.display().at(3) << endl;
-        cout << r.display().at(4) << endl;
+    Game* game = game->instance();
+    cout << game->randomDouble() << endl;
+
 
 //    //Initialise Game
 //    Game* game = game->instance();
