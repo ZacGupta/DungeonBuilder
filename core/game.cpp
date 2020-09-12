@@ -18,7 +18,6 @@ Game* Game::instance() {
         theInstance = new Game;
         return theInstance;
     }
-    std::cout << "A previous instance already exists" << std::endl;
     return nullptr;
 }
 
@@ -30,12 +29,22 @@ Game* Game::instance() {
 //    _builder = builder;
 //}
 
-void Game::setDungeonType(std::unique_ptr<core::dungeon::DungeonLevelBuilder> builder) {
+void Game::setDungeonType(std::unique_ptr<dungeon::DungeonLevelBuilder> builder) {
+    if (_level) {
+        delete _level;
+    }
     _builder = std::move(builder);
 }
 
 void Game::createExampleLevel() {
+    std::vector <dungeon::Room*> rooms;
     _builder->BuildDungeonLevel("Example", 1, 2);
+    rooms.push_back(_builder->buildRoom(1));
+    rooms.push_back(_builder->buildRoom(2));
+    _builder->buildDoorWay(rooms.at(0), rooms.at(1), dungeon::Direction::East, dungeon::MoveConstraints::DestinationImpassable);
+    _level = _builder->getDungeonLevel();
+
+
 }
 
 void Game::createRandomLevel(const std::string& name, const int width, const int height) {

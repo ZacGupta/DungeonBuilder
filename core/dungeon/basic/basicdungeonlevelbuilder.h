@@ -10,7 +10,7 @@ namespace core::dungeon::basic {
 class BasicDungeonLevelBuilder : public DungeonLevelBuilder {
   public:
     BasicDungeonLevelBuilder();
-    ~BasicDungeonLevelBuilder();
+    ~BasicDungeonLevelBuilder() = default;
     BasicDungeonLevelBuilder(const BasicDungeonLevelBuilder& other) = delete;
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) override;

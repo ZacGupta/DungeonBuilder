@@ -10,7 +10,7 @@ public:
   AlchemistsLaboratory() = delete;
   AlchemistsLaboratory(const AlchemistsLaboratory& other) = delete;
   AlchemistsLaboratory(const int id);
-  virtual ~AlchemistsLaboratory();
+  virtual ~AlchemistsLaboratory() = default;
 
   virtual const std::string description() const override;
 };

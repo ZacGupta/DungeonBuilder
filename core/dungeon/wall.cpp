@@ -3,7 +3,7 @@
 namespace core::dungeon {
 
 Wall::Wall(Direction direction) : RoomEdge{direction} {
-        std::cout << "Created Wall with Direction" << std::endl;
+        std::cout << "Created Wall" << std::endl;
 }
 
 Wall::~Wall() {

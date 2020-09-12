@@ -10,7 +10,7 @@ class OneWayDoor : public Doorway {
     OneWayDoor() = delete;
     OneWayDoor(const OneWayDoor& other) = delete;
     OneWayDoor(Direction direction);
-    ~OneWayDoor();
+    ~OneWayDoor() = default;
 
     virtual const std::string description() const override;
     virtual char displayCharacter() const override;

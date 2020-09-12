@@ -61,7 +61,19 @@ int main() {
 
     Game* game = game->instance();
     unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
+    unique_ptr<BasicDungeonLevelBuilder> dlb2{new BasicDungeonLevelBuilder()};
     game->setDungeonType(move(dlb));
+    game->createExampleLevel();
+    game->setDungeonType(move(dlb2));
+
+//    unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
+//    std::vector <dungeon::Room*> rooms;
+//    dlb->BuildDungeonLevel("Example", 1, 2);
+//    rooms.push_back(dlb->buildRoom(1));
+//    rooms.push_back(dlb->buildRoom(2));
+//    dlb->buildDoorWay(rooms.at(0), rooms.at(1), dungeon::Direction::East, dungeon::MoveConstraints::DestinationImpassable);
+
+
 //    game->createRandomLevel("Level", 1, 1);
 
 //    //Initialise Game

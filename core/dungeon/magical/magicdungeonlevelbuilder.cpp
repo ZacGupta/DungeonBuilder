@@ -12,11 +12,6 @@ namespace core::dungeon::magical {
 MagicDungeonLevelBuilder::MagicDungeonLevelBuilder() : DungeonLevelBuilder() {
     prototypeItems();
     prototypeCreatures();
-    std::cout << "Created MagicDungeonLevelBuilder" << std::endl;
-}
-
-MagicDungeonLevelBuilder::~MagicDungeonLevelBuilder() {
-    std::cout << "Destroyed MagicDungeonLevelBuilder" << std::endl;
 }
 
 void MagicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {

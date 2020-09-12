@@ -22,10 +22,8 @@ std::ostream& operator<<(std::ostream& out, const DungeonLevel& dungeonLevel) {
 bool DungeonLevel::addRoom(Room* room) {
     if (room and _rooms.size() < static_cast<unsigned>(_numberOfRooms)) {
         _rooms.push_back(room);
-        std::cout << "Added room" << room->id() <<std::endl;
         return true;
     }
-    std::cout << "Failed to add" << room->id() << std::endl;
     return false;
 }
 

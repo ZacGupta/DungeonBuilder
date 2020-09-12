@@ -11,7 +11,7 @@ class MagicDungeonLevel : public DungeonLevel {
     MagicDungeonLevel (const MagicDungeonLevel& other) = delete;
 
     MagicDungeonLevel(const std::string& name, int width, int height);
-    virtual ~MagicDungeonLevel();
+    virtual ~MagicDungeonLevel() = default;
     virtual const std::string description() const override;
 };
 }

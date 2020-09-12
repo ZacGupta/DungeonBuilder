@@ -2,14 +2,7 @@
 
 namespace core::dungeon::magical {
 
-MagicWall::~MagicWall() {
-    std::cout << "Destroyed MagicWall" << std::endl;
-}
-
-MagicWall::MagicWall(Direction direction) : Wall{direction} {
-    std::cout << "Created MagicalWall" << std::endl;
-
-}
+MagicWall::MagicWall(Direction direction) : Wall{direction} {}
 
 const std::string MagicWall::description() const {
     return "a Magic Wall";

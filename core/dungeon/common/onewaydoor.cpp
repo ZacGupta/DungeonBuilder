@@ -3,13 +3,7 @@
 namespace core::dungeon::common {
 
 
-OneWayDoor::OneWayDoor(Direction direction) : Doorway{direction}, _isEntrance{false}, _isExit{false} {
-    std::cout << "Created OneWayDoor" << std::endl;
-}
-
-OneWayDoor::~OneWayDoor() {
-    std::cout << "Destroyed OneWayDoor" << std::endl;
-}
+OneWayDoor::OneWayDoor(Direction direction) : Doorway{direction}, _isEntrance{false}, _isExit{false} {}
 
 const std::string OneWayDoor::description() const {
     if (_isEntrance) {

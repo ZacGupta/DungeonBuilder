@@ -17,11 +17,6 @@ namespace core::dungeon::basic {
 BasicDungeonLevelBuilder::BasicDungeonLevelBuilder() : DungeonLevelBuilder() {
     prototypeItems();
     prototypeCreatures();
-    std::cout << "Created BasicDungeonLevelBuilder" << std::endl;
-}
-
-BasicDungeonLevelBuilder::~BasicDungeonLevelBuilder() {
-    std::cout << "Destroyed BasicDungeonLevelBuilder" << std::endl;
 }
 
 void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {

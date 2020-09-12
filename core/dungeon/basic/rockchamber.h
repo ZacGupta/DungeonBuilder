@@ -10,7 +10,7 @@ class RockChamber : public Room {
     RockChamber() = delete;
     RockChamber(const RockChamber& other) = delete;
     RockChamber(const int id);
-    virtual ~RockChamber();
+    virtual ~RockChamber() = default;
 
     virtual const std::string description() const override;
 };

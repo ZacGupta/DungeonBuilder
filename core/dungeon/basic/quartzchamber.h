@@ -10,7 +10,7 @@ class QuartzChamber : public Room {
     QuartzChamber() = delete;
     QuartzChamber(const QuartzChamber& other) = delete;
     QuartzChamber(const int id);
-    virtual ~QuartzChamber();
+    virtual ~QuartzChamber() = default;
 
     virtual const std::string description() const override;
 };

@@ -3,13 +3,7 @@
 namespace core::dungeon::basic {
 
 
-RockWall::RockWall(Direction direction) : Wall{direction} {
-    std::cout << "Created RockWall" << std::endl;
-}
-
-RockWall::~RockWall() {
-    std::cout << "Destroyed RockWall" << std::endl;
-}
+RockWall::RockWall(Direction direction) : Wall{direction} {}
 
 const std::string RockWall::description() const {
     return "a Rock Wall";

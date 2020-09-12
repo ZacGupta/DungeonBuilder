@@ -3,13 +3,7 @@
 namespace core::dungeon::common {
 
 
-OpenDoorway::OpenDoorway(Direction direction) : Doorway(direction) {
-    std::cout << "Created OpenDoorWay" << std::endl;
-}
-
-OpenDoorway::~OpenDoorway() {
-    std::cout << "Destroyed OpenDoorWay" << std::endl;
-}
+OpenDoorway::OpenDoorway(Direction direction) : Doorway(direction) {}
 
 const std::string OpenDoorway::description() const {
     return "an Open Doorway to another chamber";

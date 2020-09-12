@@ -10,7 +10,7 @@ class EnchantedLibrary : public Room {
     EnchantedLibrary() = delete;
     EnchantedLibrary(const EnchantedLibrary& other) = delete;
     EnchantedLibrary(const int id);
-    virtual ~EnchantedLibrary();
+    virtual ~EnchantedLibrary() = default;
 
     virtual const std::string description() const override;
 };

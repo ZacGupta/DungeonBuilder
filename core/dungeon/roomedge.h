@@ -11,7 +11,7 @@ class RoomEdge {
   public:
     RoomEdge() = delete;
     RoomEdge(const RoomEdge& other) = delete;
-    virtual ~RoomEdge();
+    virtual ~RoomEdge() = default;
 
     friend std::ostream& operator<<(std::ostream& out, const RoomEdge& roomEdge);  //operator overload (<<)
 

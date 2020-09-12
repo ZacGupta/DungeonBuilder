@@ -10,7 +10,7 @@ class RockWall : public Wall {
     RockWall() = delete;
     RockWall(const RockWall& other) = delete;
     RockWall(Direction direction);
-    ~RockWall();
+    ~RockWall() = default;
 
     virtual const std::string description() const override;
 };

@@ -10,7 +10,7 @@ class LockedDoor : public Doorway {
     LockedDoor() = delete;
     LockedDoor(const LockedDoor& other) = delete;
     LockedDoor(Direction direction);
-    ~LockedDoor();
+    ~LockedDoor() = default;
 
     virtual const std::string description() const override;
     virtual char displayCharacter() const override;

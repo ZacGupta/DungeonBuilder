@@ -9,7 +9,7 @@ class MagicWall : public Wall {
   public:
     MagicWall() = delete;
     MagicWall(const MagicWall& other) = delete;
-    ~MagicWall();
+    ~MagicWall() = default;
     MagicWall(Direction direction);
     virtual const std::string description() const override;
 };
