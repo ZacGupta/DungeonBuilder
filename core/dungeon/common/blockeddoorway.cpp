@@ -11,4 +11,12 @@ const std::string BlockedDoorway::description() const {
 char BlockedDoorway::displayCharacter() const {
     return 'X';
 }
+
+bool BlockedDoorway::isEntrance() const {
+    return false;
+}
+
+bool BlockedDoorway::isExit() const {
+    return false;
+}
 }

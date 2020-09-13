@@ -12,4 +12,12 @@ const std::string LockedDoor::description() const {
 char LockedDoor::displayCharacter() const {
     return '@';
 }
+
+bool LockedDoor::isEntrance() const {
+    return false;
+}
+
+bool LockedDoor::isExit() const {
+    return false;
+}
 }

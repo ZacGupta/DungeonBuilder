@@ -14,6 +14,8 @@ class BlockedDoorway : public Doorway {
 
     virtual const std::string description() const override;
     virtual char displayCharacter() const override;
+    virtual bool isEntrance() const override;
+    virtual bool isExit() const override;
 };
 }
 

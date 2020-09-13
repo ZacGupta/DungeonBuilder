@@ -29,7 +29,7 @@ Room* BasicDungeonLevelBuilder::buildRoom(const int id) {
     Direction east = Direction::East;
     Direction west = Direction::West;
     if (_level) {
-        Room* room = nullptr;
+        Room* room{nullptr};
         //50% chance for each type of Room.
         if (randomInt(2) == 0) {
             room = new QuartzChamber(id);
@@ -55,8 +55,8 @@ void BasicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, con
     if (not origin or not destination) {
         return;
     }
-    Doorway* originDoorway;
-    Doorway* destinationDoorway;
+    Doorway* originDoorway{nullptr};
+    Doorway* destinationDoorway{nullptr};
 
     //Each case represents a bitmask, Doorways are constructed and connected accordingly.
     switch(static_cast<unsigned>(constraints)) {
@@ -116,8 +116,8 @@ void BasicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, con
         destination->setEdge(destinationDoorway, originDoorway->oppositeDirection());
         break;
     case 9:
-        originDoorway = new dungeon::common::LockedDoor(direction);
-        destinationDoorway = new common::OneWayDoor(originDoorway->oppositeDirection());
+        originDoorway = new dungeon::common::OneWayDoor(direction);
+        destinationDoorway = new common::LockedDoor(originDoorway->oppositeDirection());
         originDoorway->connect(destinationDoorway);
         destinationDoorway->connect(originDoorway);
         origin->setEdge(originDoorway, direction);
@@ -142,13 +142,13 @@ void BasicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, con
 }
 
 void BasicDungeonLevelBuilder::buildEntrance(Room* room, const Direction direction) {
-    common::OneWayDoor* entrance = new common::OneWayDoor(direction);
+    common::OneWayDoor* entrance{new common::OneWayDoor(direction)};
     entrance->markAsEntrance();
     room->setEdge(entrance, direction);
 }
 
 void BasicDungeonLevelBuilder::buildExit(Room* room, const Direction direction) {
-    common::OneWayDoor* exit = new common::OneWayDoor(direction);
+    common::OneWayDoor* exit{new common::OneWayDoor(direction)};
     exit->markAsExit();
     room->setEdge(exit, direction);
 }
@@ -163,7 +163,38 @@ void BasicDungeonLevelBuilder::buildItem(Room* room) {
 }
 
 void BasicDungeonLevelBuilder::buildCreature(Room* room) {
+
     room->setCreature(_creatures.at(randomInt(3))->clone());
+
+    Doorway* north = dynamic_cast<Doorway*>(room->north());
+    if (north) {
+        if (north->isExit()) {
+            room->creature().markAsBoss();
+            return;
+        }
+    }
+    Doorway* east  = dynamic_cast<Doorway*>(room->east());
+    if (east) {
+        if (east->isExit()) {
+            room->creature().markAsBoss();
+            return;
+        }
+    }
+    Doorway* south = dynamic_cast<Doorway*>(room->south());
+    if (south) {
+        if (south->isExit()) {
+            room->creature().markAsBoss();
+            return;
+        }
+    }
+
+    Doorway* west = dynamic_cast<Doorway*>(room->west());
+    if (west) {
+        if (west->isExit()) {
+            room->creature().markAsBoss();
+            return;
+        }
+    }
 }
 
 DungeonLevel* BasicDungeonLevelBuilder::getDungeonLevel() const {

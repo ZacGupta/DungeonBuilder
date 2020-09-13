@@ -55,24 +55,24 @@ const items::Item& Room::item() const {
     return *_item;
 }
 
-const creatures::AbstractCreature& Room::creature() const {
+creatures::AbstractCreature& Room::creature() const {
     return *_creature;
 }
 
-const RoomEdge& Room::north() const {
-    return *_north;
+RoomEdge* Room::north() const {
+    return _north;
 }
 
-const RoomEdge& Room::south() const {
-    return *_south;
+RoomEdge* Room::south() const {
+    return _south;
 }
 
-const RoomEdge& Room::east() const {
-    return *_east;
+RoomEdge* Room::east() const {
+    return _east;
 }
 
-const RoomEdge& Room::west() const {
-    return *_west;
+RoomEdge* Room::west() const {
+    return _west;
 }
 
 void Room::setItem(std::unique_ptr<core::items::Item> newItem) {
@@ -83,7 +83,7 @@ void Room::setCreature(std::unique_ptr<core::creatures::AbstractCreature> newCre
     _creature = std::move(newCreature);
 }
 
-void Room::setEdge(const RoomEdge* edge, Direction direction) {
+void Room::setEdge(RoomEdge* edge, Direction direction) {
     switch (direction) {
     case (Direction::North):
         if (_north) {

@@ -39,10 +39,80 @@ void Game::setDungeonType(std::unique_ptr<dungeon::DungeonLevelBuilder> builder)
 
 void Game::createExampleLevel() {
     std::vector <dungeon::Room*> rooms;
-    _builder->BuildDungeonLevel("Example", 1, 2);
+    _builder->BuildDungeonLevel("Example Level", 3, 3);
+    //Build 9 rooms
     rooms.push_back(_builder->buildRoom(1));
     rooms.push_back(_builder->buildRoom(2));
-    _builder->buildDoorWay(rooms.at(0), rooms.at(1), dungeon::Direction::East, dungeon::MoveConstraints::DestinationImpassable);
+    rooms.push_back(_builder->buildRoom(3));
+    rooms.push_back(_builder->buildRoom(4));
+    rooms.push_back(_builder->buildRoom(5));
+    rooms.push_back(_builder->buildRoom(6));
+    rooms.push_back(_builder->buildRoom(7));
+    rooms.push_back(_builder->buildRoom(8));
+    rooms.push_back(_builder->buildRoom(9));
+
+    //Build the doorways from room 1-9, always building east first (unless in the last column), then south (unless in the last row)
+    //Room 1
+    _builder->buildDoorWay(rooms.at(0), rooms.at(1), dungeon::Direction::East, dungeon::MoveConstraints::None);
+    _builder->buildDoorWay(rooms.at(0), rooms.at(3), dungeon::Direction::South, dungeon::MoveConstraints::DestinationImpassable);
+    //Room 2
+    _builder->buildDoorWay(rooms.at(1), rooms.at(2), dungeon::Direction::East, dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable);
+    _builder->buildDoorWay(rooms.at(1), rooms.at(4), dungeon::Direction::South, dungeon::MoveConstraints::None);
+    //Room 3
+    _builder->buildDoorWay(rooms.at(2), rooms.at(5), dungeon::Direction::South, dungeon::MoveConstraints::DestinationLocked);
+    //Room 4
+    _builder->buildDoorWay(rooms.at(3), rooms.at(4), dungeon::Direction::East, dungeon::MoveConstraints::DestinationImpassable);
+    _builder->buildDoorWay(rooms.at(3), rooms.at(6), dungeon::Direction::South, dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable);
+    //Room 5
+    _builder->buildDoorWay(rooms.at(4), rooms.at(5), dungeon::Direction::East, dungeon::MoveConstraints::None);
+    _builder->buildDoorWay(rooms.at(4), rooms.at(7), dungeon::Direction::South, dungeon::MoveConstraints::None);
+    //Room 6 - None
+    //Room 7
+    _builder->buildDoorWay(rooms.at(6), rooms.at(7), dungeon::Direction::East, dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked);
+    //Room 8
+    _builder->buildDoorWay(rooms.at(7), rooms.at(8), dungeon::Direction::East, dungeon::MoveConstraints::None);
+    //Room 9 - Exit
+    //Build Entrance and Exit
+    _builder->buildEntrance(rooms.at(0), dungeon::Direction::North);
+    _builder->buildExit(rooms.at(8), dungeon::Direction::South);
+
+    _builder->buildCreature(rooms.at(8));
+
+
+//    0 = dungeon::MoveConstraints::None
+//    1 = dungeon::MoveConstraints::OriginImpassable
+//    2 = dungeon::MoveConstraints::DestinationImpassable
+//    3 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationImpassable
+//    4 = dungeon::MoveConstraints::OriginLocked
+//    6 = dungeon::MoveConstraints::OriginLocked|dungeon|dungeon::MoveConstraints::DestinationImpassable
+//    8 = dungeon::MoveConstraints::DestinationLocked
+//    9 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationLocked
+//    12= dungeon::MoveConstraints::OriginLocked|dungeon::MoveConstraints::DestinationLocked
+
+//    {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
+//    MoveConstraints
+
+//    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible / dungeon::MoveConstraints::None
+//    0001(1) = One Way Door (Origin) OpenDoorWay(Destination) 	//Impassable/Traversible /
+//    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable / dungeon::MoveConstraints::DestinationImpassable
+//    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
+//    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
+//    0101(5) = Entrance						//Impassable/Impassable
+//    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
+//    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
+//    1001(9) = Locked Door (Origin) OneWayDoor (Destionation) 	//Locked/Impassable
+//    1010(10)= Exit							//Impassable/Impassable
+//    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked
+
+
+
+
+
+
+
+
+
+    //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
 }
 
@@ -57,7 +127,6 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
 
 std::vector<std::vector<std::string>> Game::displayLevel() const {
     std::vector<std::vector<std::string>> dungeon;
-    std::vector<std::string> room;
     int rows = _level->width();
     int cols = _level->height();
     int numOFRooms = _level->numberOfRooms();
@@ -66,7 +135,7 @@ std::vector<std::vector<std::string>> Game::displayLevel() const {
     //Outer loop for each room
     for (int i = 0; i < numOFRooms; ++i ) {
         int roomID = i + 1;
-        room = _level->retrieveRoom(i + 1)->display();
+        std::vector<std::string> room = _level->retrieveRoom(i + 1)->display();
         std::vector<std::string> newRoom = std::vector<std::string>();
 
         //Inner loop for each 'line' in a room.
@@ -84,21 +153,21 @@ std::vector<std::vector<std::string>> Game::displayLevel() const {
             //Horiontal-center & not the in the last column.
             if (j == 2 and roomID % cols != 0) {
                 //If room is a passage.
-                if (_level->retrieveRoom(1)->east().isPassage()) {
+                if (_level->retrieveRoom(roomID)->east()->isPassage()) {
                     line += "--";
                     newRoom.push_back(line);
                 } else {
                     line += "  ";
                     newRoom.push_back(line);
                 }
-            } else if (j == 2) {
+            } else if (j == 2 and roomID % cols == 0) {
                 line += "  ";
                 newRoom.push_back(line);
             }
             //The gap between rows & room not in the last row.
             if (j == 5 && roomID < (cols - 1) * rows) {
                 //If room is a passage.
-                if (_level->retrieveRoom(1)->south().isPassage()) {
+                if (_level->retrieveRoom(1)->south()->isPassage()) {
                     line += "     |       ";
                     newRoom.push_back(line);
                 } else {

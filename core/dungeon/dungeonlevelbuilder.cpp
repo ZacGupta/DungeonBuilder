@@ -61,6 +61,6 @@ MoveConstraints operator|(const MoveConstraints& origin, const MoveConstraints& 
 }
 
 MoveConstraints operator&(const MoveConstraints& origin, const MoveConstraints& destination) {
-    return static_cast<MoveConstraints>(static_cast<unsigned>(origin) | static_cast<unsigned>(destination));
+    return static_cast<MoveConstraints>(static_cast<unsigned>(origin) & static_cast<unsigned>(destination));
 }
 }

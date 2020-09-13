@@ -72,6 +72,7 @@ int main() {
             cout << v.at(i).at(j) << endl;
         }
     }
+//    game->setDungeonType(move(dlb2));
 
 //    unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
 //    std::vector <dungeon::Room*> rooms;

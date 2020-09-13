@@ -20,4 +20,12 @@ char OpenDoorway::displayCharacter() const {
         return '<';
     }
 }
+
+bool OpenDoorway::isEntrance() const {
+    return false;
+}
+
+bool OpenDoorway::isExit() const {
+    return false;
+}
 }
