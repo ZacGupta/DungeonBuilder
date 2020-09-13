@@ -74,9 +74,16 @@ void Game::createExampleLevel() {
     //Room 9 - Exit
     //Build Entrance and Exit
     _builder->buildEntrance(rooms.at(0), dungeon::Direction::North);
-    _builder->buildExit(rooms.at(8), dungeon::Direction::South);
+    _builder->buildExit(rooms.at(8), dungeon::Direction::East);
 
+    //Items and creatures
+    //Room 3
+    _builder->buildCreature(rooms.at(2));
+    _builder->buildItem(rooms.at(2));
+    _builder->buildCreature(rooms.at(4));
+    _builder->buildItem(rooms.at(4));
     _builder->buildCreature(rooms.at(8));
+    _builder->buildItem(rooms.at(6));
 
 
 //    0 = dungeon::MoveConstraints::None
@@ -92,25 +99,16 @@ void Game::createExampleLevel() {
 //    {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
 //    MoveConstraints
 
-//    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible / dungeon::MoveConstraints::None
+//    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible /
 //    0001(1) = One Way Door (Origin) OpenDoorWay(Destination) 	//Impassable/Traversible /
-//    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable / dungeon::MoveConstraints::DestinationImpassable
+//    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable /
 //    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
 //    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
-//    0101(5) = Entrance						//Impassable/Impassable
+//    0101(5) = Wall                                            //Impassable/Impassable
 //    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
 //    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
-//    1001(9) = Locked Door (Origin) OneWayDoor (Destionation) 	//Locked/Impassable
-//    1010(10)= Exit							//Impassable/Impassable
+//    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
 //    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked
-
-
-
-
-
-
-
-
 
     //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
@@ -125,13 +123,18 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     _level = _builder->getDungeonLevel();
 }
 
-std::vector<std::vector<std::string>> Game::displayLevel() const {
+const std::string Game::displayLevel() const {
+
+}
+
+
+
+std::vector<std::vector<std::string>> Game::buildDisplay() const {
     std::vector<std::vector<std::string>> dungeon;
     int rows = _level->width();
     int cols = _level->height();
     int numOFRooms = _level->numberOfRooms();
 
-    int i = 0;
     //Outer loop for each room
     for (int i = 0; i < numOFRooms; ++i ) {
         int roomID = i + 1;
@@ -165,7 +168,7 @@ std::vector<std::vector<std::string>> Game::displayLevel() const {
                 newRoom.push_back(line);
             }
             //The gap between rows & room not in the last row.
-            if (j == 5 && roomID < (cols - 1) * rows) {
+            if (j == 5 && roomID <= (cols - 1) * rows) {
                 //If room is a passage.
                 if (_level->retrieveRoom(1)->south()->isPassage()) {
                     line += "     |       ";

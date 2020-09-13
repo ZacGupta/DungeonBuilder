@@ -68,6 +68,7 @@ int main() {
     vector<vector<string>> v = game->displayLevel();
 
     for (unsigned i = 0; i < v.size(); ++i) {
+        cout << "Room " << i + 1 << endl;
         for (unsigned j = 0; j < v.at(i).size(); ++j) {
             cout << v.at(i).at(j) << endl;
         }
