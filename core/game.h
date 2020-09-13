@@ -21,7 +21,7 @@ class Game {
     void setDungeonType(std::unique_ptr<core::dungeon::DungeonLevelBuilder> builder);
     void createExampleLevel();
     void createRandomLevel(const std::string& name, const int width, const int height);
-    void displayLevel() const;
+    std::vector<std::vector<std::string>> displayLevel() const;
     double randomDouble();
   private:
     Game();

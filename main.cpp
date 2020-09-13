@@ -16,6 +16,7 @@
 #include <set>
 #include <memory>
 #include <map>
+#include <vector>
 
 using namespace std;
 using namespace core;
@@ -64,13 +65,19 @@ int main() {
     unique_ptr<BasicDungeonLevelBuilder> dlb2{new BasicDungeonLevelBuilder()};
     game->setDungeonType(move(dlb));
     game->createExampleLevel();
-    game->setDungeonType(move(dlb2));
+    vector<vector<string>> v = game->displayLevel();
+
+    for (unsigned i = 0; i < v.size(); ++i) {
+        for (unsigned j = 0; j < v.at(i).size(); ++j) {
+            cout << v.at(i).at(j) << endl;
+        }
+    }
 
 //    unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
 //    std::vector <dungeon::Room*> rooms;
 //    dlb->BuildDungeonLevel("Example", 1, 2);
 //    rooms.push_back(dlb->buildRoom(1));
-//    rooms.push_back(dlb->buildRoom(2));
+//    rooms.push_back(dlb->bu1ildRoom(2));
 //    dlb->buildDoorWay(rooms.at(0), rooms.at(1), dungeon::Direction::East, dungeon::MoveConstraints::DestinationImpassable);
 
 

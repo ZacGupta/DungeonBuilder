@@ -12,9 +12,8 @@
 namespace core::dungeon {
 
 enum class MoveConstraints : unsigned {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
-MoveConstraints operator|(const MoveConstraints& o, const MoveConstraints& d);
-MoveConstraints operator&(const MoveConstraints& o, const MoveConstraints& d);
-std::ostream& operator<<(std::ostream& out, const MoveConstraints& roomEdge);
+MoveConstraints operator|(const MoveConstraints& origin, const MoveConstraints& destination);
+MoveConstraints operator&(const MoveConstraints& origin, const MoveConstraints& destination);
 
 class DungeonLevelBuilder {
   public:
