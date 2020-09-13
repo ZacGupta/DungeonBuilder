@@ -38,6 +38,11 @@ void Game::setDungeonType(std::unique_ptr<dungeon::DungeonLevelBuilder> builder)
 }
 
 void Game::createExampleLevel() {
+    if (_level) {
+        delete _level;
+        _level = nullptr;
+    }
+
     std::vector <dungeon::Room*> rooms;
     _builder->BuildDungeonLevel("Example Level", 3, 3);
     //Build 9 rooms
@@ -129,26 +134,48 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
 }
 
 const std::vector<std::string> Game::displayLevel() const {
+    std::vector<std::vector<std::string>> dungeon = buildDisplay();
+    std::vector<std::string> newDungeon = std::vector<std::string>();
 
+    int numOfRooms = _level->numberOfRooms();
+    int rows = _level->width();
+    int cols = _level->height();
+    int maxLoop = (cols * 6) - 1;
+    int i = 0;
+
+    while (i < cols) {
+        for (int j = 0; j < 6; ++j) {
+            std::string line{""};
+            for (int k = 0; k < rows; ++k) {
+                if (i == cols -1 && j == 5 ) {
+                    break;
+                }
+                line+= dungeon.at(k).at(j);
+            }
+            newDungeon.push_back(line);
+        }
+        ++i;
+    }
+    return newDungeon;
 }
 
 
 
 std::vector<std::vector<std::string>> Game::buildDisplay() const {
     std::vector<std::vector<std::string>> dungeon;
-    int rows = _level->width();
-    int cols = _level->height();
-    int numOFRooms = _level->numberOfRooms();
+    int rows{_level->width()};
+    int cols{_level->height()};
+    int numOFRooms{_level->numberOfRooms()};
 
     //Outer loop for each room
-    for (int i = 0; i < numOFRooms; ++i ) {
+    for (int i{0}; i < numOFRooms; ++i ) {
         int roomID = i + 1;
         std::vector<std::string> room = _level->retrieveRoom(i + 1)->display();
         std::vector<std::string> newRoom = std::vector<std::string>();
 
         //Inner loop for each 'line' in a room.
-        for (int j = 0; j < 6; ++j) {
-            std::string line;
+        for (int j{0}; j < 6; ++j) {
+            std::string line{""};
             //To stay in bounds of the vector.
             if (j < 5) {
                 line = room.at(j);

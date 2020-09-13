@@ -19,6 +19,10 @@ BasicDungeonLevelBuilder::BasicDungeonLevelBuilder() : DungeonLevelBuilder() {
     prototypeCreatures();
 }
 
+BasicDungeonLevelBuilder::~BasicDungeonLevelBuilder() {
+    _level = nullptr;
+}
+
 void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {
     _level = new BasicDungeonLevel(name, width, height);
 }
