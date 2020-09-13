@@ -22,13 +22,13 @@ class Game {
     void createExampleLevel();
     void createRandomLevel(const std::string& name, const int width, const int height);
 
-    const std::string displayLevel() const;
+    std::vector<std::vector<std::string>> buildDisplay() const;
+    const std::vector<std::string> displayLevel() const;
     double randomDouble();
   private:
     Game();
     static Game* theInstance;
     //core::dungeon::DungeonLevelBuilder* _builder;
-    std::vector<std::vector<std::string>> buildDisplay() const;
     std::unique_ptr<core::dungeon::DungeonLevelBuilder> _builder;
     core::dungeon::DungeonLevel* _level;
     std::mt19937 _randomGenerator{uint32_t(time(nullptr))}; //!< Mersenne Twister random number generator seeded by current time

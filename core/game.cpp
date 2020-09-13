@@ -85,6 +85,12 @@ void Game::createExampleLevel() {
     _builder->buildCreature(rooms.at(8));
     _builder->buildItem(rooms.at(6));
 
+    //Get the DungeonLevel
+    _level = _builder->getDungeonLevel();
+
+    std::cout << rooms.at(8)->creature().name() << std::endl;
+
+
 
 //    0 = dungeon::MoveConstraints::None
 //    1 = dungeon::MoveConstraints::OriginImpassable
@@ -110,8 +116,7 @@ void Game::createExampleLevel() {
 //    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
 //    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked
 
-    //Get the DungeonLevel
-    _level = _builder->getDungeonLevel();
+
 }
 
 void Game::createRandomLevel(const std::string& name, const int width, const int height) {
@@ -123,7 +128,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     _level = _builder->getDungeonLevel();
 }
 
-const std::string Game::displayLevel() const {
+const std::vector<std::string> Game::displayLevel() const {
 
 }
 

@@ -65,7 +65,7 @@ int main() {
     unique_ptr<BasicDungeonLevelBuilder> dlb2{new BasicDungeonLevelBuilder()};
     game->setDungeonType(move(dlb));
     game->createExampleLevel();
-    vector<vector<string>> v = game->displayLevel();
+    vector<vector<string>> v = game->buildDisplay();
 
     for (unsigned i = 0; i < v.size(); ++i) {
         cout << "Room " << i + 1 << endl;

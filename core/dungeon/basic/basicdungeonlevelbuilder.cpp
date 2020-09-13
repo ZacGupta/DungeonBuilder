@@ -204,16 +204,16 @@ DungeonLevel* BasicDungeonLevelBuilder::getDungeonLevel() const {
 void BasicDungeonLevelBuilder::prototypeItems() {
     _consumables.push_back(std::make_unique<core::items::Consumable>(core::items::Consumable("Health Potion")));
     _consumables.push_back(std::make_unique<core::items::Consumable>(core::items::Consumable("Molotov Cocktail")));
-    _consumables.push_back(std::make_unique<core::items::Consumable>(core::items::Consumable("Resistance Potion")));
+    _consumables.push_back(std::make_unique<core::items::Consumable>(core::items::Consumable("Smoke Bomb")));
 
     _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Boomerang")));
-    _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Wizard's Staff")));
-    _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Basic Wand")));
+    _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Short Sword")));
+    _weapons.push_back(std::make_unique<core::items::Weapon>(core::items::Weapon("Battle Axe")));
 };
 
 void BasicDungeonLevelBuilder::prototypeCreatures() {
     _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Goblin")));
     _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Evil Wizard")));
-    _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Dragon")));
+    _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Werewolf")));
 }
 }
