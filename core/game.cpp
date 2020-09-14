@@ -35,8 +35,11 @@ void Game::createExampleLevel() {
         _level = nullptr;
     }
 
-    std::vector <dungeon::Room*> rooms;
+    std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
+    rooms.reserve(9);
+
     _builder->BuildDungeonLevel("Example Level", 3, 3);
+
     //Build 9 rooms
     rooms.push_back(_builder->buildRoom(1));
     rooms.push_back(_builder->buildRoom(2));
@@ -129,12 +132,12 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
 }
 
 const std::vector<std::string> Game::displayLevel() const {
-    std::vector<std::vector<std::string>> dungeon = buildDisplay();
-    std::vector<std::string> newDungeon = std::vector<std::string>();
+    std::vector<std::vector<std::string>> dungeon{buildDisplay()};
+    std::vector<std::string> newDungeon{std::vector<std::string>()};
 
-    int rows = _level->width();
-    int cols = _level->height();
-    unsigned maxLoop = (rows * 6) - 1;
+    int rows{_level->width()};
+    int cols{_level->height()};
+    unsigned maxLoop{(static_cast<unsigned>(rows) * 6) - 1};
 
     //For each row in the dungeon
     for (int i{0}; i < rows; ++i) {
@@ -166,8 +169,8 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
     //Outer loop for each room
     for (int i{0}; i < numOFRooms; ++i ) {
         int roomID = i + 1;
-        std::vector<std::string> room = _level->retrieveRoom(i + 1)->display();
-        std::vector<std::string> newRoom = std::vector<std::string>();
+        std::vector<std::string> room{_level->retrieveRoom(i + 1)->display()};
+        std::vector<std::string> newRoom{std::vector<std::string>()};
 
         //Inner loop for each 'line' in a room.
         for (int j{0}; j < 6; ++j) {
