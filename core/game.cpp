@@ -87,24 +87,88 @@ void Game::createExampleLevel() {
 
     //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
-    _builder.reset();
-    _builder = nullptr;
+//    _builder.reset();
 }
 
 void Game::createRandomLevel(const std::string& name, const int width, const int height) {
+    if (not _builder or height < 1 or height > 4 or width < 1 or width > 4) {
+        return;
+    }
+
     if (_level) {
         delete _level;
         _level = nullptr;
     }
+
+    int numOfRooms{width * height};
+    int rows{width};
+    int cols{height};
+
+    std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
+    rooms.reserve(numOfRooms);
+
     _builder->BuildDungeonLevel(name, width, height);
 
+    //Build rooms
+    for (int i{0}; i < numOfRooms; ++i) {
+        rooms.push_back(_builder->buildRoom(i + 1));
+    }
 
+    //Build doorways, always building east first (unless in the last column or the only room), then south (unless in the last or only row)
+    for (int i{0}; i < numOfRooms; ++i) {
+        //roomID and adjacentH(Horizontal) have the same value but i purposely chose to give them separate names
+        //to make the algortithm a bit more readable, as they have different meanings and are used in different contexts.
+        int roomID{i + 1};
+        int adjacentH{i + 1};
+        int adjacentV{i + cols};
 
+        //Last Room (I hope break is okay to use, it made logical sense to do so, and made the rest of the conditionals a lot clearer)
+        if (roomID == numOfRooms) {
+            break;
+        }
+        //Last Column
+        else if (roomID % cols == 0) {
+            _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
+        }
 
-
+        //Last row
+        else if (roomID > (cols - 1) * rows) {
+            _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
+        }
+        else {
+            _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
+            if (rows != 1)
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
+        }
+    }
     _level = _builder->getDungeonLevel();
 
+//    if (id % cols = 0) =   end room
+//        if not last row
+//            adjacent = id + cols (south)
+//        if last row
+//            adjacent = id + 1 (east)
+//    if (id % cols = 1) = first room
+//        if not last row
+//            adjacent = id + 1 and id + cols (east, south)
+//        if last row
+//            adjacent = id + 1 (east)
+//    if (id % cols = 2) = second room
+//        if not last row
+//            adjacent = id + 1 and id + cols (east, south)
+//        if last row
+//            adjacent = id + 1 (east)
+//    if (id % cols = 3) = third room
+//        if not last row
+//            adjacent = id + 1 and id + cols (east, south)
+//        if last row
+//            adjacent = id + 1 (east)
 
+//    last row = if room.id > rows x (cols -1)
+
+
+
+//    _builder.reset();
 
     //    0 = dungeon::MoveConstraints::None
     //    1 = dungeon::MoveConstraints::OriginImpassable
@@ -135,6 +199,10 @@ const std::vector<std::string> Game::displayLevel() const {
     std::vector<std::vector<std::string>> dungeon{buildDisplay()};
     std::vector<std::string> newDungeon{std::vector<std::string>()};
 
+    if (not _level or dungeon.size() == 0) {
+        return std::vector<std::string>();
+    }
+
     int rows{_level->width()};
     int cols{_level->height()};
     unsigned maxLoop{(static_cast<unsigned>(rows) * 6) - 1};
@@ -161,6 +229,9 @@ const std::vector<std::string> Game::displayLevel() const {
 }
 
 std::vector<std::vector<std::string>> Game::buildDisplay() const {
+    if (not _level) {
+        return std::vector<std::vector<std::string>>();
+    }
     std::vector<std::vector<std::string>> dungeon;
     int rows{_level->width()};
     int cols{_level->height()};
