@@ -28,10 +28,10 @@ void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const 
 }
 
 Room* BasicDungeonLevelBuilder::buildRoom(const int id) {
-    Direction north = Direction::North;
-    Direction south = Direction::South;
-    Direction east = Direction::East;
-    Direction west = Direction::West;
+    Direction north{Direction::North};
+    Direction south{Direction::South};
+    Direction east{Direction::East};
+    Direction west{Direction::West};
     if (_level) {
         Room* room{nullptr};
         //50% chance for each type of Room.
@@ -170,21 +170,21 @@ void BasicDungeonLevelBuilder::buildCreature(Room* room) {
 
     room->setCreature(_creatures.at(randomInt(3))->clone());
 
-    Doorway* north = dynamic_cast<Doorway*>(room->north());
+    Doorway* north{dynamic_cast<Doorway*>(room->north())};
     if (north) {
         if (north->isExit()) {
             room->creature().markAsBoss();
             return;
         }
     }
-    Doorway* east  = dynamic_cast<Doorway*>(room->east());
+    Doorway* east{dynamic_cast<Doorway*>(room->east())};
     if (east) {
         if (east->isExit()) {
             room->creature().markAsBoss();
             return;
         }
     }
-    Doorway* south = dynamic_cast<Doorway*>(room->south());
+    Doorway* south{dynamic_cast<Doorway*>(room->south())};
     if (south) {
         if (south->isExit()) {
             room->creature().markAsBoss();
@@ -192,11 +192,10 @@ void BasicDungeonLevelBuilder::buildCreature(Room* room) {
         }
     }
 
-    Doorway* west = dynamic_cast<Doorway*>(room->west());
+    Doorway* west{dynamic_cast<Doorway*>(room->west())};
     if (west) {
         if (west->isExit()) {
             room->creature().markAsBoss();
-            return;
         }
     }
 }

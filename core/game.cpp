@@ -84,36 +84,8 @@ void Game::createExampleLevel() {
 
     //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
-
-    std::cout << rooms.at(8)->creature().name() << std::endl;
-
-
-
-//    0 = dungeon::MoveConstraints::None
-//    1 = dungeon::MoveConstraints::OriginImpassable
-//    2 = dungeon::MoveConstraints::DestinationImpassable
-//    3 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationImpassable
-//    4 = dungeon::MoveConstraints::OriginLocked
-//    6 = dungeon::MoveConstraints::OriginLocked|dungeon|dungeon::MoveConstraints::DestinationImpassable
-//    8 = dungeon::MoveConstraints::DestinationLocked
-//    9 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationLocked
-//    12= dungeon::MoveConstraints::OriginLocked|dungeon::MoveConstraints::DestinationLocked
-
-//    {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
-//    MoveConstraints
-
-//    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible /
-//    0001(1) = One Way Door (Origin) OpenDoorWay(Destination) 	//Impassable/Traversible /
-//    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable /
-//    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
-//    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
-//    0101(5) = Wall                                            //Impassable/Impassable
-//    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
-//    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
-//    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
-//    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked
-
-
+    _builder.reset();
+    _builder = nullptr;
 }
 
 void Game::createRandomLevel(const std::string& name, const int width, const int height) {
@@ -122,7 +94,38 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         _level = nullptr;
     }
     _builder->BuildDungeonLevel(name, width, height);
+
+
+
+
+
     _level = _builder->getDungeonLevel();
+
+
+
+    //    0 = dungeon::MoveConstraints::None
+    //    1 = dungeon::MoveConstraints::OriginImpassable
+    //    2 = dungeon::MoveConstraints::DestinationImpassable
+    //    3 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationImpassable
+    //    4 = dungeon::MoveConstraints::OriginLocked
+    //    6 = dungeon::MoveConstraints::OriginLocked|dungeon|dungeon::MoveConstraints::DestinationImpassable
+    //    8 = dungeon::MoveConstraints::DestinationLocked
+    //    9 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationLocked
+    //    12= dungeon::MoveConstraints::OriginLocked|dungeon::MoveConstraints::DestinationLocked
+
+    //    {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
+    //    MoveConstraints
+
+    //    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible /
+    //    0001(1) = One Way Door (Origin) OpenDoorWay(Destination) 	//Impassable/Traversible /
+    //    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable /
+    //    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
+    //    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
+    //    0101(5) = Wall                                            //Impassable/Impassable
+    //    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
+    //    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
+    //    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
+    //    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked
 }
 
 const std::vector<std::string> Game::displayLevel() const {
@@ -134,23 +137,22 @@ const std::vector<std::string> Game::displayLevel() const {
     unsigned maxLoop = (rows * 6) - 1;
 
     //For each row in the dungeon
-    for (int i = 0; i < rows; ++i) {
+    for (int i{0}; i < rows; ++i) {
 
         //For each line inside a row (including the gap between rows)
-        for (int j = 0; j < 6; ++j) {
-            int k = 0;
-            int m = i * cols;
+        for (int j{0}; j < 6; ++j) {
+
+            int lastRoom{i* cols + cols};
             std::string line{""};
 
             //For each room in the row, concatenate.
-            for (k = i * cols; k < m + cols; ++k) {
+            for (int k{i * cols}; k < lastRoom; ++k) {
                 if (newDungeon.size() != maxLoop) {
                     line += dungeon.at(k).at(j);
                 }
             }
             newDungeon.push_back(line);
         }
-
     }
     return newDungeon;
 }
@@ -179,7 +181,7 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
                 line += "  ";
                 newRoom.push_back(line);
             }
-            //Horiontal-center & not the in the last column.
+            //Horiontal-centre & not the in the last column.
             if (j == 2 and roomID % cols != 0) {
                 //If room is a passage.
                 if (_level->retrieveRoom(roomID)->east()->isPassage()) {
