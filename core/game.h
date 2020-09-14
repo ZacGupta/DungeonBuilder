@@ -13,7 +13,6 @@ class Game {
   public:
     Game(const Game& other) = delete;
     Game& operator=(const Game&) = delete;
-    friend std::ostream& operator<<(std::ostream& out, const Game* game);  //operator overload (<<)
 
     ~Game();
 
@@ -23,13 +22,13 @@ class Game {
     void createExampleLevel();
     void createRandomLevel(const std::string& name, const int width, const int height);
 
-    std::vector<std::vector<std::string>> buildDisplay() const;
+
     const std::vector<std::string> displayLevel() const;
     double randomDouble();
   private:
     Game();
+    std::vector<std::vector<std::string>> buildDisplay() const;
     static Game* theInstance;
-    //core::dungeon::DungeonLevelBuilder* _builder;
     std::unique_ptr<core::dungeon::DungeonLevelBuilder> _builder;
     core::dungeon::DungeonLevel* _level;
     std::mt19937 _randomGenerator{uint32_t(time(nullptr))}; //!< Mersenne Twister random number generator seeded by current time
