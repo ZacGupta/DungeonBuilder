@@ -67,9 +67,11 @@ int main() {
     game->createExampleLevel();
     vector<string> v = game->displayLevel();
 
-    for (string line : v) {
-        cout << line << endl;
-    }
+    cout << *game << endl;
+
+//    for (string line : v) {
+//        cout << line << endl;
+//    }
 
 //    game->setDungeonType(move(dlb2));
 

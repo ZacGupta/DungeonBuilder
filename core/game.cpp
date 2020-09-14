@@ -9,6 +9,14 @@ Game::Game() : _builder{nullptr}, _level{nullptr} {
     std::cout << "Created Game" << std::endl;
 }
 
+std::ostream& operator<<(std::ostream& out, const Game& game) {
+
+    for (std::string line : game.displayLevel()) {
+        out << line << std::endl;
+    }
+    return out;
+}
+
 Game::~Game() {
     theInstance = nullptr;
     std::cout << "Destroyed Game" << std::endl;
@@ -140,24 +148,39 @@ const std::vector<std::string> Game::displayLevel() const {
     int numOfRooms = _level->numberOfRooms();
     int rows = _level->width();
     int cols = _level->height();
-    int maxLoop = (cols * 6) - 1;
-    int i = 0;
+    unsigned maxLoop = (rows * 6) - 1;
+    int loopCount = 0;
 
-    while (i < cols) {
+    //For each row in the dungeon
+    for (int i = 0; i < rows; ++i) {
+
+        //For each line inside a row (including the gap between rows)
         for (int j = 0; j < 6; ++j) {
+
+            //Because the last row will never have the 6th line (gap between the rows)
+            if (newDungeon.size() == maxLoop) break;
+
+            int k = 0;
+            int m = i * cols;
             std::string line{""};
-            for (int k = 0; k < rows; ++k) {
-                if (i == cols -1 && j == 5 ) {
-                    break;
-                }
-                line+= dungeon.at(k).at(j);
+
+            //For each room in the row, concatenate.
+            for (k = i * cols; k < m + cols; ++k) {
+                line += dungeon.at(k).at(j);
             }
             newDungeon.push_back(line);
+            ++loopCount;
         }
-        ++i;
+
     }
     return newDungeon;
 }
+
+// i = 0 j = 0 k = 0 currentRoom = 0  === [currentRoom + k = 0][j = 0]
+// i = 0 j = 0 k = 1 currentRoom = 0  === [currentRoom + k = 1][j = 0]
+// i = 0 j = 0 k = 2 currentRoom = 0  === [currentRoom + k = 2][j = 0] break;
+
+// i = 0 j = 1 k = 0 currentRoom = 1  === [currentRoom + k = 1][j = 1]
 
 
 
