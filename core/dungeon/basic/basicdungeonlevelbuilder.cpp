@@ -201,8 +201,10 @@ void BasicDungeonLevelBuilder::buildCreature(Room* room) {
     }
 }
 
-DungeonLevel* BasicDungeonLevelBuilder::getDungeonLevel() const {
-    return _level;
+DungeonLevel* BasicDungeonLevelBuilder::getDungeonLevel() {
+    DungeonLevel* temp{_level};
+    _level = nullptr;
+    return temp;
 }
 
 void BasicDungeonLevelBuilder::prototypeItems() {

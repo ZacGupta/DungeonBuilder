@@ -53,7 +53,7 @@ void MagicDungeonLevelBuilder::buildCreature(Room* room) {
     room->setCreature(_creatures.at(randomInt(3))->clone());
 }
 
-DungeonLevel* MagicDungeonLevelBuilder::getDungeonLevel() const {
+DungeonLevel* MagicDungeonLevelBuilder::getDungeonLevel() {
     return _level;
 }
 

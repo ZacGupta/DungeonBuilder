@@ -27,7 +27,7 @@ class DungeonLevelBuilder {
     virtual void buildExit(Room* room, const Direction direction);
     virtual void buildItem(Room* room);
     virtual void buildCreature(Room* room);
-    virtual DungeonLevel* getDungeonLevel() const;
+    virtual DungeonLevel* getDungeonLevel();
   protected:
     DungeonLevelBuilder();
     virtual void prototypeItems();

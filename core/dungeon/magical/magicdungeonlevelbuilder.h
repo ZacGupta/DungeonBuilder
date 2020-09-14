@@ -20,7 +20,7 @@ class MagicDungeonLevelBuilder : public DungeonLevelBuilder {
     virtual void buildExit(Room* room, const Direction direction) override;
     virtual void buildItem(Room* room) override;
     virtual void buildCreature(Room* room) override;
-    virtual DungeonLevel* getDungeonLevel() const override;
+    virtual DungeonLevel* getDungeonLevel() override;
   private:
     void prototypeItems() override;
     void prototypeCreatures() override;

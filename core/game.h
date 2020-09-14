@@ -13,7 +13,7 @@ class Game {
   public:
     Game(const Game& other) = delete;
     Game& operator=(const Game&) = delete;
-    friend std::ostream& operator<<(std::ostream& out, const Game& game);  //operator overload (<<)
+    friend std::ostream& operator<<(std::ostream& out, const Game* game);  //operator overload (<<)
 
     ~Game();
 

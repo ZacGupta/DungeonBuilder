@@ -9,9 +9,9 @@ Game::Game() : _builder{nullptr}, _level{nullptr} {
     std::cout << "Created Game" << std::endl;
 }
 
-std::ostream& operator<<(std::ostream& out, const Game& game) {
+std::ostream& operator<<(std::ostream& out, const Game* game) {
 
-    for (std::string line : game.displayLevel()) {
+    for (std::string line : game->displayLevel()) {
         out << line << std::endl;
     }
     return out;
@@ -145,44 +145,31 @@ const std::vector<std::string> Game::displayLevel() const {
     std::vector<std::vector<std::string>> dungeon = buildDisplay();
     std::vector<std::string> newDungeon = std::vector<std::string>();
 
-    int numOfRooms = _level->numberOfRooms();
     int rows = _level->width();
     int cols = _level->height();
     unsigned maxLoop = (rows * 6) - 1;
-    int loopCount = 0;
 
     //For each row in the dungeon
     for (int i = 0; i < rows; ++i) {
 
         //For each line inside a row (including the gap between rows)
         for (int j = 0; j < 6; ++j) {
-
-            //Because the last row will never have the 6th line (gap between the rows)
-            if (newDungeon.size() == maxLoop) break;
-
             int k = 0;
             int m = i * cols;
             std::string line{""};
 
             //For each room in the row, concatenate.
             for (k = i * cols; k < m + cols; ++k) {
-                line += dungeon.at(k).at(j);
+                if (newDungeon.size() != maxLoop) {
+                    line += dungeon.at(k).at(j);
+                }
             }
             newDungeon.push_back(line);
-            ++loopCount;
         }
 
     }
     return newDungeon;
 }
-
-// i = 0 j = 0 k = 0 currentRoom = 0  === [currentRoom + k = 0][j = 0]
-// i = 0 j = 0 k = 1 currentRoom = 0  === [currentRoom + k = 1][j = 0]
-// i = 0 j = 0 k = 2 currentRoom = 0  === [currentRoom + k = 2][j = 0] break;
-
-// i = 0 j = 1 k = 0 currentRoom = 1  === [currentRoom + k = 1][j = 1]
-
-
 
 std::vector<std::vector<std::string>> Game::buildDisplay() const {
     std::vector<std::vector<std::string>> dungeon;

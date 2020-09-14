@@ -67,7 +67,7 @@ int main() {
     game->createExampleLevel();
     vector<string> v = game->displayLevel();
 
-    cout << *game << endl;
+    cout << game << endl;
 
 //    for (string line : v) {
 //        cout << line << endl;

@@ -38,7 +38,7 @@ void DungeonLevelBuilder::buildCreature(Room* room) {
 
 }
 
-DungeonLevel* DungeonLevelBuilder::getDungeonLevel() const {
+DungeonLevel* DungeonLevelBuilder::getDungeonLevel() {
 
 }
 
