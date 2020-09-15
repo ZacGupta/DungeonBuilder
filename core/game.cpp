@@ -101,8 +101,8 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     }
 
     int numOfRooms{width * height};
-    int rows{width};
-    int cols{height};
+    int rows{height};
+    int cols{width};
 
     std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
     rooms.reserve(numOfRooms);
@@ -132,7 +132,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
 
         //Last row
-        else if (roomID > (cols - 1) * rows) {
+        else if (roomID > (rows - 1) * cols) {
             _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
         } else {
             _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
@@ -141,6 +141,8 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     _level = _builder->getDungeonLevel();
+
+    std::cout << "End of createLevel" << std::endl;
 
 //    if (id % cols = 0) =   end room
 //        if not last row
@@ -202,8 +204,8 @@ const std::vector<std::string> Game::displayLevel() const {
         return std::vector<std::string>();
     }
 
-    int rows{_level->width()};
-    int cols{_level->height()};
+    int rows{_level->height()};
+    int cols{_level->width()};
     unsigned maxLoop{(static_cast<unsigned>(rows) * 6) - 1};
 
     //For each row in the dungeon
@@ -224,7 +226,9 @@ const std::vector<std::string> Game::displayLevel() const {
             newDungeon.push_back(line);
         }
     }
+    std::cout << "End of displayLevel" << std::endl;
     return newDungeon;
+
 }
 
 std::vector<std::vector<std::string>> Game::buildDisplay() const {
@@ -232,8 +236,8 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
         return std::vector<std::vector<std::string>>();
     }
     std::vector<std::vector<std::string>> dungeon;
-    int rows{_level->width()};
-    int cols{_level->height()};
+    int rows{_level->height()};
+    int cols{_level->width()};
     int numOFRooms{_level->numberOfRooms()};
 
     //Outer loop for each room
@@ -245,6 +249,7 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
         //Inner loop for each 'line' in a room.
         for (int j{0}; j < 6; ++j) {
             std::string line{""};
+            int colsMinusOneXRows = (cols -1) * rows + 1;
             //To stay in bounds of the vector.
             if (j < 5) {
                 line = room.at(j);
@@ -268,7 +273,7 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
                 newRoom.push_back(line);
             }
             //The gap between rows & room not in the last row.
-            if (j == 5 and roomID <= (cols - 1) * rows) {
+            if (j == 5 and roomID <= (rows - 1) * cols) {
                 if (_level->retrieveRoom(1)->south()->isPassage()) {
                     line += "     |       ";
                     newRoom.push_back(line);
@@ -288,6 +293,7 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
         }
         dungeon.push_back(newRoom);
     }
+    std::cout << "End of buildDisplay" << std::endl;
     return dungeon;
 }
 
