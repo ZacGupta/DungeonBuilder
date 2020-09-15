@@ -24,13 +24,18 @@ class Game {
 
 
     const std::vector<std::string> displayLevel() const;
-    double randomDouble();
+
   private:
     Game();
     std::vector<std::vector<std::string>> buildDisplay() const;
+
+    int randomInt(double possibilities) const;
+    double randomDouble();
+
     static Game* theInstance;
     std::unique_ptr<core::dungeon::DungeonLevelBuilder> _builder;
     core::dungeon::DungeonLevel* _level;
+
     std::mt19937 _randomGenerator{uint32_t(time(nullptr))}; //!< Mersenne Twister random number generator seeded by current time
     std::uniform_real_distribution<double> _realDistribution{0.0, 1.0}; //!< For random numbers between 0.0 & 1.0
 

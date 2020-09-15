@@ -100,14 +100,11 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         _level = nullptr;
     }
 
-    int numOfRooms{width * height};
-    int rows{height};
-    int cols{width};
-
     std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
+    int numOfRooms{width * height};
     rooms.reserve(numOfRooms);
-
     _builder->BuildDungeonLevel(name, width, height);
+    int rng{0};
 
     //Build rooms
     for (int i{0}; i < numOfRooms; ++i) {
@@ -116,58 +113,96 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
 
     //Build doorways, always building east first (unless in the last column or the only room), then south (unless in the last or only row)
     for (int i{0}; i < numOfRooms; ++i) {
-        //roomID and adjacentH(Horizontal) have the same value but i purposely chose to give them separate names
+        //roomID and adjacentH (Horizontal) have the same value but i purposely chose to give them separate names
         //to make the algortithm a bit more readable, as they have different meanings and are used in different contexts.
         int roomID{i + 1};
         int adjacentH{i + 1};
-        int adjacentV{i + cols};
+        int adjacentV{i + width};
 
-        //Last Room (I hope break is okay to use, it made logical sense to do so, and made the rest of the conditionals a lot clearer)
-        if (roomID == numOfRooms) {
-            break;
-        }
-        //Last Column
-        else if (roomID % cols == 0) {
-            _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
-        }
-
-        //Last row
-        else if (roomID > (rows - 1) * cols) {
-            _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
-        } else {
-            _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
-            if (rows != 1)
+        if (roomID != numOfRooms) {
+            //Last Column
+            if (roomID % width == 0) {
                 _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
+            }
+            //Last row
+            else if (roomID > (width * height) - width) {
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
+            }
+            //All other rooms
+            else {
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
+                if (height != 1)
+                    _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
+            }
         }
     }
+    //Build Entranc
+    rng = randomInt(width);
+
+    //Room 1
+    if (rng == 0) {
+        if (width == 1) {
+            double randomDirection = randomDouble();
+            if (randomDirection < 0.33) {
+                _builder->buildEntrance(rooms.at(0), dungeon::Direction::North);
+            } else if (randomDirection > 0.33 and randomDirection < 0.66) {
+                _builder->buildEntrance(rooms.at(0), dungeon::Direction::West);
+            } else {
+                _builder->buildEntrance(rooms.at(0), dungeon::Direction::East);
+            }
+        } else {
+            if (randomDouble() < 0.50) {
+                _builder->buildEntrance(rooms.at(0), dungeon::Direction::North);
+            } else {
+                _builder->buildEntrance(rooms.at(0), dungeon::Direction::West);
+            }
+        }
+    }
+    //Room 2
+    else if (rng == 1) {
+        if (width != 2) {
+            _builder->buildEntrance(rooms.at(1), dungeon::Direction::North);
+        } else {
+            if (randomDouble() < 0.50) {
+                _builder->buildEntrance(rooms.at(1), dungeon::Direction::North);
+            } else {
+                _builder->buildEntrance(rooms.at(1), dungeon::Direction::East);
+            }
+        }
+    }
+    //Room 3
+    else if (rng == 2) {
+        if (width != 3) {
+            _builder->buildEntrance(rooms.at(2), dungeon::Direction::North);
+        } else {
+            if (randomDouble() < 0.50) {
+                _builder->buildEntrance(rooms.at(2), dungeon::Direction::North);
+            } else {
+                _builder->buildEntrance(rooms.at(2), dungeon::Direction::East);
+            }
+        }
+    }
+    //Room 4
+    else if (rng == 3) {
+        if (randomDouble() < 0.50) {
+            _builder->buildEntrance(rooms.at(3), dungeon::Direction::North);
+        } else {
+            _builder->buildEntrance(rooms.at(3), dungeon::Direction::East);
+        }
+
+
+        _builder->buildExit(rooms.at(8), dungeon::Direction::East);
+    }
+
+
+
+    //Build Exit
+    //Find the range of the last row
+    int exitStart{(width * height) - width};
+    int exitEnd{numOfRooms};
+    int exitRange{exitEnd - exitStart};
+
     _level = _builder->getDungeonLevel();
-
-    std::cout << "End of createLevel" << std::endl;
-
-//    if (id % cols = 0) =   end room
-//        if not last row
-//            adjacent = id + cols (south)
-//        if last row
-//            adjacent = id + 1 (east)
-//    if (id % cols = 1) = first room
-//        if not last row
-//            adjacent = id + 1 and id + cols (east, south)
-//        if last row
-//            adjacent = id + 1 (east)
-//    if (id % cols = 2) = second room
-//        if not last row
-//            adjacent = id + 1 and id + cols (east, south)
-//        if last row
-//            adjacent = id + 1 (east)
-//    if (id % cols = 3) = third room
-//        if not last row
-//            adjacent = id + 1 and id + cols (east, south)
-//        if last row
-//            adjacent = id + 1 (east)
-
-//    last row = if room.id > rows x (cols -1)
-
-
 
 //    _builder.reset();
 
@@ -226,7 +261,6 @@ const std::vector<std::string> Game::displayLevel() const {
             newDungeon.push_back(line);
         }
     }
-    std::cout << "End of displayLevel" << std::endl;
     return newDungeon;
 
 }
@@ -249,7 +283,7 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
         //Inner loop for each 'line' in a room.
         for (int j{0}; j < 6; ++j) {
             std::string line{""};
-            int colsMinusOneXRows = (cols -1) * rows + 1;
+            int colsMinusOneXRows = (cols - 1) * rows + 1;
             //To stay in bounds of the vector.
             if (j < 5) {
                 line = room.at(j);
@@ -269,19 +303,10 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
                     newRoom.push_back(line);
                 }
             } else if (j == 2 and roomID % cols == 0) { //In the last column
-                line += "  "; //Might need to delete this line.
                 newRoom.push_back(line);
             }
-            //The gap between rows & room not in the last row.
-            if (j == 5 and roomID <= (rows - 1) * cols) {
-                if (_level->retrieveRoom(1)->south()->isPassage()) {
-                    line += "     |       ";
-                    newRoom.push_back(line);
-                } else {
-                    line += "             ";
-                    newRoom.push_back(line);
-                }
-            } else if (j == 5 and cols == 1) {
+            //Insert vertical gap between the rooms if not in the last row.
+            if (j == 5 and roomID <= (rows * cols) - cols) {
                 if (_level->retrieveRoom(1)->south()->isPassage()) {
                     line += "     |       ";
                     newRoom.push_back(line);
@@ -293,12 +318,17 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
         }
         dungeon.push_back(newRoom);
     }
-    std::cout << "End of buildDisplay" << std::endl;
     return dungeon;
 }
 
 double Game::randomDouble() {
     return _realDistribution(_randomGenerator);
+}
+
+int Game::randomInt(double possibilities) const {
+    std::uniform_real_distribution<double> realDistribution{0, possibilities};
+    std::mt19937 randomGenerator{uint32_t(time(nullptr))};
+    return realDistribution(randomGenerator);
 }
 
 

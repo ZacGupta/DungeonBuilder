@@ -64,13 +64,12 @@ int main() {
     unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
 //    unique_ptr<BasicDungeonLevelBuilder> dlb2{new BasicDungeonLevelBuilder()};
     game->setDungeonType(move(dlb));
-    game->createRandomLevel("Random Dungeon", 3, 2);
+    game->createRandomLevel("Random Dungeon", 4, 4);
     vector<string> v = game->displayLevel();
 
     for (auto i : game->displayLevel()) {
         cout << i << endl;
     }
-
 
 //    for (string line : v) {
 //        cout << line << endl;
