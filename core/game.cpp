@@ -104,7 +104,6 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     int numOfRooms{width * height};
     rooms.reserve(numOfRooms);
     _builder->BuildDungeonLevel(name, width, height);
-    int rng{0};
 
     //Build rooms
     for (int i{0}; i < numOfRooms; ++i) {
@@ -137,12 +136,12 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     //Build Entranc
-    rng = randomInt(width);
+    int rng = randomInt(width);
 
     //Room 1
     if (rng == 0) {
+        double randomDirection{randomDouble()};
         if (width == 1) {
-            double randomDirection = randomDouble();
             if (randomDirection < 0.33) {
                 _builder->buildEntrance(rooms.at(0), dungeon::Direction::North);
             } else if (randomDirection > 0.33 and randomDirection < 0.66) {
@@ -151,7 +150,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
                 _builder->buildEntrance(rooms.at(0), dungeon::Direction::East);
             }
         } else {
-            if (randomDouble() < 0.50) {
+            if (randomDirection < 0.50) {
                 _builder->buildEntrance(rooms.at(0), dungeon::Direction::North);
             } else {
                 _builder->buildEntrance(rooms.at(0), dungeon::Direction::West);
@@ -189,46 +188,78 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         } else {
             _builder->buildEntrance(rooms.at(3), dungeon::Direction::East);
         }
-
-
-        _builder->buildExit(rooms.at(8), dungeon::Direction::East);
     }
 
-
-
     //Build Exit
-    //Find the range of the last row
-    int exitStart{(width * height) - width};
-    int exitEnd{numOfRooms};
-    int exitRange{exitEnd - exitStart};
+    int exitRange{numOfRooms - ((width * height) - width)};
+    int exitStart{((width * height) - width)};
+    rng = randomInt(exitRange);
 
+    //Room 1
+    if (rng == 0) {
+        if (width == 1) {
+            if (height == 1) {
+                _builder->buildExit(rooms.at(exitStart), dungeon::Direction::South);
+            } else {
+                double randomDirection{randomDouble()};
+                if (randomDirection < 0.33) {
+                    _builder->buildExit(rooms.at(exitStart), dungeon::Direction::South);
+                } else if (randomDirection > 0.33 and randomDirection < 0.66) {
+                    _builder->buildExit(rooms.at(exitStart), dungeon::Direction::East);
+                } else {
+                    _builder->buildExit(rooms.at(exitStart), dungeon::Direction::West);
+                }
+            }
+        } else {
+            if (randomDouble() < 0.50) {
+                _builder->buildExit(rooms.at(exitStart), dungeon::Direction::South);
+            } else {
+                _builder->buildExit(rooms.at(exitStart), dungeon::Direction::West);
+            }
+        }
+    }
+    //Room 2
+    else if (rng == 1) {
+        if (width != 2 or height == 1) {
+            _builder->buildExit(rooms.at(exitStart + 1), dungeon::Direction::South);
+        } else {
+            if (randomDouble() < 0.50) {
+                _builder->buildExit(rooms.at(exitStart + 1), dungeon::Direction::South);
+            } else {
+                _builder->buildExit(rooms.at(exitStart + 1), dungeon::Direction::East);
+            }
+        }
+    }
+    //Room 3
+    else if (rng == 2) {
+        if (width != 3 or height == 1) {
+            _builder->buildExit(rooms.at(exitStart + 2), dungeon::Direction::South);
+        } else {
+            if (randomDouble() < 0.50) {
+                _builder->buildExit(rooms.at(exitStart + 2), dungeon::Direction::South);
+            } else {
+                _builder->buildExit(rooms.at(exitStart + 2), dungeon::Direction::East);
+            }
+        }
+    }
+    //Room 4
+    else if (rng == 3) {
+        if (height == 1) {
+            _builder->buildExit(rooms.at(exitStart + 3), dungeon::Direction::South);
+        } else {
+            if (randomDouble() < 0.50) {
+                _builder->buildExit(rooms.at(exitStart + 3), dungeon::Direction::South);
+            } else {
+                _builder->buildExit(rooms.at(exitStart + 3), dungeon::Direction::East);
+            }
+        }
+    }
+    int rand =  randomDouble();
+        for (int i = 0; i < 10000; ++i) {
+            std::cout << rand << std::endl;
+        }
     _level = _builder->getDungeonLevel();
 
-//    _builder.reset();
-
-    //    0 = dungeon::MoveConstraints::None
-    //    1 = dungeon::MoveConstraints::OriginImpassable
-    //    2 = dungeon::MoveConstraints::DestinationImpassable
-    //    3 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationImpassable
-    //    4 = dungeon::MoveConstraints::OriginLocked
-    //    6 = dungeon::MoveConstraints::OriginLocked|dungeon|dungeon::MoveConstraints::DestinationImpassable
-    //    8 = dungeon::MoveConstraints::DestinationLocked
-    //    9 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationLocked
-    //    12= dungeon::MoveConstraints::OriginLocked|dungeon::MoveConstraints::DestinationLocked
-
-    //    {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
-    //    MoveConstraints
-
-    //    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible /
-    //    0001(1) = One Way Door (Origin) OpenDoorWay(Destination) 	//Impassable/Traversible /
-    //    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable /
-    //    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
-    //    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
-    //    0101(5) = Wall                                            //Impassable/Impassable
-    //    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
-    //    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
-    //    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
-    //    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked
 }
 
 const std::vector<std::string> Game::displayLevel() const {
@@ -283,7 +314,6 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
         //Inner loop for each 'line' in a room.
         for (int j{0}; j < 6; ++j) {
             std::string line{""};
-            int colsMinusOneXRows = (cols - 1) * rows + 1;
             //To stay in bounds of the vector.
             if (j < 5) {
                 line = room.at(j);
@@ -333,3 +363,29 @@ int Game::randomInt(double possibilities) const {
 
 
 }
+
+//    _builder.reset();
+
+//    0 = dungeon::MoveConstraints::None
+//    1 = dungeon::MoveConstraints::OriginImpassable
+//    2 = dungeon::MoveConstraints::DestinationImpassable
+//    3 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationImpassable
+//    4 = dungeon::MoveConstraints::OriginLocked
+//    6 = dungeon::MoveConstraints::OriginLocked|dungeon|dungeon::MoveConstraints::DestinationImpassable
+//    8 = dungeon::MoveConstraints::DestinationLocked
+//    9 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationLocked
+//    12= dungeon::MoveConstraints::OriginLocked|dungeon::MoveConstraints::DestinationLocked
+
+//    {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
+//    MoveConstraints
+
+//    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible /
+//    0001(1) = One Way Door (Origin) OpenDoorWay(Destination) 	//Impassable/Traversible /
+//    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable /
+//    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
+//    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
+//    0101(5) = Wall                                            //Impassable/Impassable
+//    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
+//    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
+//    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
+//    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked
