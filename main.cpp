@@ -64,7 +64,7 @@ int main() {
     unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
 //    unique_ptr<BasicDungeonLevelBuilder> dlb2{new BasicDungeonLevelBuilder()};
     game->setDungeonType(move(dlb));
-    game->createRandomLevel("Random Dungeon", 1, 1);
+    game->createRandomLevel("Random Dungeon", 3, 4);
     vector<string> v = game->displayLevel();
 
     for (auto i : game->displayLevel()) {

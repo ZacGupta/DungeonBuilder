@@ -134,8 +134,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         //Last row
         else if (roomID > (cols - 1) * rows) {
             _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
-        }
-        else {
+        } else {
             _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
             if (rows != 1)
                 _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
@@ -257,7 +256,6 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
             }
             //Horiontal-centre & not the in the last column.
             if (j == 2 and roomID % cols != 0) {
-                //If room is a passage.
                 if (_level->retrieveRoom(roomID)->east()->isPassage()) {
                     line += "--";
                     newRoom.push_back(line);
@@ -265,13 +263,20 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
                     line += "  ";
                     newRoom.push_back(line);
                 }
-            } else if (j == 2 and roomID % cols == 0) {
-                line += "  ";
+            } else if (j == 2 and roomID % cols == 0) { //In the last column
+                line += "  "; //Might need to delete this line.
                 newRoom.push_back(line);
             }
             //The gap between rows & room not in the last row.
-            if (j == 5 && roomID <= (cols - 1) * rows) {
-                //If room is a passage.
+            if (j == 5 and roomID <= (cols - 1) * rows) {
+                if (_level->retrieveRoom(1)->south()->isPassage()) {
+                    line += "     |       ";
+                    newRoom.push_back(line);
+                } else {
+                    line += "             ";
+                    newRoom.push_back(line);
+                }
+            } else if (j == 5 and cols == 1) {
                 if (_level->retrieveRoom(1)->south()->isPassage()) {
                     line += "     |       ";
                     newRoom.push_back(line);
