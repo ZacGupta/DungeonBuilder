@@ -10,11 +10,11 @@ namespace core::dungeon::magical {
 class MagicDungeonLevelBuilder : public DungeonLevelBuilder {
   public:
     MagicDungeonLevelBuilder();
-    ~MagicDungeonLevelBuilder() = default;
+    ~MagicDungeonLevelBuilder();
     MagicDungeonLevelBuilder(const MagicDungeonLevelBuilder& other) = delete;
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) override;
-    virtual std::shared_ptr<Room> buildRoom(const int id) override;
+    virtual std::shared_ptr<Room> buildRoom(int id) override;
     virtual void buildDoorWay(std::shared_ptr<Room> origin, std::shared_ptr<Room> destination, const Direction direction, const MoveConstraints constraints) override;
     virtual void buildEntrance(std::shared_ptr<Room> room, const Direction direction) override;
     virtual void buildExit(std::shared_ptr<Room> room, const Direction direction) override;
@@ -26,6 +26,5 @@ class MagicDungeonLevelBuilder : public DungeonLevelBuilder {
     void prototypeCreatures() override;
 };
 }
-
 
 #endif // MAGICDUNGEONLEVELBUILDER_H
