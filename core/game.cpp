@@ -93,8 +93,6 @@ void Game::createExampleLevel() {
     std::cout << rooms.at(4)->item().name() << std::endl;
     std::cout << rooms.at(6)->item().name() << std::endl;
 
-
-
     //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
 //    _builder.reset();
@@ -110,7 +108,21 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         _level = nullptr;
     }
 
-    int rng{0};
+    //If we have one of each move constraint, it naturally results in a 33.33% for each type of doorway,
+    //so by simply adding 'None' twice, we increase the chance of traversible doorways to 40%,
+    //and reduce the chances of the impassable and locked doorways to 30% each.
+    std::vector<dungeon::MoveConstraints> constraints{
+        dungeon::MoveConstraints::None,
+        dungeon::MoveConstraints::None,
+        dungeon::MoveConstraints::OriginImpassable,
+        dungeon::MoveConstraints::DestinationImpassable,
+        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable,
+        dungeon::MoveConstraints::OriginLocked,
+        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationImpassable,
+        dungeon::MoveConstraints::DestinationLocked,
+        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationLocked,
+        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked};
+
     std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
     int numOfRooms{width * height};
     rooms.reserve(numOfRooms);
@@ -132,72 +144,73 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         if (roomID != numOfRooms) {
             //Last Column
             if (roomID % width == 0) {
-                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
             }
             //Last row
             else if (roomID > (width * height) - width) {
-                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, constraints.at((randomInt(10))));
             }
             //All other rooms
             else {
-                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, dungeon::MoveConstraints::None);
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, constraints.at((randomInt(10))));
                 if (height != 1)
-                    _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, dungeon::MoveConstraints::None);
+                    _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
             }
         }
     }
     //Build Entrance
-    rng = randomInt(width);
+    int rng{randomInt(width)};
+    int entranceRoom = rng;
 
     //Room 1
     if (rng == 0 or width == 1) {
         double randomDirection{randomDouble()};
         if (width == 1) {
             if (randomDirection < 0.33) {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::North);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::North);
             } else if (randomDirection > 0.33 and randomDirection < 0.66) {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::West);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::West);
             } else {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::East);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::East);
             }
         } else {
             if (randomDirection < 0.50) {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::North);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::North);
             } else {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::West);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::West);
             }
         }
     }
     //Room 2
     else if (rng == 1 or width == 2) {
         if (width != 2) {
-            _builder->buildEntrance(rooms.at(rng), dungeon::Direction::North);
+            _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::North);
         } else {
             if (randomDouble() < 0.50) {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::North);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::North);
             } else {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::East);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::East);
             }
         }
     }
     //Room 3
     else if (rng == 2 or width == 3) {
         if (width != 3) {
-            _builder->buildEntrance(rooms.at(rng), dungeon::Direction::North);
+            _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::North);
         } else {
             if (randomDouble() < 0.50) {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::North);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::North);
             } else {
-                _builder->buildEntrance(rooms.at(rng), dungeon::Direction::East);
+                _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::East);
             }
         }
     }
     //Room 4
     else if (rng == 3 or width == 4) {
         if (randomDouble() < 0.50) {
-            _builder->buildEntrance(rooms.at(rng), dungeon::Direction::North);
+            _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::North);
         } else {
-            _builder->buildEntrance(rooms.at(rng), dungeon::Direction::East);
+            _builder->buildEntrance(rooms.at(entranceRoom), dungeon::Direction::East);
         }
     }
 
@@ -270,11 +283,13 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     }
     //Add items and creatures
     for (int i = 0; i < numOfRooms; ++i) {
-        if (randomDouble() < 0.25) {
-            _builder->buildCreature(rooms.at(i));
-        }
-        if (randomDouble() < 0.35) {
-            _builder->buildItem(rooms.at(i));
+        if (i != entranceRoom) {
+            if (randomDouble() < 0.25) {
+                _builder->buildCreature(rooms.at(i));
+            }
+            if (randomDouble() < 0.35) {
+                _builder->buildItem(rooms.at(i));
+            }
         }
         if (i == exitRoom) {
             _builder->buildCreature(rooms.at(i));
@@ -405,7 +420,6 @@ int Game::randomInt(int possibilities) const {
 //    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable /
 //    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
 //    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
-//    0101(5) = Wall                                            //Impassable/Impassable
 //    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
 //    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
 //    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
