@@ -23,11 +23,10 @@ class Game {
     void createRandomLevel(const std::string& name, const int width, const int height);
 
 
-    const std::vector<std::string> displayLevel() const;
+    const std::ostream& displayLevel(std::ostream& out) const;
 
   private:
     Game();
-    std::vector<std::vector<std::string>> buildDisplay() const;
 
     double randomDouble();
     int randomInt(int possibilities) const;

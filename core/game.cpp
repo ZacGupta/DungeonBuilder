@@ -360,92 +360,14 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     _builder.reset();
 }
 
-const std::vector<std::string> Game::displayLevel() const {
-    std::vector<std::vector<std::string>> dungeon{buildDisplay()};
-    std::vector<std::string> newDungeon{std::vector<std::string>()};
-
-    if (not _level or dungeon.size() == 0) {
-        return std::vector<std::string>();
-    }
-
-    int rows{_level->height()};
-    int cols{_level->width()};
-    unsigned maxLoop{(static_cast<unsigned>(rows) * 6) - 1};
-
-    //For each row in the dungeon
-    for (int i{0}; i < rows; ++i) {
-        //For each line inside a row (including the gap between rows)
-        for (int j{0}; j < 6; ++j) {
-            int lastRoom{i* cols + cols};
-            std::string line{""};
-            //For each room in the row, concatenate.
-            for (int k{i * cols}; k < lastRoom; ++k) {
-                if (newDungeon.size() != maxLoop) {
-                    line += dungeon.at(k).at(j);
-                }
-            }
-            newDungeon.push_back(line);
-        }
-    }
-    return newDungeon;
-
-}
-
-std::vector<std::vector<std::string>> Game::buildDisplay() const {
+const std::ostream& Game::displayLevel(std::ostream& out) const {
     if (not _level) {
-        return std::vector<std::vector<std::string>>();
+        return out;
     }
-    std::vector<std::vector<std::string>> dungeon;
-    int rows{_level->height()};
-    int cols{_level->width()};
-    int numOFRooms{_level->numberOfRooms()};
-
-    //Outer loop for each room
-    for (int i{0}; i < numOFRooms; ++i ) {
-        int roomID = i + 1;
-        std::vector<std::string> room{_level->retrieveRoom(i + 1)->display()};
-        std::vector<std::string> newRoom{std::vector<std::string>()};
-
-        //Inner loop for each 'line' in a room.
-        for (int j{0}; j < 6; ++j) {
-            std::string line{""};
-            //To stay in bounds of the vector.
-            if (j < 5) {
-                line = room.at(j);
-            }
-            //Top/offcentre//bottom
-            if (j != 2 and j != 5) {
-                line += "  ";
-                newRoom.push_back(line);
-            }
-            //Horiontal-centre & not the in the last column.
-            if (j == 2 and roomID % cols != 0) {
-                if (_level->retrieveRoom(roomID)->east()->isPassage()) {
-                    line += "--";
-                    newRoom.push_back(line);
-                } else {
-                    line += "  ";
-                    newRoom.push_back(line);
-                }
-            } else if (j == 2 and roomID % cols == 0) { //In the last column
-                newRoom.push_back(line);
-            }
-            //Insert vertical gap between the rooms if room is not in the last row.
-            if (j == 5 and roomID <= (rows * cols) - cols) {
-                if (_level->retrieveRoom(roomID)->south()->isPassage()) {
-                    line += "     |       ";
-                    newRoom.push_back(line);
-                } else {
-                    line += "             ";
-                    newRoom.push_back(line);
-                }
-            }
-        }
-        dungeon.push_back(newRoom);
-
-
+    std::vector<std::string> dungeon {_level->display()};
+    for (std::string row : dungeon ) {
+        out << row << std::endl;
     }
-    return dungeon;
 }
 
 double Game::randomDouble() {

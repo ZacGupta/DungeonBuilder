@@ -21,7 +21,7 @@ class DungeonLevel {
     virtual int numberOfRooms() const;
     virtual const std::string& name() const;
     virtual const std::string description() const = 0;
-    virtual const std::vector<std::string>& display() const;
+    virtual const std::vector<std::string> display() const;
   protected:
     DungeonLevel(const std::string& name, int width, int height);
     const std::string _name;
@@ -29,7 +29,7 @@ class DungeonLevel {
     const int _height;
     const int _numberOfRooms;
     std::vector<std::shared_ptr<Room>> _rooms;
-    const std::vector<std::string> _display;
+    std::vector<std::vector<std::string>> buildDisplay() const;
 };
 }
 
