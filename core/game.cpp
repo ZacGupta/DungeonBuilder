@@ -35,7 +35,7 @@ void Game::createExampleLevel() {
         _level = nullptr;
     }
 
-    std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
+    std::vector <std::shared_ptr<dungeon::Room>> rooms{std::vector <std::shared_ptr<dungeon::Room>>()};
     rooms.reserve(9);
 
     _builder->BuildDungeonLevel("Example Level", 3, 3);
@@ -103,74 +103,74 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         _level = nullptr;
     }
 
-    //If we have one of each move constraint, it naturally results in a 33.33% for each type of doorway,
-    //so by simply adding 'None' twice, we increase the chance of traversible doorways to 40%,
-    //and reduce the chances of the impassable and locked doorways to 30% each.
+    //If we have one of each move constraint, it naturally results in a 33.33% probability for each type of doorway,
+    //so by simply adding 'None' twice, we can increase the probability of traversable doorways to 40%,
+    //and reduce the probability of the impassable and locked doorways to 30% each.
     std::vector<dungeon::MoveConstraints> constraints{
-        dungeon::MoveConstraints::None, //0
-        dungeon::MoveConstraints::None,  //1
-        dungeon::MoveConstraints::OriginImpassable, //2
-        dungeon::MoveConstraints::DestinationImpassable, //3
-        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable, //4
-        dungeon::MoveConstraints::OriginLocked, //5
-        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationImpassable, //6
-        dungeon::MoveConstraints::DestinationLocked, //7
-        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationLocked, //8
-        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked}; //9
+        dungeon::MoveConstraints::None,
+        dungeon::MoveConstraints::None,
+        dungeon::MoveConstraints::OriginImpassable,
+        dungeon::MoveConstraints::DestinationImpassable,
+        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable,
+        dungeon::MoveConstraints::OriginLocked,
+        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationImpassable,
+        dungeon::MoveConstraints::DestinationLocked,
+        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationLocked,
+        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked};
 
-    int traversable{0};
-    int impassable{0};
-    int locked{0};
-    for (int i{0}; i < 2147483646; ++i) {
-        int rng = randomInt(10);
+//    int traversable{0};
+//    int impassable{0};
+//    int locked{0};
+//    for (int i{0}; i < 2147483646; ++i) {
+//        int rng = randomInt(10);
 
-        if (rng == 0) {
-            ++traversable;
-            ++traversable;
-        }
-        if (rng == 1) {
-            ++traversable;
-            ++traversable;
-        }
-        if (rng == 2) {
-            ++traversable;
-            ++impassable;
-        }
-        if (rng == 3) {
-            ++traversable;
-            ++impassable;
-        }
-        if (rng == 4) {
-            ++impassable;
-            ++impassable;
-        }
-        if (rng == 5) {
-            ++locked;
-            ++traversable;
-        }
-        if (rng == 6) {
-            ++locked;
-            ++impassable;
-        }
-        if (rng == 7) {
-            ++traversable;
-            ++locked;
-        }
-        if (rng == 8) {
-            ++locked;
-            ++impassable;
-        }
-        if (rng == 9) {
-            ++locked;
-            ++locked;
-        }
+//        if (rng == 0) {
+//            ++traversable;
+//            ++traversable;
+//        }
+//        if (rng == 1) {
+//            ++traversable;
+//            ++traversable;
+//        }
+//        if (rng == 2) {
+//            ++traversable;
+//            ++impassable;
+//        }
+//        if (rng == 3) {
+//            ++traversable;
+//            ++impassable;
+//        }
+//        if (rng == 4) {
+//            ++impassable;
+//            ++impassable;
+//        }
+//        if (rng == 5) {
+//            ++locked;
+//            ++traversable;
+//        }
+//        if (rng == 6) {
+//            ++locked;
+//            ++impassable;
+//        }
+//        if (rng == 7) {
+//            ++traversable;
+//            ++locked;
+//        }
+//        if (rng == 8) {
+//            ++locked;
+//            ++impassable;
+//        }
+//        if (rng == 9) {
+//            ++locked;
+//            ++locked;
+//        }
 
-    }
-    std::cout << "Traversable: " << traversable << std::endl;
-    std::cout << "Impassable: " << impassable << std::endl;
-    std::cout << "Locked: " << locked << std::endl;
+//    }
+//    std::cout << "Traversable: " << traversable << std::endl;
+//    std::cout << "Impassable: " << impassable << std::endl;
+//    std::cout << "Locked: " << locked << std::endl;
 
-    std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
+    std::vector <std::shared_ptr<dungeon::Room>> rooms{std::vector <std::shared_ptr<dungeon::Room>>()};
     int numOfRooms{width * height};
     rooms.reserve(numOfRooms);
     _builder->BuildDungeonLevel(name, width, height);
@@ -356,10 +356,8 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
             _builder->buildItem(rooms.at(i));
         }
     }
-
-
-
     _level = _builder->getDungeonLevel();
+    _builder.reset();
 }
 
 const std::vector<std::string> Game::displayLevel() const {

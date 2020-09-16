@@ -14,12 +14,12 @@ class MagicDungeonLevelBuilder : public DungeonLevelBuilder {
     MagicDungeonLevelBuilder(const MagicDungeonLevelBuilder& other) = delete;
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height) override;
-    virtual Room* buildRoom(const int id) override;
-    virtual void buildDoorWay(Room* origin, Room* destination, const Direction direction, const MoveConstraints constraints) override;
-    virtual void buildEntrance(Room* room, const Direction direction) override;
-    virtual void buildExit(Room* room, const Direction direction) override;
-    virtual void buildItem(Room* room) override;
-    virtual void buildCreature(Room* room) override;
+    virtual std::shared_ptr<Room> buildRoom(const int id) override;
+    virtual void buildDoorWay(std::shared_ptr<Room> origin, std::shared_ptr<Room> destination, const Direction direction, const MoveConstraints constraints) override;
+    virtual void buildEntrance(std::shared_ptr<Room> room, const Direction direction) override;
+    virtual void buildExit(std::shared_ptr<Room> room, const Direction direction) override;
+    virtual void buildItem(std::shared_ptr<Room> room) override;
+    virtual void buildCreature(std::shared_ptr<Room> room) override;
     virtual DungeonLevel* getDungeonLevel() override;
   private:
     void prototypeItems() override;

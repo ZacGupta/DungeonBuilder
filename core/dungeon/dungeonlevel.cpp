@@ -9,8 +9,8 @@ DungeonLevel::DungeonLevel(const std::string& name, int width, int height) : _na
 }
 
 DungeonLevel::~DungeonLevel() {
-    for (Room* room : _rooms) {
-        delete room;
+    for (std::shared_ptr<Room> room : _rooms) {
+        room.reset();
     }
     std::cout << "Destroyed DungeonLevel" << std::endl;
 }
@@ -19,7 +19,7 @@ std::ostream& operator<<(std::ostream& out, const DungeonLevel& dungeonLevel) {
     return out << dungeonLevel.description();
 }
 
-bool DungeonLevel::addRoom(Room* room) {
+bool DungeonLevel::addRoom(std::shared_ptr<Room> room) {
     if (room and _rooms.size() < static_cast<unsigned>(_numberOfRooms)) {
         _rooms.push_back(room);
         return true;
@@ -27,7 +27,7 @@ bool DungeonLevel::addRoom(Room* room) {
     return false;
 }
 
-Room* DungeonLevel::retrieveRoom(int id) const {
+std::shared_ptr<Room> DungeonLevel::retrieveRoom(int id) const {
     if (id < 1 or id > numberOfRooms()) {
         return nullptr;
     }

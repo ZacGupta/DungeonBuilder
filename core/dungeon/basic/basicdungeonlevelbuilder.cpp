@@ -27,35 +27,35 @@ void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const 
     _level = new BasicDungeonLevel(name, width, height);
 }
 
-Room* BasicDungeonLevelBuilder::buildRoom(const int id) {
+std::shared_ptr<Room> BasicDungeonLevelBuilder::buildRoom(const int id) {
     Direction north{Direction::North};
     Direction south{Direction::South};
     Direction east{Direction::East};
     Direction west{Direction::West};
     if (_level) {
-        Room* room{nullptr};
         //50% chance for each type of Room.
         if (randomInt(2) == 0) {
-            room = new QuartzChamber(id);
+            std::shared_ptr<QuartzChamber> room{new QuartzChamber(id)};
             room->setEdge(new RockWall(north), north);
             room->setEdge(new RockWall(south), south);
             room->setEdge(new RockWall(east), east);
             room->setEdge(new RockWall(west), west);
             _level->addRoom(room);
+            return room;
         } else {
-            room = new RockChamber(id);
+            std::shared_ptr<RockChamber> room{new RockChamber(id)};
             room->setEdge(new RockWall(north), north);
             room->setEdge(new RockWall(south), south);
             room->setEdge(new RockWall(east), east);
             room->setEdge(new RockWall(west), west);
             _level->addRoom(room);
+            return room;
         }
-        return room;
     }
     return nullptr;
 }
 
-void BasicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, const Direction direction, const MoveConstraints constraints) {
+void BasicDungeonLevelBuilder::buildDoorWay(std::shared_ptr<Room> origin, std::shared_ptr<Room> destination, const Direction direction, const MoveConstraints constraints) {
     if (not origin or not destination) {
         return;
     }
@@ -135,29 +135,22 @@ void BasicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, con
         origin->setEdge(originDoorway, direction);
         destination->setEdge(destinationDoorway, originDoorway->oppositeDirection());
         break;
-    case 5:
-        Wall* originWall = new RockWall(direction);
-        Wall* destinationWall = new RockWall(originWall->oppositeDirection());
-        origin->setEdge(originWall, direction);
-        destination->setEdge(destinationWall, originWall->oppositeDirection());
-        break;
     }
-    return;
 }
 
-void BasicDungeonLevelBuilder::buildEntrance(Room* room, const Direction direction) {
+void BasicDungeonLevelBuilder::buildEntrance(std::shared_ptr<Room> room, const Direction direction) {
     common::OneWayDoor* entrance{new common::OneWayDoor(direction)};
     entrance->markAsEntrance();
     room->setEdge(entrance, direction);
 }
 
-void BasicDungeonLevelBuilder::buildExit(Room* room, const Direction direction) {
+void BasicDungeonLevelBuilder::buildExit(std::shared_ptr<Room> room, const Direction direction) {
     common::OneWayDoor* exit{new common::OneWayDoor(direction)};
     exit->markAsExit();
     room->setEdge(exit, direction);
 }
 
-void BasicDungeonLevelBuilder::buildItem(Room* room) {
+void BasicDungeonLevelBuilder::buildItem(std::shared_ptr<Room> room) {
     //65% chance that Item is a consumable, 35% chance it is a Weapon.
     if (randomInt(100) < 65) {
         room->setItem(_consumables.at(randomInt(3))->clone());
@@ -166,7 +159,7 @@ void BasicDungeonLevelBuilder::buildItem(Room* room) {
     }
 }
 
-void BasicDungeonLevelBuilder::buildCreature(Room* room) {
+void BasicDungeonLevelBuilder::buildCreature(std::shared_ptr<Room> room) {
 
     room->setCreature(_creatures.at(randomInt(3))->clone());
 

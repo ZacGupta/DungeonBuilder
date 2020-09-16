@@ -7,8 +7,6 @@ Doorway::Doorway(Direction direction) : RoomEdge{direction}, _opposite{nullptr} 
 }
 
 Doorway::~Doorway() {
-    //Potentially unneccesary if all rooms are destroyed at once since the pointer will go out of scope and the _opposites,
-    //and every room being pointed to by each _opposite will be destroyed by ~Room().
     if (_opposite) {
         _opposite->_opposite = nullptr;
     }

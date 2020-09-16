@@ -18,29 +18,22 @@ void MagicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const 
     _level = new MagicDungeonLevel(name, width, height);
 }
 
-Room* MagicDungeonLevelBuilder::buildRoom(const int id) {
-    //50% chance for each type of Room.
-    if (randomInt(2) == 0) {
-        _level->addRoom(new AlchemistsLaboratory(id));
-    }
-    else {
-        _level->addRoom(new EnchantedLibrary(id));
-    }
+std::shared_ptr<Room> MagicDungeonLevelBuilder::buildRoom(const int id) {
 }
 
-void MagicDungeonLevelBuilder::buildDoorWay(Room* origin, Room* destination, const Direction direction, const MoveConstraints constraints) {
+void MagicDungeonLevelBuilder::buildDoorWay(std::shared_ptr<Room> origin, std::shared_ptr<Room> destination, const Direction direction, const MoveConstraints constraints) {
 
 }
 
-void MagicDungeonLevelBuilder::buildEntrance(Room* room, const Direction direction) {
+void MagicDungeonLevelBuilder::buildEntrance(std::shared_ptr<Room> room, const Direction direction) {
 
 }
 
-void MagicDungeonLevelBuilder::buildExit(Room* room, const Direction direction) {
+void MagicDungeonLevelBuilder::buildExit(std::shared_ptr<Room> room, const Direction direction) {
 
 }
 
-void MagicDungeonLevelBuilder::buildItem(Room* room) {
+void MagicDungeonLevelBuilder::buildItem(std::shared_ptr<Room> room) {
     //65% chance that Item is a consumable, 35% chance it is a Weapon.
     if (randomInt(100) < 65) {
         room->setItem(_consumables.at(randomInt(3))->clone());
@@ -49,7 +42,7 @@ void MagicDungeonLevelBuilder::buildItem(Room* room) {
     }
 }
 
-void MagicDungeonLevelBuilder::buildCreature(Room* room) {
+void MagicDungeonLevelBuilder::buildCreature(std::shared_ptr<Room> room) {
     room->setCreature(_creatures.at(randomInt(3))->clone());
 }
 

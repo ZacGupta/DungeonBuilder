@@ -21,12 +21,12 @@ class DungeonLevelBuilder {
     virtual ~DungeonLevelBuilder();
 
     virtual void BuildDungeonLevel(const std::string& name, const int width, const int height);
-    virtual Room* buildRoom(const int id);
-    virtual void buildDoorWay(Room* origin, Room* destination, const Direction direction, const MoveConstraints constraints);
-    virtual void buildEntrance(Room* room, const Direction direction);
-    virtual void buildExit(Room* room, const Direction direction);
-    virtual void buildItem(Room* room);
-    virtual void buildCreature(Room* room);
+    virtual std::shared_ptr<Room> buildRoom(const int id);
+    virtual void buildDoorWay(std::shared_ptr<Room> origin, std::shared_ptr<Room> destination, const Direction direction, const MoveConstraints constraints);
+    virtual void buildEntrance(std::shared_ptr<Room> room, const Direction direction);
+    virtual void buildExit(std::shared_ptr<Room> room, const Direction direction);
+    virtual void buildItem(std::shared_ptr<Room> room);
+    virtual void buildCreature(std::shared_ptr<Room> room);
     virtual DungeonLevel* getDungeonLevel();
   protected:
     DungeonLevelBuilder();
