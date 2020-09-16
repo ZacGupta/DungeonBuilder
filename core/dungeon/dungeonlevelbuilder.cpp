@@ -50,10 +50,10 @@ void DungeonLevelBuilder::prototypeCreatures() {
 
 }
 
-int DungeonLevelBuilder::randomInt(double possibilities) {
-    std::uniform_real_distribution<double> realDistribution{0, possibilities};
-    std::mt19937 randomGenerator{uint32_t(time(nullptr))};
-    return realDistribution(randomGenerator);
+int DungeonLevelBuilder::randomInt(int possibilities) const {
+    static std::mt19937 randomGenerator{uint32_t(time(nullptr))};
+    static std::uniform_int_distribution<int> distribution{0, (possibilities)};
+    return (distribution(randomGenerator));
 }
 
 MoveConstraints operator|(const MoveConstraints& origin, const MoveConstraints& destination) {

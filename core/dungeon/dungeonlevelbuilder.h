@@ -37,7 +37,7 @@ class DungeonLevelBuilder {
     std::vector<std::unique_ptr<core::items::Item>> _weapons;
     std::vector<std::unique_ptr<core::items::Item>> _consumables;
     std::vector<std::unique_ptr<core::creatures::AbstractCreature>> _creatures;
-    int randomInt(double possibilities);
+    int randomInt(int possibilities) const;
 };
 
 }

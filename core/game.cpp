@@ -135,11 +135,11 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
             }
         }
     }
-    //Build Entranc
-    int rng = randomInt(width);
+    //Build Entrance
+    double rng = randomInt(4);
 
     //Room 1
-    if (rng == 0) {
+    if (rng < 0 or width == 1) {
         double randomDirection{randomDouble()};
         if (width == 1) {
             if (randomDirection < 0.33) {
@@ -158,7 +158,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     //Room 2
-    else if (rng == 1) {
+    else if (rng == 1 or width == 2) {
         if (width != 2) {
             _builder->buildEntrance(rooms.at(1), dungeon::Direction::North);
         } else {
@@ -170,7 +170,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     //Room 3
-    else if (rng == 2) {
+    else if (rng == 2 or width == 3) {
         if (width != 3) {
             _builder->buildEntrance(rooms.at(2), dungeon::Direction::North);
         } else {
@@ -182,7 +182,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     //Room 4
-    else if (rng == 3) {
+    else if (rng >= 3 or width == 4) {
         if (randomDouble() < 0.50) {
             _builder->buildEntrance(rooms.at(3), dungeon::Direction::North);
         } else {
@@ -191,12 +191,11 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     }
 
     //Build Exit
-    int exitRange{numOfRooms - ((width * height) - width)};
     int exitStart{((width * height) - width)};
-    rng = randomInt(exitRange);
+    rng = randomInt(4);
 
     //Room 1
-    if (rng == 0) {
+    if (rng == 0 or width == 1) {
         if (width == 1) {
             if (height == 1) {
                 _builder->buildExit(rooms.at(exitStart), dungeon::Direction::South);
@@ -211,15 +210,11 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
                 }
             }
         } else {
-            if (randomDouble() < 0.50) {
-                _builder->buildExit(rooms.at(exitStart), dungeon::Direction::South);
-            } else {
-                _builder->buildExit(rooms.at(exitStart), dungeon::Direction::West);
-            }
+            _builder->buildExit(rooms.at(exitStart), dungeon::Direction::South);
         }
     }
     //Room 2
-    else if (rng == 1) {
+    else if (rng == 1 or width == 2) {
         if (width != 2 or height == 1) {
             _builder->buildExit(rooms.at(exitStart + 1), dungeon::Direction::South);
         } else {
@@ -231,7 +226,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     //Room 3
-    else if (rng == 2) {
+    else if (rng == 2 or width == 3) {
         if (width != 3 or height == 1) {
             _builder->buildExit(rooms.at(exitStart + 2), dungeon::Direction::South);
         } else {
@@ -243,7 +238,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     //Room 4
-    else if (rng == 3) {
+    else if (rng >= 3 or width == 4) {
         if (height == 1) {
             _builder->buildExit(rooms.at(exitStart + 3), dungeon::Direction::South);
         } else {
@@ -254,12 +249,8 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
             }
         }
     }
-    int rand =  randomDouble();
-        for (int i = 0; i < 10000; ++i) {
-            std::cout << rand << std::endl;
-        }
-    _level = _builder->getDungeonLevel();
 
+    _level = _builder->getDungeonLevel();
 }
 
 const std::vector<std::string> Game::displayLevel() const {
@@ -347,6 +338,8 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
             }
         }
         dungeon.push_back(newRoom);
+
+
     }
     return dungeon;
 }
@@ -354,11 +347,11 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
 double Game::randomDouble() {
     return _realDistribution(_randomGenerator);
 }
-
-int Game::randomInt(double possibilities) const {
-    std::uniform_real_distribution<double> realDistribution{0, possibilities};
-    std::mt19937 randomGenerator{uint32_t(time(nullptr))};
-    return realDistribution(randomGenerator);
+int Game::randomInt(int possibilities) const {
+    possibilities -= 1;
+    static std::mt19937 randomGenerator{uint32_t(time(nullptr))};
+    static std::uniform_int_distribution<int> distribution{0, (possibilities)};
+    (distribution(randomGenerator));
 }
 
 

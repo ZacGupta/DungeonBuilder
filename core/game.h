@@ -29,7 +29,7 @@ class Game {
     Game();
     std::vector<std::vector<std::string>> buildDisplay() const;
 
-    int randomInt(double possibilities) const;
+    int randomInt(int possibilities) const;
     double randomDouble();
 
     static Game* theInstance;
