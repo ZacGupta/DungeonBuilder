@@ -14,7 +14,7 @@ class Item {
     Item(std::string name);
     virtual ~Item() = default;
 
-    std::string name();
+    std::string name() const;
     char displayCharacter();
     virtual std::unique_ptr<Item> clone() = 0;
   protected:

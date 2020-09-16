@@ -29,8 +29,8 @@ class Game {
     Game();
     std::vector<std::vector<std::string>> buildDisplay() const;
 
-    int randomInt(int possibilities) const;
     double randomDouble();
+    int randomInt(int possibilities) const;
 
     static Game* theInstance;
     std::unique_ptr<core::dungeon::DungeonLevelBuilder> _builder;

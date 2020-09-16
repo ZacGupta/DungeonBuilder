@@ -32,12 +32,12 @@ class DungeonLevelBuilder {
     DungeonLevelBuilder();
     virtual void prototypeItems();
     virtual void prototypeCreatures();
+    int randomInt(int possibilities) const;
 
     DungeonLevel* _level;
     std::vector<std::unique_ptr<core::items::Item>> _weapons;
     std::vector<std::unique_ptr<core::items::Item>> _consumables;
     std::vector<std::unique_ptr<core::creatures::AbstractCreature>> _creatures;
-    int randomInt(int possibilities) const;
 };
 
 }

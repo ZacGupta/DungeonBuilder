@@ -1,4 +1,6 @@
 #include "dungeonlevelbuilder.h"
+#include <stdlib.h>
+#include <time.h>
 
 namespace core::dungeon {
 
@@ -52,8 +54,8 @@ void DungeonLevelBuilder::prototypeCreatures() {
 
 int DungeonLevelBuilder::randomInt(int possibilities) const {
     static std::mt19937 randomGenerator{uint32_t(time(nullptr))};
-    static std::uniform_int_distribution<int> distribution{0, (possibilities)};
-    return (distribution(randomGenerator));
+    static std::uniform_int_distribution<int> distribution{0, RAND_MAX};
+    return (distribution(randomGenerator) % possibilities);
 }
 
 MoveConstraints operator|(const MoveConstraints& origin, const MoveConstraints& destination) {
