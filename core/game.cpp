@@ -86,12 +86,7 @@ void Game::createExampleLevel() {
     _builder->buildItem(rooms.at(4));
     _builder->buildItem(rooms.at(6));
 
-    std::cout << rooms.at(2)->creature().name() << std::endl;
-    std::cout << rooms.at(4)->creature().name() << std::endl;
-    std::cout << rooms.at(8)->creature().name() << std::endl;
-    std::cout << rooms.at(2)->item().name() << std::endl;
-    std::cout << rooms.at(4)->item().name() << std::endl;
-    std::cout << rooms.at(6)->item().name() << std::endl;
+    std::cout << "Room 6: isPassge(): " << rooms.at(5)->south()->isPassage() << std::endl;
 
     //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
@@ -112,16 +107,68 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     //so by simply adding 'None' twice, we increase the chance of traversible doorways to 40%,
     //and reduce the chances of the impassable and locked doorways to 30% each.
     std::vector<dungeon::MoveConstraints> constraints{
-        dungeon::MoveConstraints::None,
-        dungeon::MoveConstraints::None,
-        dungeon::MoveConstraints::OriginImpassable,
-        dungeon::MoveConstraints::DestinationImpassable,
-        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable,
-        dungeon::MoveConstraints::OriginLocked,
-        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationImpassable,
-        dungeon::MoveConstraints::DestinationLocked,
-        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationLocked,
-        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked};
+        dungeon::MoveConstraints::None, //0
+        dungeon::MoveConstraints::None,  //1
+        dungeon::MoveConstraints::OriginImpassable, //2
+        dungeon::MoveConstraints::DestinationImpassable, //3
+        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable, //4
+        dungeon::MoveConstraints::OriginLocked, //5
+        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationImpassable, //6
+        dungeon::MoveConstraints::DestinationLocked, //7
+        dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationLocked, //8
+        dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked}; //9
+
+    int traversable{0};
+    int impassable{0};
+    int locked{0};
+    for (int i{0}; i < 2147483646; ++i) {
+        int rng = randomInt(10);
+
+        if (rng == 0) {
+            ++traversable;
+            ++traversable;
+        }
+        if (rng == 1) {
+            ++traversable;
+            ++traversable;
+        }
+        if (rng == 2) {
+            ++traversable;
+            ++impassable;
+        }
+        if (rng == 3) {
+            ++traversable;
+            ++impassable;
+        }
+        if (rng == 4) {
+            ++impassable;
+            ++impassable;
+        }
+        if (rng == 5) {
+            ++locked;
+            ++traversable;
+        }
+        if (rng == 6) {
+            ++locked;
+            ++impassable;
+        }
+        if (rng == 7) {
+            ++traversable;
+            ++locked;
+        }
+        if (rng == 8) {
+            ++locked;
+            ++impassable;
+        }
+        if (rng == 9) {
+            ++locked;
+            ++locked;
+        }
+
+    }
+    std::cout << "Traversable: " << traversable << std::endl;
+    std::cout << "Impassable: " << impassable << std::endl;
+    std::cout << "Locked: " << locked << std::endl;
 
     std::vector <dungeon::Room*> rooms{std::vector <dungeon::Room*>()};
     int numOfRooms{width * height};
@@ -144,7 +191,16 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         if (roomID != numOfRooms) {
             //Last Column
             if (roomID % width == 0) {
-                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                //1 x n dungeon
+                if (width == 1) {
+                    _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                }
+                //last column and not 1 x n dungeon
+                else {
+                    if (randomDouble() < 0.50) {
+                        _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                    }
+                }
             }
             //Last row
             else if (roomID > (width * height) - width) {
@@ -153,8 +209,11 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
             //All other rooms
             else {
                 _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, constraints.at((randomInt(10))));
-                if (height != 1)
-                    _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                if (height != 1) {
+                    if (randomDouble() < 0.69) {
+                        _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                    }
+                }
             }
         }
     }
@@ -236,11 +295,12 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         } else {
             if (height == 1) {
                 _builder->buildExit(rooms.at(exitRoom), dungeon::Direction::South);
-            }
-            if (randomDouble() < 0.50) {
-                _builder->buildExit(rooms.at(exitRoom), dungeon::Direction::South);
             } else {
-                _builder->buildExit(rooms.at(exitRoom), dungeon::Direction::West);
+                if (randomDouble() < 0.50) {
+                    _builder->buildExit(rooms.at(exitRoom), dungeon::Direction::South);
+                } else {
+                    _builder->buildExit(rooms.at(exitRoom), dungeon::Direction::West);
+                }
             }
 
         }
@@ -372,9 +432,9 @@ std::vector<std::vector<std::string>> Game::buildDisplay() const {
             } else if (j == 2 and roomID % cols == 0) { //In the last column
                 newRoom.push_back(line);
             }
-            //Insert vertical gap between the rooms if not in the last row.
+            //Insert vertical gap between the rooms if room is not in the last row.
             if (j == 5 and roomID <= (rows * cols) - cols) {
-                if (_level->retrieveRoom(1)->south()->isPassage()) {
+                if (_level->retrieveRoom(roomID)->south()->isPassage()) {
                     line += "     |       ";
                     newRoom.push_back(line);
                 } else {

@@ -64,13 +64,19 @@ int main() {
     unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
 //    unique_ptr<BasicDungeonLevelBuilder> dlb2{new BasicDungeonLevelBuilder()};
     game->setDungeonType(move(dlb));
-    game->createRandomLevel("Random Dungeon", 4, 4);
+    game->createRandomLevel("Random Dungeon", 1, 4);
 //    game->createExampleLevel();
     vector<string> v = game->displayLevel();
 
     for (auto i : game->displayLevel()) {
         cout << i << endl;
     }
+    RoomEdge* r;
+    RockWall* w = new RockWall(Direction::North);
+
+    r = w;
+
+    cout << r->isPassage() << endl;
 
 //    for (string line : v) {
 //        cout << line << endl;
