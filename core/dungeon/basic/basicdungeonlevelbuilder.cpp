@@ -32,6 +32,7 @@ std::shared_ptr<Room> BasicDungeonLevelBuilder::buildRoom(const int id) {
     Direction south{Direction::South};
     Direction east{Direction::East};
     Direction west{Direction::West};
+
     if (_level) {
         //50% chance for each type of Room.
         if (randomInt(2) == 0) {

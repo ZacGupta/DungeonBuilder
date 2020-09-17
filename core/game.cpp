@@ -90,7 +90,7 @@ void Game::createExampleLevel() {
 
     //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
-//    _builder.reset();
+    _builder.reset();
 }
 
 void Game::createRandomLevel(const std::string& name, const int width, const int height) {
