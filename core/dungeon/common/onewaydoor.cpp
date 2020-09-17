@@ -7,11 +7,11 @@ OneWayDoor::OneWayDoor(Direction direction) : Doorway{direction}, _isEntrance{fa
 
 const std::string OneWayDoor::description() const {
     if (_isEntrance) {
-        return "the entrance to the dungeon level (One Way Door)";
+        return "the entrance to the dungeon level (One-Way Door).";
     } else if (_isExit) {
-        return "an EXIT (One Way Door)";
+        return "the exit from the dungeon level (One-Way Door).";
     } else {
-        return "a One Way Door";
+        return "a One-Way Door from another chamber.";
     }
 }
 

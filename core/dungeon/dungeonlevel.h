@@ -25,8 +25,8 @@ class DungeonLevel {
   protected:
     DungeonLevel(const std::string& name, int width, int height);
     const std::string _name;
-    const int _width;
-    const int _height;
+    int _width;
+    int _height;
     const int _numberOfRooms;
     std::vector<std::shared_ptr<Room>> _rooms;
     std::vector<std::vector<std::string>> buildDisplay() const;

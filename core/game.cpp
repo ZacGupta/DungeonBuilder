@@ -358,6 +358,8 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     }
     _level = _builder->getDungeonLevel();
     _builder.reset();
+    std::cout << _level->description() << std::endl;
+    std::cout << _level->retrieveRoom(1)->description() << std::endl;
 }
 
 const std::ostream& Game::displayLevel(std::ostream& out) const {

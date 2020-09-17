@@ -6,7 +6,7 @@ namespace core::dungeon::common {
 OpenDoorway::OpenDoorway(Direction direction) : Doorway(direction) {}
 
 const std::string OpenDoorway::description() const {
-    return "an Open Doorway to another chamber";
+    return "an Open Doorway to another chamber.";
 }
 
 char OpenDoorway::displayCharacter() const {
