@@ -358,19 +358,33 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     }
     _level = _builder->getDungeonLevel();
     _builder.reset();
-    std::cout << _level->description() << std::endl;
-    std::cout << _level->retrieveRoom(1)->description() << std::endl;
 }
 
 const std::ostream& Game::displayLevel(std::ostream& out) const {
-    if (not _level) {
+    if (_level) {
+        std::vector<std::string> dungeon {_level->display()};
+        for (std::string row : dungeon) {
+            out << row << std::endl;
+        }
         return out;
     }
-    std::vector<std::string> dungeon {_level->display()};
-    for (std::string row : dungeon ) {
-        out << row << std::endl;
-    }
+    return out << "There is no level to display!";
 }
+
+const std::ostream& Game::describeDungeon(std::ostream& out) const {
+    if (_level) {
+        return out << _level->description();
+    }
+    return out << "There is no level to describe!";
+}
+
+const std::ostream& Game::describeRoom(const int id, std::ostream& out) const {
+    if (_level and _level->retrieveRoom(id)) {
+        return out << _level->retrieveRoom(id)->description();
+    }
+    return out << "This room doesn't exist!\n Please choose between 1-" + std::to_string(_level->numberOfRooms()) + ".";
+}
+
 
 double Game::randomDouble() {
     return _realDistribution(_randomGenerator);

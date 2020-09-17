@@ -24,6 +24,8 @@ class Game {
 
 
     const std::ostream& displayLevel(std::ostream& out) const;
+    const std::ostream& describeDungeon(std::ostream& out) const;
+    const std::ostream& describeRoom(const int id, std::ostream& out) const;
 
   private:
     Game();
