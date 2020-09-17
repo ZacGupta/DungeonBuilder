@@ -23,14 +23,14 @@ Game* Game::instance() {
 }
 
 void Game::setDungeonType(std::unique_ptr<dungeon::DungeonLevelBuilder> builder) {
-    _builder = std::move(builder);
-}
-
-void Game::createExampleLevel() {
     if (_level) {
         delete _level;
         _level = nullptr;
     }
+    _builder = std::move(builder);
+}
+
+void Game::createExampleLevel() {
 
     std::vector <std::shared_ptr<dungeon::Room>> rooms{std::vector <std::shared_ptr<dungeon::Room>>()};
     rooms.reserve(9);
@@ -87,13 +87,8 @@ void Game::createExampleLevel() {
 }
 
 void Game::createRandomLevel(const std::string& name, const int width, const int height) {
-    if (not _builder or height < 1 or height > 4 or width < 1 or width > 4) {
+    if (not _builder or width < 1 or  width > 4 or height < 1 or height > 4) {
         return;
-    }
-
-    if (_level) {
-        delete _level;
-        _level = nullptr;
     }
 
     //If we have one of each move constraint, it naturally results in a 33.33% probability for each type of doorway,
@@ -353,30 +348,29 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
 }
 
 const std::ostream& Game::displayLevel(std::ostream& out) const {
-    out << std::endl;
     if (_level) {
+        out << "\n" << _level->name() << std::endl;
         std::vector<std::string> dungeon {_level->display()};
         for (std::string row : dungeon) {
             out << row << std::endl;
         }
-        return out << "\n" << std::endl;
+        return out;
     }
-    return out << "There is no level to display!\n" << std::endl;
+    return out << "\nThere is no level to display!\n" << std::endl;
 }
 
 const std::ostream& Game::describeDungeon(std::ostream& out) const {
-    out << std::endl;
     if (_level) {
-        return out << _level->description() << "\n" << std::endl;
+        return out << "\n" << _level->description() << "\n" << std::endl;
     }
-    return out << "There is no level to describe!\n" << std::endl;;
+    return out << "\nThere is no level to describe!\n" << std::endl;;
 }
 
 const std::ostream& Game::describeRoom(const int id, std::ostream& out) const {
     if (_level and _level->retrieveRoom(id)) {
         return out << _level->retrieveRoom(id)->description() << "\n" << std::endl;;
     }
-    return out << "This room doesn't exist!\n Please choose between 1-" + std::to_string(_level->numberOfRooms()) + ".\n" << std::endl;
+    return out << "This room doesn't exist!\n Please choose between 1-" << std::to_string(_level->numberOfRooms()) + ".\n" << std::endl;
 }
 
 

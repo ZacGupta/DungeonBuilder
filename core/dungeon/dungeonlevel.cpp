@@ -118,7 +118,7 @@ std::vector<std::vector<std::string>> DungeonLevel::buildDisplay() const {
             }
             //Insert vertical gap between the rooms if room is not in the last row.
             if (j == 5 and roomID <= (rows * cols) - cols) {
-                if (_rooms.at(roomID)->south()->isPassage()) {
+                if (_rooms.at(i)->south()->isPassage()) {
                     line += "     |       ";
                     newRoom.push_back(line);
                 } else {

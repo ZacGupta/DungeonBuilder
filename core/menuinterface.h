@@ -18,29 +18,27 @@ class MenuInterface {
     MenuInterface(std::ostream& _display, std::istream& _input);
     void displayWelcome (const std::string& author, const std::string& title) const;
     //!< @brief displays the menu interface to the console.
-    void run() const;
+    void run();
 
   private:
     std::ostream& _display;
     std::istream& _input;
-    int numOfRooms;
-    int width;
-    int height;
+    int _numOfRooms;
 
-    void mainMenu() const;
-    void describeViewMenu() const;
-    void explorationMenu() const;
+    void mainMenu();
+    void describeViewMenu();
+    void explorationMenu();
 
     /** @brief validates user input for alphabetical values.
       * @returns true if the char exists in the set.
      */
-    bool isValidOption(const std::unordered_set<char>& menuOptions, const char& userInput) const;
+    bool isValidOption(const std::unordered_set<char>& menuOptions, const char userInput) const;
 
     /** @brief Validates user input for numeric values.
       * @returns true if the char is an integer between 1-4 inclusive.
      */
-    bool isValidDimension(const char& userInput) const;
-    bool isValidRoom(const char& userinPut) const;
+    bool isValidDimension(const int userInput) const;
+    bool isValidRoom(const int userinPut) const;
 };
 }
 
