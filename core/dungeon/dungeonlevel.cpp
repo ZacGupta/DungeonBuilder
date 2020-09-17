@@ -5,14 +5,6 @@ namespace core::dungeon {
 
 DungeonLevel::DungeonLevel(const std::string& name, int width, int height) : _name{name}, _width{width}, _height{height}, _numberOfRooms{height * width} {
     _rooms.reserve(_numberOfRooms);
-    std::cout << "Created DungeonLevel" << std::endl;
-}
-
-DungeonLevel::~DungeonLevel() {
-    for (std::shared_ptr<Room> room : _rooms) {
-        room.reset();
-    }
-    std::cout << "Destroyed DungeonLevel" << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& out, const DungeonLevel& dungeonLevel) {

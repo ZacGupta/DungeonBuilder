@@ -5,11 +5,9 @@
 namespace core::dungeon {
 
 DungeonLevelBuilder::DungeonLevelBuilder() : _level{nullptr} {
-    std::cout << "Created DungeonLevelbuilder" << std::endl;
 }
 
 DungeonLevelBuilder::~DungeonLevelBuilder() {
-    std::cout << "Destroyed DungeonLevelbuilder" << std::endl;
 }
 
 void DungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {

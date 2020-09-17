@@ -4,7 +4,6 @@
 namespace core::dungeon {
 
 Room::Room(const int id) : _id{id}, _item{nullptr}, _creature{nullptr}, _north{nullptr}, _south{nullptr}, _east{nullptr}, _west{nullptr} {
-    std::cout << "Created Room" << std::endl;
 }
 
 Room::~Room() {
@@ -12,7 +11,6 @@ Room::~Room() {
     delete _south;
     delete _east;
     delete _west;
-    std::cout << "Destroyed Room" << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& out, const Room& room) {

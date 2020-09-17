@@ -2,13 +2,7 @@
 
 namespace core::dungeon {
 
-Wall::Wall(Direction direction) : RoomEdge{direction} {
-        std::cout << "Created Wall" << std::endl;
-}
-
-Wall::~Wall() {
-    std::cout << "Destroyed Wall" << std::endl;
-}
+Wall::Wall(Direction direction) : RoomEdge{direction} {}
 
 char Wall::displayCharacter() const {
     if (_direction == Direction::North or _direction == Direction::South) {

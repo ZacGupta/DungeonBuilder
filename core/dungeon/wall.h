@@ -9,7 +9,7 @@ class Wall : public RoomEdge  {
   public:
     Wall() = delete;
     Wall(const Wall& other) = delete;
-    virtual ~Wall();
+    virtual ~Wall() = default;
 
     virtual const std::string description() const override = 0; //May not be neccesary to declare this again.
     virtual char displayCharacter() const override;

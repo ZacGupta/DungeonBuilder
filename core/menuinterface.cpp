@@ -238,8 +238,7 @@ void MenuInterface::explorationMenu() {
                 _display << "\nWhich room would you like to describe? (1";
                 if (_numOfRooms == 1) {
                     _display << ")" << std::endl;
-                }
-                else {
+                } else {
                     _display << "-" << _numOfRooms << ")" << std::endl;
                 }
                 _input >> roomNumber;
@@ -251,8 +250,7 @@ void MenuInterface::explorationMenu() {
 
                     if (_numOfRooms == 1) {
                         _display << "Please enter 1" << std::endl;
-                    }
-                    else {
+                    } else {
                         _display << "Please enter a value between [1-" << _numOfRooms << "] " << "(inclusive)" << std::endl;
                     }
 

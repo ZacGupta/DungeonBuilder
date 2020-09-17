@@ -10,7 +10,7 @@ class DungeonLevel {
   public:
     DungeonLevel() = delete;
     DungeonLevel (const DungeonLevel& other) = delete;
-    virtual ~DungeonLevel();
+    virtual ~DungeonLevel() = default;
 
     friend std::ostream& operator<<(std::ostream& out, const DungeonLevel& dungeonLevel);  //operator overload (<<)
 

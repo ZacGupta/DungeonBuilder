@@ -1,17 +1,16 @@
 #include "game.h"
 #include <core/dungeon/roomedge.h>
+#include <iostream>
 
 namespace core {
 
 Game* Game::theInstance{nullptr};
 
 Game::Game() : _builder{nullptr}, _level{nullptr} {
-    std::cout << "Created Game" << std::endl;
 }
 
 Game::~Game() {
     theInstance = nullptr;
-    std::cout << "Destroyed Game" << std::endl;
 }
 
 Game* Game::instance() {
@@ -185,7 +184,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
                 }
                 //last column and not 1 x n dungeon
                 else {
-                    if (randomDouble() < 0.50) {
+                    if (randomDouble() < 0.69) {
                         _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
                     }
                 }
