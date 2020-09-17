@@ -14,8 +14,10 @@ class Item {
     Item(std::string name);
     virtual ~Item() = default;
 
-    std::string name() const;
-    char displayCharacter();
+    friend std::ostream& operator<<(std::ostream& out, const Item& item);  //operator overload (<<)
+
+    const std::string name() const;
+    char displayCharacter() const;
     virtual std::unique_ptr<Item> clone() = 0;
   protected:
     std::string _name;

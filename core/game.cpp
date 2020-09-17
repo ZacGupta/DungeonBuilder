@@ -23,9 +23,6 @@ Game* Game::instance() {
 }
 
 void Game::setDungeonType(std::unique_ptr<dungeon::DungeonLevelBuilder> builder) {
-    if (_level) {
-        delete _level;
-    }
     _builder = std::move(builder);
 }
 
@@ -77,7 +74,6 @@ void Game::createExampleLevel() {
     _builder->buildExit(rooms.at(8), dungeon::Direction::East);
 
     //Items and creatures
-    //Room 3
     _builder->buildCreature(rooms.at(2));
     _builder->buildCreature(rooms.at(4));
     _builder->buildCreature(rooms.at(8));
@@ -86,11 +82,8 @@ void Game::createExampleLevel() {
     _builder->buildItem(rooms.at(4));
     _builder->buildItem(rooms.at(6));
 
-    std::cout << "Room 6: isPassge(): " << rooms.at(5)->south()->isPassage() << std::endl;
-
     //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
-    _builder.reset();
 }
 
 void Game::createRandomLevel(const std::string& name, const int width, const int height) {
@@ -357,32 +350,33 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         }
     }
     _level = _builder->getDungeonLevel();
-    _builder.reset();
 }
 
 const std::ostream& Game::displayLevel(std::ostream& out) const {
+    out << std::endl;
     if (_level) {
         std::vector<std::string> dungeon {_level->display()};
         for (std::string row : dungeon) {
             out << row << std::endl;
         }
-        return out;
+        return out << "\n" << std::endl;
     }
-    return out << "There is no level to display!";
+    return out << "There is no level to display!\n" << std::endl;
 }
 
 const std::ostream& Game::describeDungeon(std::ostream& out) const {
+    out << std::endl;
     if (_level) {
-        return out << _level->description();
+        return out << _level->description() << "\n" << std::endl;
     }
-    return out << "There is no level to describe!";
+    return out << "There is no level to describe!\n" << std::endl;;
 }
 
 const std::ostream& Game::describeRoom(const int id, std::ostream& out) const {
     if (_level and _level->retrieveRoom(id)) {
-        return out << _level->retrieveRoom(id)->description();
+        return out << _level->retrieveRoom(id)->description() << "\n" << std::endl;;
     }
-    return out << "This room doesn't exist!\n Please choose between 1-" + std::to_string(_level->numberOfRooms()) + ".";
+    return out << "This room doesn't exist!\n Please choose between 1-" + std::to_string(_level->numberOfRooms()) + ".\n" << std::endl;
 }
 
 

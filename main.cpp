@@ -60,17 +60,23 @@ int main() {
 //    cout << r.display().at(3) << endl;
 //    cout << r.display().at(4) << endl;
 
-    static Game* game = game->instance();
-    unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
-    unique_ptr<MagicDungeonLevelBuilder> dlb2{new MagicDungeonLevelBuilder()};
-    game->setDungeonType(move(dlb2));
-    game->createRandomLevel("Random Dungeon", 2, 2);
+    //********************************************
+//    static Game* game{game->instance()};
+//    unique_ptr<BasicDungeonLevelBuilder> dlb{new BasicDungeonLevelBuilder()};
+//    unique_ptr<MagicDungeonLevelBuilder> dlb2{new MagicDungeonLevelBuilder()};
+//    game->setDungeonType(move(dlb2));
+//    game->createRandomLevel("Random Dungeon", 2, 2);
 
 //    game->createExampleLevel();
 
-    game->displayLevel(cout);
-    game->setDungeonType(move(dlb));
-    delete game;
+//    game->displayLevel(cout);
+//    game->setDungeonType(move(dlb));
+//    delete game;
+    //********************************************
+
+    MenuInterface menu = MenuInterface(cout, cin);
+    menu.displayWelcome("Sakcham Gupta", "Dungeon Builder");
+    menu.run();
 
 //    for (string line : v) {
 //        cout << line << endl;

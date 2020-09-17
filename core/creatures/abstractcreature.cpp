@@ -4,11 +4,15 @@ namespace core::creatures {
 
 AbstractCreature::AbstractCreature(std::string name) : _name{name}, _isBoss{false} {}
 
-std::string AbstractCreature::name() {
+std::ostream& operator<<(std::ostream& out, const AbstractCreature& creature) {
+    return out << creature.name();
+}
+
+const std::string AbstractCreature::name() const {
     return _name;
 }
 
-char AbstractCreature::displayCharacter() {
+char AbstractCreature::displayCharacter() const {
     return 'M';
 }
 
@@ -17,7 +21,7 @@ void AbstractCreature::markAsBoss() {
     _isBoss = true;
 }
 
-bool AbstractCreature::isBoss() {
+bool AbstractCreature::isBoss() const {
     return _isBoss;
 }
 

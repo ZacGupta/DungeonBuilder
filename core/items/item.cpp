@@ -4,11 +4,15 @@ namespace core::items {
 
 Item::Item(std::string name) : _name{name} {}
 
-std::string Item::name() const {
+std::ostream& operator<<(std::ostream& out, const Item& item) {
+    return out << item.name();
+}
+
+const std::string Item::name() const {
     return _name;
 }
 
-char Item::displayCharacter() {
+char Item::displayCharacter() const {
     return 'L';
 }
 

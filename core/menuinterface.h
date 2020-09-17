@@ -1,6 +1,7 @@
 #ifndef MENUINTERFACE_H
 #define MENUINTERFACE_H
 
+#include <core/game.h>
 #include <unordered_set>
 
 namespace core {
@@ -22,6 +23,9 @@ class MenuInterface {
   private:
     std::ostream& _display;
     std::istream& _input;
+    int numOfRooms;
+    int width;
+    int height;
 
     void mainMenu() const;
     void describeViewMenu() const;
@@ -35,7 +39,8 @@ class MenuInterface {
     /** @brief Validates user input for numeric values.
       * @returns true if the char is an integer between 1-4 inclusive.
      */
-    bool isValidInteger(const char& userInput) const;
+    bool isValidDimension(const char& userInput) const;
+    bool isValidRoom(const char& userinPut) const;
 };
 }
 
