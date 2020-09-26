@@ -19,11 +19,11 @@ std::ostream& operator<<(std::ostream& out, const Room& room) {
 
 std::vector<std::string> Room::display() const {
     //Base template
-    std::string top = "+---- ----+";
-    const std::string offCentreTop = "|         |";
+    std::string top{"+---- ----+"};
+    const std::string offCentreTop{"|         |"};
     std::string centre = "           ";
-    const std::string offCentreBottom = "|         |";
-    std::string bottom = "+---- ----+";
+    const std::string offCentreBottom{"|         |"};
+    std::string bottom{"+---- ----+"};
 
     //Fill in the relevant RoomEdge characters
     top[5] = _north->displayCharacter();

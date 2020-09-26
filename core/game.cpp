@@ -142,7 +142,7 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     }
     //Build Entrance
     int rng{randomInt(width)};
-    int entranceRoom = rng;
+    int entranceRoom{rng};
 
     //Room 1
     if (rng == 0 or width == 1) {
