@@ -1,8 +1,5 @@
 #include "menuinterface.h"
 #include <iostream>
-#include <stdlib.h>
-#include <limits>
-#include <memory>
 #include <core/dungeon/basic/basicdungeonlevelbuilder.h>
 #include <core/dungeon/magical/magicdungeonlevelbuilder.h>
 
@@ -39,7 +36,6 @@ void MenuInterface::mainMenu() {
     //Valid input
     if (userInput.length() == 1 and isValidOption(menuOptions, std::tolower(userInput.front()))) {
         choice  = std::tolower(userInput.front());
-
 
         //Generate Example Dungeon
         if (choice == 'g') {
@@ -243,7 +239,7 @@ void MenuInterface::explorationMenu() {
                 }
                 _input >> roomNumber;
 
-                if (_input.fail() or not isValidRoom(roomNumber)) {
+                if (_input.fail() or not isValidRoomNumber(roomNumber)) {
                     _input.clear();
                     _input.ignore();
                     _display << "\nInvalid input option" << std::endl;
@@ -255,7 +251,7 @@ void MenuInterface::explorationMenu() {
                     }
 
                 }
-            } while (_input.fail() or not isValidRoom(roomNumber));
+            } while (_input.fail() or not isValidRoomNumber(roomNumber));
 
             _display << "\nRoom *" << roomNumber << "* is..." << std::endl;
             game->describeRoom(roomNumber, _display);
@@ -298,12 +294,10 @@ bool MenuInterface::isValidDimension(const int userInput) const {
     }
 }
 
-bool MenuInterface::isValidRoom(const int userInput) const {
+bool MenuInterface::isValidRoomNumber(const int userInput) const {
     if (userInput < 1 or userInput > _numOfRooms) {
         return false;
     }
     return true;
 }
-
-
 }

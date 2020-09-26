@@ -11,9 +11,15 @@ class Wall : public RoomEdge  {
     Wall(const Wall& other) = delete;
     virtual ~Wall() = default;
 
-    virtual const std::string description() const override = 0; //May not be neccesary to declare this again.
+    virtual const std::string description() const override = 0;
+    //!< @brief Returns a description of itself.
+
     virtual char displayCharacter() const override;
+    //!< @brief Returns its own specific display character.
+
     virtual bool isPassage() const override;
+    //!< @brief Always returns false for this class.
+
   protected:
     Wall(Direction direction);
 };

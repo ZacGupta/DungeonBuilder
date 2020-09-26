@@ -34,7 +34,7 @@ void Game::createExampleLevel() {
     std::vector <std::shared_ptr<dungeon::Room>> rooms{std::vector <std::shared_ptr<dungeon::Room>>()};
     rooms.reserve(9);
 
-    _builder->BuildDungeonLevel("Example Level", 3, 3);
+    _builder->buildDungeonLevel("Example Level", 3, 3);
 
     //Build 9 rooms
     rooms.push_back(_builder->buildRoom(1));
@@ -48,26 +48,18 @@ void Game::createExampleLevel() {
     rooms.push_back(_builder->buildRoom(9));
 
     //Build the doorways from room 1-9, always building east first (unless in the last column), then south (unless in the last row)
-    //Room 1
     _builder->buildDoorWay(rooms.at(0), rooms.at(1), dungeon::Direction::East, dungeon::MoveConstraints::None);
     _builder->buildDoorWay(rooms.at(0), rooms.at(3), dungeon::Direction::South, dungeon::MoveConstraints::DestinationImpassable);
-    //Room 2
     _builder->buildDoorWay(rooms.at(1), rooms.at(2), dungeon::Direction::East, dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable);
     _builder->buildDoorWay(rooms.at(1), rooms.at(4), dungeon::Direction::South, dungeon::MoveConstraints::None);
-    //Room 3
     _builder->buildDoorWay(rooms.at(2), rooms.at(5), dungeon::Direction::South, dungeon::MoveConstraints::DestinationLocked);
-    //Room 4
     _builder->buildDoorWay(rooms.at(3), rooms.at(4), dungeon::Direction::East, dungeon::MoveConstraints::DestinationImpassable);
     _builder->buildDoorWay(rooms.at(3), rooms.at(6), dungeon::Direction::South, dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationImpassable);
-    //Room 5
     _builder->buildDoorWay(rooms.at(4), rooms.at(5), dungeon::Direction::East, dungeon::MoveConstraints::None);
     _builder->buildDoorWay(rooms.at(4), rooms.at(7), dungeon::Direction::South, dungeon::MoveConstraints::None);
-    //Room 6 - None
-    //Room 7
     _builder->buildDoorWay(rooms.at(6), rooms.at(7), dungeon::Direction::East, dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked);
-    //Room 8
     _builder->buildDoorWay(rooms.at(7), rooms.at(8), dungeon::Direction::East, dungeon::MoveConstraints::None);
-    //Room 9 - Exit
+
     //Build Entrance and Exit
     _builder->buildEntrance(rooms.at(0), dungeon::Direction::North);
     _builder->buildExit(rooms.at(8), dungeon::Direction::East);
@@ -81,7 +73,6 @@ void Game::createExampleLevel() {
     _builder->buildItem(rooms.at(4));
     _builder->buildItem(rooms.at(6));
 
-    //Get the DungeonLevel
     _level = _builder->getDungeonLevel();
 }
 
@@ -105,62 +96,10 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
         dungeon::MoveConstraints::OriginImpassable | dungeon::MoveConstraints::DestinationLocked,
         dungeon::MoveConstraints::OriginLocked | dungeon::MoveConstraints::DestinationLocked};
 
-//    int traversable{0};
-//    int impassable{0};
-//    int locked{0};
-//    for (int i{0}; i < 2147483646; ++i) {
-//        int rng = randomInt(10);
-
-//        if (rng == 0) {
-//            ++traversable;
-//            ++traversable;
-//        }
-//        if (rng == 1) {
-//            ++traversable;
-//            ++traversable;
-//        }
-//        if (rng == 2) {
-//            ++traversable;
-//            ++impassable;
-//        }
-//        if (rng == 3) {
-//            ++traversable;
-//            ++impassable;
-//        }
-//        if (rng == 4) {
-//            ++impassable;
-//            ++impassable;
-//        }
-//        if (rng == 5) {
-//            ++locked;
-//            ++traversable;
-//        }
-//        if (rng == 6) {
-//            ++locked;
-//            ++impassable;
-//        }
-//        if (rng == 7) {
-//            ++traversable;
-//            ++locked;
-//        }
-//        if (rng == 8) {
-//            ++locked;
-//            ++impassable;
-//        }
-//        if (rng == 9) {
-//            ++locked;
-//            ++locked;
-//        }
-
-//    }
-//    std::cout << "Traversable: " << traversable << std::endl;
-//    std::cout << "Impassable: " << impassable << std::endl;
-//    std::cout << "Locked: " << locked << std::endl;
-
     std::vector <std::shared_ptr<dungeon::Room>> rooms{std::vector <std::shared_ptr<dungeon::Room>>()};
     int numOfRooms{width * height};
     rooms.reserve(numOfRooms);
-    _builder->BuildDungeonLevel(name, width, height);
+    _builder->buildDungeonLevel(name, width, height);
 
     //Build rooms
     for (int i{0}; i < numOfRooms; ++i) {
@@ -168,37 +107,34 @@ void Game::createRandomLevel(const std::string& name, const int width, const int
     }
 
     //Build doorways, always building east first (unless in the last column or the only room), then south (unless in the last or only row)
+    //Generally speaking, East will always be built, and the decision to build South will be random.
     for (int i{0}; i < numOfRooms; ++i) {
-        //roomID and adjacentH (Horizontal) have the same value but i purposely chose to give them separate names
-        //to make the algortithm a bit more readable, as they have different meanings and are used in different contexts.
         int roomID{i + 1};
-        int adjacentH{i + 1};
-        int adjacentV{i + width};
+        int adjacentEast{i + 1};
+        int adjacentSouth{i + width};
 
         if (roomID != numOfRooms) {
             //Last Column
             if (roomID % width == 0) {
-                //1 x n dungeon
                 if (width == 1) {
-                    _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                    _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentSouth), dungeon::Direction::South, constraints.at((randomInt(10))));
                 }
-                //last column and not 1 x n dungeon
                 else {
                     if (randomDouble() < 0.69) {
-                        _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                        _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentSouth), dungeon::Direction::South, constraints.at((randomInt(10))));
                     }
                 }
             }
             //Last row
             else if (roomID > (width * height) - width) {
-                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, constraints.at((randomInt(10))));
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentEast), dungeon::Direction::East, constraints.at((randomInt(10))));
             }
             //All other rooms
             else {
-                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentH), dungeon::Direction::East, constraints.at((randomInt(10))));
+                _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentEast), dungeon::Direction::East, constraints.at((randomInt(10))));
                 if (height != 1) {
                     if (randomDouble() < 0.69) {
-                        _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentV), dungeon::Direction::South, constraints.at((randomInt(10))));
+                        _builder->buildDoorWay(rooms.at(i), rooms.at(adjacentSouth), dungeon::Direction::South, constraints.at((randomInt(10))));
                     }
                 }
             }
@@ -377,33 +313,10 @@ double Game::randomDouble() {
     return _realDistribution(_randomGenerator);
 }
 int Game::randomInt(int possibilities) const {
+    //This just returns a random integer between 0 to number of possibilities (exclusive),
+    //It's mainly used to simplify the selection of random doorways.
     static std::mt19937 randomGenerator{uint32_t(time(nullptr))};
     static std::uniform_int_distribution<int> distribution{0, RAND_MAX};
     return (distribution(randomGenerator) % possibilities);
 }
 }
-
-//    _builder.reset();
-
-//    0 = dungeon::MoveConstraints::None
-//    1 = dungeon::MoveConstraints::OriginImpassable
-//    2 = dungeon::MoveConstraints::DestinationImpassable
-//    3 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationImpassable
-//    4 = dungeon::MoveConstraints::OriginLocked
-//    6 = dungeon::MoveConstraints::OriginLocked|dungeon|dungeon::MoveConstraints::DestinationImpassable
-//    8 = dungeon::MoveConstraints::DestinationLocked
-//    9 = dungeon::MoveConstraints::OriginImpassable|dungeon::MoveConstraints::DestinationLocked
-//    12= dungeon::MoveConstraints::OriginLocked|dungeon::MoveConstraints::DestinationLocked
-
-//    {None = 0, OriginImpassable = 1, DestinationImpassable = 2, OriginLocked = 4, DestinationLocked = 8};
-//    MoveConstraints
-
-//    0000(0) = Open Doorway (Origin and Destination) 		//Traversible/Traversible /
-//    0001(1) = One Way Door (Origin) OpenDoorWay(Destination) 	//Impassable/Traversible /
-//    0010(2) = Open Doorway (Origin) One Way Door (Destination) 	//Traversible/Impassable /
-//    0011(3) = BlockedDoorway (Origin and Destination) 		//Impassable/Impassable /
-//    0100(4) = LockedDoor (Origin) OpenDoorway (Destination) 	//Locked/Traversible /
-//    0110(6) = LockedDoor (Origin) OneWayDoor (Destination) 		//Locked/Impassable
-//    1000(8) = OpenDoorway (Origin) LockedDoor (Destination)  	//Traversible/Locked
-//    1001(9) = OneWayDoor (Origin) LockedDoor (Destionation) 	//Impassable/Locked
-//    1100(12)= Locked Door (Origin and Destination) 			//Locked/Locked

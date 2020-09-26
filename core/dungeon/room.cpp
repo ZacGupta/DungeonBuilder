@@ -25,7 +25,6 @@ std::vector<std::string> Room::display() const {
     const std::string offCentreBottom = "|         |";
     std::string bottom = "+---- ----+";
 
-
     //Fill in the relevant RoomEdge characters
     top[5] = _north->displayCharacter();
     bottom[5] = _south->displayCharacter();
@@ -82,6 +81,7 @@ void Room::setCreature(std::unique_ptr<core::creatures::AbstractCreature> newCre
 }
 
 void Room::setEdge(RoomEdge* edge, Direction direction) {
+    //Delete pre-existing edge if it exists, and set the new edge at the specified direction.
     switch (direction) {
     case (Direction::North):
         if (_north) {
@@ -106,6 +106,7 @@ void Room::setEdge(RoomEdge* edge, Direction direction) {
             delete _west;
         }
         _west = edge;
+        break;
     }
 }
 }

@@ -11,7 +11,10 @@ class MagicWall : public Wall {
     MagicWall(const MagicWall& other) = delete;
     ~MagicWall() = default;
     MagicWall(Direction direction);
+    //!< @brief The constructor requires a Direction (the location of the wall).
+
     virtual const std::string description() const override;
+    //!< @brief Returns a description of itself.
 };
 }
 

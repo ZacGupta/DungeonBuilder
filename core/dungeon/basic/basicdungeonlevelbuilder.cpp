@@ -19,11 +19,7 @@ BasicDungeonLevelBuilder::BasicDungeonLevelBuilder() : DungeonLevelBuilder() {
     prototypeCreatures();
 }
 
-BasicDungeonLevelBuilder::~BasicDungeonLevelBuilder() {
-    _level = nullptr;
-}
-
-void BasicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {
+void BasicDungeonLevelBuilder::buildDungeonLevel(const std::string& name, const int width, const int height) {
     _level = new BasicDungeonLevel(name, width, height);
 }
 
@@ -161,9 +157,9 @@ void BasicDungeonLevelBuilder::buildItem(std::shared_ptr<Room> room) {
 }
 
 void BasicDungeonLevelBuilder::buildCreature(std::shared_ptr<Room> room) {
-
     room->setCreature(_creatures.at(randomInt(3))->clone());
 
+    //If any of the room edges are exits, then the creature will be marked as a boss.
     Doorway* north{dynamic_cast<Doorway*>(room->north())};
     if (north) {
         if (north->isExit()) {

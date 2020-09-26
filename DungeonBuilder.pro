@@ -63,4 +63,4 @@ HEADERS += \
     core/menuinterface.h
 
 DISTFILES += \
-    DungeonBuilder.Doxyfile
+    DungeonBuilder.doxyfile

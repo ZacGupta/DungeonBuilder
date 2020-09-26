@@ -44,6 +44,13 @@ const std::string& DungeonLevel::name() const {
 }
 
 const std::vector<std::string> DungeonLevel::display() const {
+
+    /*
+     * This algorithm takes the output of buildDisplay() (which is responsible for adding all the neccesary passages and spaces).
+     * It first takes the top line of each room inside a row, concatenates them into a single string, and pushes it into a new vector.
+     * It does this for 6 times for each row, unless the row is the last or only row in the dungeon, in which it repeats only 5 times.
+    */
+
     std::vector<std::vector<std::string>> dungeon{buildDisplay()};
     std::vector<std::string> newDungeon{std::vector<std::string>()};
 
@@ -52,6 +59,8 @@ const std::vector<std::string> DungeonLevel::display() const {
     }
     int rows{_height};
     int cols{_width};
+    //All the rooms have 6 strings (5 for the room + 1 for the gap between rooms), except the very last row,
+    //this variable is used to break out of the loop before attempting to access the 6th element for rooms in the last row.
     unsigned maxLoop{(static_cast<unsigned>(rows) * 6) - 1};
 
     //For each row in the dungeon
@@ -73,6 +82,13 @@ const std::vector<std::string> DungeonLevel::display() const {
 }
 
 std::vector<std::vector<std::string>> DungeonLevel::buildDisplay() const {
+
+    /*
+     * This algorithm simply calls the display() method on each room, and adds the passages/spaces where neccesary.
+     * It only ever checks for the eastern and southern passages, which eliminates the need to check for northern and western edges in subsequent rooms.
+     * If the room is in the last column, then the east edge is ignored, If the room is in the last row, then the southern edge is ignored.
+    */
+
     std::vector<std::vector<std::string>> dungeon;
     int rows{_height};
     int cols{_width};
@@ -91,7 +107,7 @@ std::vector<std::vector<std::string>> DungeonLevel::buildDisplay() const {
             if (j < 5) {
                 line = room.at(j);
             }
-            //Top/offcentre//bottom
+            //Top/offcentre//bottom lines
             if (j != 2 and j != 5) {
                 line += "  ";
                 newRoom.push_back(line);
@@ -105,7 +121,7 @@ std::vector<std::vector<std::string>> DungeonLevel::buildDisplay() const {
                     line += "  ";
                     newRoom.push_back(line);
                 }
-            } else if (j == 2 and roomID % cols == 0) { //In the last column
+            } else if (j == 2 and roomID % cols == 0) { //In the last column (ignore eastern passage check)
                 newRoom.push_back(line);
             }
             //Insert vertical gap between the rooms if room is not in the last row.

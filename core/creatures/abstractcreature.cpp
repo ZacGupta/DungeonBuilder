@@ -24,5 +24,4 @@ void AbstractCreature::markAsBoss() {
 bool AbstractCreature::isBoss() const {
     return _isBoss;
 }
-
 }

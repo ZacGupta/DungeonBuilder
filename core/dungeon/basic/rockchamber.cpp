@@ -17,7 +17,6 @@ const std::string RockChamber::description() const {
     if (_item) {
         description += "\nThere is a " + _item->name() + " to pick up.";
     }
-
     return description;
 }
 

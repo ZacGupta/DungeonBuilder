@@ -10,20 +10,36 @@ class AbstractCreature {
   public:
     AbstractCreature() = delete;
     AbstractCreature(const AbstractCreature& other) = default;
-
-    AbstractCreature(std::string name);
     virtual ~AbstractCreature() = default;
+    AbstractCreature(std::string name);
+    //!< @brief The constructor requires an std::string which represents the name of the AbstractCreature.
 
-    friend std::ostream& operator<<(std::ostream& out, const AbstractCreature& creature);  //operator overload (<<)
+    friend std::ostream& operator<<(std::ostream& out, const AbstractCreature& creature);
+    //!< @brief The << operator is overloaded to describe the creature.
+
 
     const std::string name() const;
+    //!< @brief Returns the name of the creature
+
+
     char displayCharacter() const;
-    void markAsBoss();
+    //!< @brief Returns the display character for creatures.
+
+
     bool isBoss() const;
+    //!< @brief Returns true if the creature is a boss.
+
+
+    void markAsBoss();
+    //!< @brief Makes the creature an elite version of itself.
+
+
     virtual std::unique_ptr<AbstractCreature> clone() = 0;
+    //!< @brief Returns a deep copy of itself when overridden by a derieved class.
   protected:
     std::string _name;
     bool _isBoss;
+
 };
 }
 

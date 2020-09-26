@@ -10,7 +10,7 @@ DungeonLevelBuilder::DungeonLevelBuilder() : _level{nullptr} {
 DungeonLevelBuilder::~DungeonLevelBuilder() {
 }
 
-void DungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {
+void DungeonLevelBuilder::buildDungeonLevel(const std::string& name, const int width, const int height) {
 
 }
 
@@ -51,6 +51,7 @@ void DungeonLevelBuilder::prototypeCreatures() {
 }
 
 int DungeonLevelBuilder::randomInt(int possibilities) const {
+    //This just returns a random between 0 to number of possibilities (exclusive) and is used for simplifying random selection within the builder classes.
     static std::mt19937 randomGenerator{uint32_t(time(nullptr))};
     static std::uniform_int_distribution<int> distribution{0, RAND_MAX};
     return (distribution(randomGenerator) % possibilities);

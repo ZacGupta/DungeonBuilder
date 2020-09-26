@@ -48,5 +48,4 @@ void OneWayDoor::markAsEntrance() {
 void OneWayDoor::markAsExit() {
     _isExit = true;
 }
-
 }

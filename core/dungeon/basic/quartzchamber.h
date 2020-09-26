@@ -9,10 +9,12 @@ class QuartzChamber : public Room {
   public:
     QuartzChamber() = delete;
     QuartzChamber(const QuartzChamber& other) = delete;
+    ~QuartzChamber() = default;
     QuartzChamber(const int id);
-    virtual ~QuartzChamber() = default;
+    //!< @brief The constructor requires the id of the room to be created.
 
     virtual const std::string description() const override;
+    //!< @brief Returns a description of the room, including all room edges, as well as any creatures and items if present.
 };
 }
 

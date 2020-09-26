@@ -15,5 +15,4 @@ const std::string Item::name() const {
 char Item::displayCharacter() const {
     return 'L';
 }
-
 }

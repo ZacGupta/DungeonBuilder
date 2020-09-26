@@ -9,10 +9,12 @@ class RockChamber : public Room {
   public:
     RockChamber() = delete;
     RockChamber(const RockChamber& other) = delete;
+    ~RockChamber() = default;
     RockChamber(const int id);
-    virtual ~RockChamber() = default;
+    //!< @brief The constructor requires the id of the room to be created.
 
     virtual const std::string description() const override;
+    //!< @brief Returns a description of the room, including all room edges, as well as any creatures and items if present.
 };
 }
 

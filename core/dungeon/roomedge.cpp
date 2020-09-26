@@ -13,7 +13,7 @@ const Direction& RoomEdge::getDirection() const {
     return _direction;
 }
 
-const Direction RoomEdge::oppositeDirection() const {
+Direction RoomEdge::oppositeDirection() const {
     switch (_direction) {
     case (Direction::North):
         return Direction::South;

@@ -14,17 +14,12 @@
 
 namespace core::dungeon::magical {
 
-
 MagicDungeonLevelBuilder::MagicDungeonLevelBuilder() : DungeonLevelBuilder() {
     prototypeItems();
     prototypeCreatures();
 }
 
-MagicDungeonLevelBuilder::~MagicDungeonLevelBuilder() {
-    _level = nullptr;
-}
-
-void MagicDungeonLevelBuilder::BuildDungeonLevel(const std::string& name, const int width, const int height) {
+void MagicDungeonLevelBuilder::buildDungeonLevel(const std::string& name, const int width, const int height) {
     _level = new MagicDungeonLevel(name, width, height);
 }
 
@@ -161,9 +156,9 @@ void MagicDungeonLevelBuilder::buildItem(std::shared_ptr<Room> room) {
 }
 
 void MagicDungeonLevelBuilder::buildCreature(std::shared_ptr<Room> room) {
-
     room->setCreature(_creatures.at(randomInt(3))->clone());
 
+    //If any of the room edges are exits, then the creature will be marked as a boss.
     Doorway* north{dynamic_cast<Doorway*>(room->north())};
     if (north) {
         if (north->isExit()) {
@@ -215,5 +210,4 @@ void MagicDungeonLevelBuilder::prototypeCreatures() {
     _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Evil Wizard")));
     _creatures.push_back(std::make_unique<core::creatures::Monster>(core::creatures::Monster("Dragon")));
 }
-
 }
